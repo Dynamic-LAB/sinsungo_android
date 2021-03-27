@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">sinsungo</string>
+    <string name="app_name_kor">신선고</string>
+    <string name="refrigerator">냉장고</string>
+    <string name="diet">식단</string>
+    <string name="recipe">레시피</string>
+    <string name="notification">알림</string>
+    <string name="shopping_basket">장바구니</string>
 </resources>
