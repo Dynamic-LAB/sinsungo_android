@@ -6,4 +6,9 @@
     <string name="recipe">레시피</string>
     <string name="notification">알림</string>
     <string name="shopping_basket">장바구니</string>
+    <string name="cold">냉장</string>
+    <string name="iced">냉동</string>
+    <string name="fresh">신선</string>
+    <string name="indoor">상온</string>
+    <string name="seasoning">조미료/양념</string>
 </resources>
