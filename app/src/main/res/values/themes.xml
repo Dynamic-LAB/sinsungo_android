@@ -12,4 +12,7 @@
         <item name="backgroundColor">@color/white_smoke</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.Splash" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/ic_splash</item>
+    </style>
 </resources>
