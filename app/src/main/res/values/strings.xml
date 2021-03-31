@@ -14,4 +14,5 @@
     <string name="custom_edit">직접 입력</string>
     <string name="scan_receipt">영수증 촬영</string>
     <string name="picture_ingredient">재료 촬영</string>
+    <string name="empty_refrigerator">냉장고에 재료를 먼저 넣어주세요!</string>
 </resources>
