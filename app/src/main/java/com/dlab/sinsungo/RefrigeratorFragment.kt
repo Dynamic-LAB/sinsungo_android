@@ -8,16 +8,29 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayoutMediator
 import com.leinardi.android.speeddial.FabWithLabelView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 
 class RefrigeratorFragment : Fragment() {
     private lateinit var binding: FragmentRefrigeratorBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val tabTextList = arrayListOf(
+        "냉장", "냉동", "신선", "상온", "조미료/양념"
+    )
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRefrigeratorBinding.inflate(inflater, container, false)
+        initTabLayout()
         initSpeedDialItem()
         return binding.root
+    }
+
+    private fun initTabLayout() {
+        binding.pagerIngredient.adapter = CustomFragmentStateAdapter(activity!!)
+        TabLayoutMediator(binding.tablayoutRefrigerator, binding.pagerIngredient) { tab, position ->
+            tab.text = tabTextList[position]
+        }.attach()
     }
 
     private fun initSpeedDialItem() {
