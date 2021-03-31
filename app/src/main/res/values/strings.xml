@@ -11,4 +11,7 @@
     <string name="fresh">신선</string>
     <string name="indoor">상온</string>
     <string name="seasoning">조미료/양념</string>
+    <string name="custom_edit">직접 입력</string>
+    <string name="scan_receipt">영수증 촬영</string>
+    <string name="picture_ingredient">재료 촬영</string>
 </resources>
