@@ -9,12 +9,12 @@
         android:fontWeight="400"
         app:font="@font/nanumsquare_acr"
         app:fontStyle="normal"
-        app:fontweight="400" />
+        app:fontWeight="400" />
     <font
         android:font="@font/nanumsquare_acb"
         android:fontStyle="normal"
         android:fontWeight="700"
         app:font="@font/nanumsquare_acb"
         app:fontStyle="normal"
-        app:fontweight="700" />
+        app:fontWeight="700" />
 </font-family>

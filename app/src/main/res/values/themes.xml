@@ -15,6 +15,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Splash Theme -->
+
+    <style name="Theme.Splash" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/ic_splash</item>
+    </style>
+
     <!-- Font Style -->
 
     <style name="Text.Bold_32_Blue" parent="android:TextAppearance">
@@ -219,4 +225,5 @@
         <item name="android:fontFamily">@font/app_font</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 </resources>
