@@ -15,4 +15,5 @@
     <string name="scan_receipt">영수증 촬영</string>
     <string name="picture_ingredient">재료 촬영</string>
     <string name="empty_refrigerator">냉장고에 재료를 먼저 넣어주세요!</string>
+    <string name="kakao_app_key">ee3f134157c1c12681be4c972668fcea</string>
 </resources>

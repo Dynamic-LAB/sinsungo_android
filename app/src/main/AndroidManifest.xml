@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dlab.sinsungo">
 
+    <!-- 인터넷 사용 권한 설정-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -18,6 +21,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
+        <!-- 카카오 인증 Redirect URI 설정 -->
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+                <data android:host="oauth"
+                    android:scheme="kakaoee3f134157c1c12681be4c972668fcea" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
