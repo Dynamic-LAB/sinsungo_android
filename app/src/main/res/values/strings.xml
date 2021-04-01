@@ -6,5 +6,14 @@
     <string name="recipe">레시피</string>
     <string name="notification">알림</string>
     <string name="shopping_basket">장바구니</string>
+    <string name="cold">냉장</string>
+    <string name="iced">냉동</string>
+    <string name="fresh">신선</string>
+    <string name="indoor">상온</string>
+    <string name="seasoning">조미료/양념</string>
+    <string name="custom_edit">직접 입력</string>
+    <string name="scan_receipt">영수증 촬영</string>
+    <string name="picture_ingredient">재료 촬영</string>
+    <string name="empty_refrigerator">냉장고에 재료를 먼저 넣어주세요!</string>
     <string name="kakao_app_key">ee3f134157c1c12681be4c972668fcea</string>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fab_custom_edit" type="id" />
+    <item name="fab_scan_receipt" type="id" />
+    <item name="fab_picture_ingredient" type="id" />
+</resources>
