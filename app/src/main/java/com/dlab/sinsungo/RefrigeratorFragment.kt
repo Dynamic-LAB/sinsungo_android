@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
-import com.leinardi.android.speeddial.FabWithLabelView
 import com.leinardi.android.speeddial.SpeedDialActionItem
 
 class RefrigeratorFragment : Fragment() {
