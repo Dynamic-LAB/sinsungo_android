@@ -6,4 +6,5 @@
     <string name="recipe">레시피</string>
     <string name="notification">알림</string>
     <string name="shopping_basket">장바구니</string>
+    <string name="kakao_app_key">ee3f134157c1c12681be4c972668fcea</string>
 </resources>
