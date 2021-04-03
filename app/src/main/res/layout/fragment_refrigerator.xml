@@ -14,8 +14,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="39dp"
             android:text="@string/refrigerator"
-            android:textColor="@color/royal_blue"
-            android:textSize="32sp"
+            style="@style/Text.Bold_32_Blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
