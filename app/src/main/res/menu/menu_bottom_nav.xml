@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="@string/diet"
-        android:id="@+id/bottom_nav_menu_diet"
-        android:icon="@drawable/ic_bottom_nav_diet"/>
-
-    <item
-        android:title="@string/recipe"
-        android:id="@+id/bottom_nav_menu_recipe"
-        android:icon="@drawable/ic_bottom_nav_recipe"/>
-
-    <item
-        android:title="@string/refrigerator"
+        android:title="@string/all_refrigerator"
         android:id="@+id/bottom_nav_menu_refrigerator"
         android:icon="@drawable/ic_bottom_nav_refrigerator"/>
 
     <item
-        android:title="@string/notification"
+        android:title="@string/all_diet"
+        android:id="@+id/bottom_nav_menu_diet"
+        android:icon="@drawable/ic_bottom_nav_diet"/>
+
+    <item
+        android:title="@string/all_recipe"
+        android:id="@+id/bottom_nav_menu_recipe"
+        android:icon="@drawable/ic_bottom_nav_recipe"/>
+
+    <item
+        android:title="@string/all_notification"
         android:id="@+id/bottom_nav_menu_notification"
         android:icon="@drawable/ic_bottom_nav_notification"/>
 
     <item
-        android:title="@string/shopping_basket"
+        android:title="@string/all_shopping_basket"
         android:id="@+id/bottom_nav_menu_shopping_basket"
         android:icon="@drawable/ic_bottom_nav_basket"/>
 </menu>

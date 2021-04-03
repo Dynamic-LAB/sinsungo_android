@@ -13,16 +13,15 @@
         <item name="background">@color/white_smoke</item>
         <item name="android:windowBackground">@color/white_smoke</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/app_font</item>
     </style>
 
     <!-- Splash Theme -->
-
     <style name="Theme.Splash" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/ic_splash</item>
     </style>
 
     <!-- Font Style -->
-
     <style name="Text.Bold_32_Blue" parent="android:TextAppearance">
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/royal_blue</item>
@@ -224,6 +223,26 @@
         <item name="android:textColor">@color/free_speech_red</item>
         <item name="android:fontFamily">@font/app_font</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TabLayout Style -->
+    <style name="TabLayout.Refrigerator" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorColor">@color/royal_blue</item>
+        <item name="tabSelectedTextColor">@color/royal_blue</item>
+        <item name="tabTextAppearance">@style/Text.Regular_16_Black</item>
+    </style>
+
+    <!-- SpeedDial Style -->
+    <style name="SpeedDial.Refrigerator" parent="SpeedDial">
+        <item name="sdOverlayLayout">@id/sdv_overlay</item>
+        <item name="sdUseReverseAnimationOnClose">true</item>
+        <item name="sdExpansionMode">top</item>
+        <item name="sdMainFabClosedBackgroundColor">@color/lavender_blue</item>
+        <item name="sdMainFabClosedIconColor">@color/black</item>
+        <item name="sdMainFabClosedSrc">@drawable/btn_add</item>
+        <item name="sdMainFabOpenedBackgroundColor">@color/lavender_blue</item>
+        <item name="sdMainFabOpenedIconColor">@color/black</item>
+        <item name="sdMainFabOpenedSrc">@drawable/btn_close</item>
     </style>
 
 </resources>
