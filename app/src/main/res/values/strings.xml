@@ -1,19 +1,90 @@
 <resources>
     <string name="app_name">sinsungo</string>
     <string name="app_name_kor">신선고</string>
-    <string name="refrigerator">냉장고</string>
-    <string name="diet">식단</string>
-    <string name="recipe">레시피</string>
-    <string name="notification">알림</string>
-    <string name="shopping_basket">장바구니</string>
-    <string name="cold">냉장</string>
-    <string name="iced">냉동</string>
-    <string name="fresh">신선</string>
-    <string name="indoor">상온</string>
-    <string name="seasoning">조미료/양념</string>
-    <string name="custom_edit">직접 입력</string>
-    <string name="scan_receipt">영수증 촬영</string>
-    <string name="picture_ingredient">재료 촬영</string>
-    <string name="empty_refrigerator">냉장고에 재료를 먼저 넣어주세요!</string>
-    <string name="kakao_app_key">ee3f134157c1c12681be4c972668fcea</string>
+
+    <!-- 공통 -->
+    <string name="all_refrigerator">냉장고</string>
+    <string name="all_diet">식단</string>
+    <string name="all_recipe">레시피</string>
+    <string name="all_notification">알림</string>
+    <string name="all_shopping_basket">장바구니</string>
+    <string name="all_mypage">마이페이지</string>
+    <string name="all_material">재료</string>
+    <string name="all_expiration_date">유통기한</string>
+    <string name="all_store_date">보관기한</string>
+    <string name="all_gram">g</string>
+    <string name="all_ml">ml</string>
+    <string name="all_unit">개</string>
+
+    <!-- 버튼 -->
+    <string name="btn_add">추가하기</string>
+    <string name="btn_cancel">취소</string>
+    <string name="btn_accept">확인</string>
+
+    <!-- 커스텀 다이얼로그 -->
+    <string name="dial_ref_title">냉장고 재료</string>
+    <string name="dial_shop_title">장바구니 목록</string>
+    <string name="dial_add">추가</string>
+    <string name="dial_ingredient">재료</string>
+    <string name="dial_memo">메모</string>
+    <string name="dial_hint_ingredient">재료명을 입력해주세요.</string>
+    <string name="dial_hint_count">수량을 입력해주세요.</string>
+    <string name="dial_hint_date">날짜를 선택해주세요.</string>
+    <string name="dial_hint_memo">내용을 작성해주세요.</string>
+    <string name="dial_normal_essential">필수 입력사항</string>
+    <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
+    <string name="dial_date">날짜</string>
+
+    <!-- 냉장고 TODO: 정렬요소 정해서 넣기 -->
+    <string name="ref_cold">냉장</string>
+    <string name="ref_iced">냉동</string>
+    <string name="ref_fresh">신선</string>
+    <string name="ref_indoor">상온</string>
+    <string name="ref_seasoning">조미료/양념</string>
+    <string name="ref_custom_edit">직접 입력</string>
+    <string name="ref_scan_receipt">영수증 촬영</string>
+    <string name="ref_picture_ingredient">재료 촬영</string>
+    <string name="ref_empty_message">냉장고에 재료를 먼저 넣어주세요!</string>
+    <string name="ref_format_expiration_date">유통기한 마감까지 %d일 남았어요!</string>
+
+    <!-- 식단 -->
+    <string name="diet_morning">아침 메뉴는</string>
+    <string name="diet_lunch">점심 메뉴는</string>
+    <string name="diet_dinner">저녁 메뉴는</string>
+    <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
+    <string name="diet_use_ingredient">사용재료</string>
+
+    <!-- 레시피 -->
+    <string name="reci_hint_search">검색어를 입력해주세요.</string>
+    <string name="reci_in_refrigerator">냉장고 속 재료</string>
+    <string name="reci_not_in_refrigerator">냉장고에 없는 재료</string>
+    <string name="reci_add_diet">식단에 추가하기</string>
+    <string name="reci_watch_recipe">레시피보기</string>
+
+    <!-- 알림 -->
+    <string name="noti_expiration_date">유통기한이 %d일 남은 %s가(이) 있습니다!</string>
+    <string name="noti_expiration_date_several">유통기한이 %d일 남은 재료들 있습니다!</string>
+    <string name="noti_use_ingredient">%s님이 냉장고의 재료를 사용하였습니다.</string>
+    <string name="noti_write_diet">식단을 작성해주세요!</string>
+    <string name="noti_update_diet">%s님이 식단을 업데이트 했습니다!</string>
+
+    <!-- 장바구니 -->
+    <string name="shop_advice_add">이 재료도 <b>추가</b>하시는건 어때요?</string>
+    <string name="shop_morning">아침 식단의 재료</string>
+    <string name="shop_lunch">점심 식단의 재료</string>
+    <string name="shop_dinner">저녁 식단의 재료</string>
+    <string name="shop_often_ingredient">자주 사용하는 재료</string>
+    <string name="shop_list_title">장 볼 목록</string>
+    <string name="shop_empty_message">장보기 목록이 비어있어요!</string>
+
+    <!-- 마이페이지 -->
+    <string name="my_add_member">멤버 추가하기</string>
+    <string name="my_setting_notice">알림 설정</string>
+    <string name="my_notify">공지사항</string>
+    <string name="my_help">도움말</string>
+    <string name="my_contact">개발자와 연락하기</string>
+    <string name="my_law">법적고지</string>
+    <string name="my_logout">로그아웃</string>
+    <string name="my_withdraw">회원 탈퇴</string>
+
 </resources>
