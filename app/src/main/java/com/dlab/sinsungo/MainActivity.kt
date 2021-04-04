@@ -1,8 +1,8 @@
 package com.dlab.sinsungo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,15 +21,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            R.id.bottom_nav_menu_refrigerator ->{
+                val fragment = RefrigeratorFragment()
+                changeFragment(fragment)
+            }
             R.id.bottom_nav_menu_diet ->{
                 // changeFragment()
             }
             R.id.bottom_nav_menu_recipe ->{
                 // changeFragment()
-            }
-            R.id.bottom_nav_menu_refrigerator ->{
-                val fragment = RefrigeratorFragment()
-                changeFragment(fragment)
             }
             R.id.bottom_nav_menu_notification ->{
                 // changeFragment()

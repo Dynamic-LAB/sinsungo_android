@@ -14,10 +14,6 @@ import com.leinardi.android.speeddial.SpeedDialActionItem
 class RefrigeratorFragment : Fragment() {
     private lateinit var binding: FragmentRefrigeratorBinding
 
-    private val tabTextList = arrayListOf(
-        "냉장", "냉동", "신선", "상온", "조미료/양념"
-    )
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRefrigeratorBinding.inflate(inflater, container, false)
         initTabLayout()
@@ -26,6 +22,7 @@ class RefrigeratorFragment : Fragment() {
     }
 
     private fun initTabLayout() {
+        val tabTextList = resources.getStringArray(R.array.ref_tabLayout_item)
         binding.pagerIngredient.adapter = CustomFragmentStateAdapter(activity!!)
         TabLayoutMediator(binding.tablayoutRefrigerator, binding.pagerIngredient) { tab, position ->
             tab.text = tabTextList[position]
@@ -38,7 +35,7 @@ class RefrigeratorFragment : Fragment() {
                 .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
                 .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
-                .setLabel(R.string.custom_edit)
+                .setLabel(R.string.ref_custom_edit)
                 .setLabelClickable(false)
                 .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
                 .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
@@ -50,7 +47,7 @@ class RefrigeratorFragment : Fragment() {
                 .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
                 .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
-                .setLabel(R.string.scan_receipt)
+                .setLabel(R.string.ref_scan_receipt)
                 .setLabelClickable(false)
                 .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
                 .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
@@ -62,7 +59,7 @@ class RefrigeratorFragment : Fragment() {
                 .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
                 .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
-                .setLabel(R.string.picture_ingredient)
+                .setLabel(R.string.ref_picture_ingredient)
                 .setLabelClickable(false)
                 .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
                 .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
