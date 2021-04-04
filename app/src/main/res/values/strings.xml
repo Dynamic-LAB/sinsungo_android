@@ -89,4 +89,7 @@
     <string name="my_logout">로그아웃</string>
     <string name="my_withdraw">회원 탈퇴</string>
 
+    <!-- 로그인 타입 -->
+    <string name="login_type_kakao">kakao</string>
+    <string name="login_type_google">google</string>
 </resources>
