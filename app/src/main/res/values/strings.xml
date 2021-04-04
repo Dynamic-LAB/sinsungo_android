@@ -15,6 +15,7 @@
     <string name="all_gram">g</string>
     <string name="all_ml">ml</string>
     <string name="all_unit">개</string>
+    <string name="all_img_description">이미지가 로딩되지 않았습니다. </string>
 
     <!-- 버튼 -->
     <string name="btn_add">추가하기</string>
@@ -55,6 +56,8 @@
     <string name="diet_dinner">저녁 메뉴는</string>
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
     <string name="diet_use_ingredient">사용재료</string>
+    <string name="diet_custom_edit">직접 입력</string>
+    <string name="diet_add_edit">식단에서 추가하기</string>
 
     <!-- 레시피 -->
     <string name="reci_hint_search">검색어를 입력해주세요.</string>

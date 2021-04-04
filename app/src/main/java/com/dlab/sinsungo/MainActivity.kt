@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 changeFragment(fragment)
             }
             R.id.bottom_nav_menu_diet ->{
-                // changeFragment()
+                val fragment = DietFragment()
+                changeFragment(fragment)
             }
             R.id.bottom_nav_menu_recipe ->{
                 // changeFragment()
