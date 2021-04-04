@@ -10,7 +10,7 @@ data class User(
     val userId: String,
 
     @SerializedName("login_type")
-    val loginType: String,
+    val loginType: String?,
 
     @SerializedName("name")
     val name: String?,
