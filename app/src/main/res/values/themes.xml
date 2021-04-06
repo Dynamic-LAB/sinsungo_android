@@ -246,15 +246,13 @@
     </style>
 
     <!-- Button Style -->
-    <style name="Widget.MaterialComponents.Button.OutlinedButton.Dialog"
-        parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Widget.MaterialComponents.Button.OutlinedButton.Dialog" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">20dp</item>
         <item name="strokeColor">@color/royal_blue</item>
         <item name="android:textAppearance">@style/Text.Regular_16_blue</item>
     </style>
 
-    <style name="Widget.MaterialComponents.Button.Dialog"
-        parent="Widget.MaterialComponents.Button">
+    <style name="Widget.MaterialComponents.Button.Dialog" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">20dp</item>
         <item name="android:textAppearance">@style/Text.Regular_16_white</item>
     </style>
