@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dial_ref_title"
+            android:textAppearance="@style/Text.Bold_24_Black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_dialog_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_dialog"
+            android:backgroundTint="@color/white"
+            android:elevation="2dp"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_dialog_title">
+
+            <TextView
+                android:id="@+id/tv_ingredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_material"
+                android:textAppearance="@style/Text.Bold_14dp_Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_input_noti1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dial_normal_essential"
+                android:textAppearance="@style/Text.Bold_08_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ingredient"
+                app:layout_constraintStart_toEndOf="@id/tv_ingredient" />
+
+            <Spinner
+                android:id="@+id/spinner_ref_category"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/tf_ingredient"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tf_ingredient" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tf_ingredient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/spinner_ref_category"
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredient"
+                app:startIconDrawable="@drawable/ic_cutlery">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_ingredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dial_hint_ingredient"
+                    android:textAppearance="@style/Text.Bold_14dp_Black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dial_count"
+                android:textAppearance="@style/Text.Bold_14dp_Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tf_ingredient" />
+
+            <TextView
+                android:id="@+id/tv_input_noti2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dial_normal_essential"
+                android:textAppearance="@style/Text.Bold_08_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_count"
+                app:layout_constraintStart_toEndOf="@id/tv_count" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tf_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toStartOf="@id/spinner_count_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_count"
+                app:startIconDrawable="@drawable/ic_cutlery">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dial_hint_count"
+                    android:inputType="number"
+                    android:textAppearance="@style/Text.Bold_14dp_Black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinner_count_type"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/tf_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tf_count" />
+
+            <TextView
+                android:id="@+id/tv_exdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dial_date"
+                android:textAppearance="@style/Text.Bold_14dp_Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tf_count" />
+
+            <TextView
+                android:id="@+id/tv_input_noti3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dial_normal_essential"
+                android:textAppearance="@style/Text.Bold_08_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exdate"
+                app:layout_constraintStart_toEndOf="@id/tv_exdate" />
+
+            <Spinner
+                android:id="@+id/spinner_exdate_type"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tf_exdate"
+                app:layout_constraintBottom_toBottomOf="@id/tf_exdate"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tf_exdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinner_exdate_type"
+                app:layout_constraintTop_toBottomOf="@id/tv_exdate">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_exdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dial_hint_date"
+                    android:inputType="date"
+                    android:textAppearance="@style/Text.Bold_14dp_Black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_dialog_body"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/btn_canel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Dialog"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/btn_cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_accept"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_accept"
+                style="@style/Widget.MaterialComponents.Button.Dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

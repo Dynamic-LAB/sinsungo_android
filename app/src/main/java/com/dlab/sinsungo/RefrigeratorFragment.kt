@@ -22,7 +22,7 @@ class RefrigeratorFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        val tabTextList = resources.getStringArray(R.array.ref_tabLayout_item)
+        val tabTextList = resources.getStringArray(R.array.ref_categories)
         binding.pagerIngredient.adapter = CustomFragmentStateAdapter(activity!!)
         TabLayoutMediator(binding.tablayoutRefrigerator, binding.pagerIngredient) { tab, position ->
             tab.text = tabTextList[position]
