@@ -35,6 +35,11 @@
     <string name="dial_normal_essential">* 필수 입력사항</string>
     <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
     <string name="dial_date">날짜</string>
+    <string-array name="dial_count_types">
+        <item>g</item>
+        <item>ml</item>
+        <item>개</item>
+    </string-array>
     <string-array name="dial_exdate_types">
         <item>유통기한</item>
         <item>제조일자</item>
@@ -48,6 +53,12 @@
         <item>신선</item>
         <item>상온</item>
         <item>조미료/양념</item>
+    </string-array>
+    <string-array name="ref_sort_types">
+        <item>유통기한 임박 순</item>
+        <item>재료명 순</item>
+        <item>수량 순</item>
+        <item>최근 추가 순</item>
     </string-array>
     <string name="ref_custom_edit">직접 입력</string>
     <string name="ref_scan_receipt">영수증 촬영</string>

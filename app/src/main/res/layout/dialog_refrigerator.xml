@@ -6,8 +6,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_dialog"
-        android:padding="16dp">
+        android:background="@drawable/shape_dialog"
+        android:backgroundTint="@color/white_smoke"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="24dp">
 
         <TextView
             android:id="@+id/tv_dialog_title"
@@ -22,12 +24,10 @@
             android:id="@+id/cl_dialog_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_dialog"
+            android:background="@drawable/shape_inner_dialog"
             android:backgroundTint="@color/white"
-            android:elevation="2dp"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,35 +52,79 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient"
                 app:layout_constraintStart_toEndOf="@id/tv_ingredient" />
 
-            <Spinner
-                android:id="@+id/spinner_ref_category"
-                android:layout_width="100dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/tf_ingredient"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tf_ingredient" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tf_ingredient"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_ingredient_input"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:endIconMode="clear_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spinner_ref_category"
-                app:layout_constraintTop_toBottomOf="@id/tv_ingredient"
-                app:startIconDrawable="@drawable/ic_cutlery">
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/border_bottom"
+                app:layout_constraintBottom_toBottomOf="@id/cl_ingredient_category"
+                app:layout_constraintEnd_toStartOf="@id/cl_ingredient_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_ingredient_category">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <ImageView
+                    android:id="@+id/iv_ingredient_cutlery"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_cutlery"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dim_grey" />
+
+                <EditText
                     android:id="@+id/et_ingredient"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@null"
                     android:hint="@string/dial_hint_ingredient"
-                    android:textAppearance="@style/Text.Bold_14dp_Black" />
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14dp_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_ingredient_cutlery"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_ingredient_category"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/border_bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredient">
+
+                <TextView
+                    android:id="@+id/tv_ref_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14dp_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_open_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_open_category"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/btn_expand"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_count"
@@ -90,7 +134,7 @@
                 android:text="@string/dial_count"
                 android:textAppearance="@style/Text.Bold_14dp_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tf_ingredient" />
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_category" />
 
             <TextView
                 android:id="@+id/tv_input_noti2"
@@ -102,36 +146,81 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_count"
                 app:layout_constraintStart_toEndOf="@id/tv_count" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tf_count"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_count_input"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:endIconMode="clear_text"
-                app:layout_constraintEnd_toStartOf="@id/spinner_count_type"
+                android:background="@drawable/border_bottom"
+                app:layout_constraintBottom_toBottomOf="@id/cl_count_type"
+                app:layout_constraintEnd_toStartOf="@id/cl_count_type"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_count"
-                app:startIconDrawable="@drawable/ic_cutlery">
+                app:layout_constraintTop_toTopOf="@id/cl_count_type">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <ImageView
+                    android:id="@+id/iv_count_cutlery"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_cutlery"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dim_grey" />
+
+                <EditText
                     android:id="@+id/et_count"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@null"
                     android:hint="@string/dial_hint_count"
                     android:inputType="number"
-                    android:textAppearance="@style/Text.Bold_14dp_Black" />
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14dp_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_count_cutlery"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Spinner
-                android:id="@+id/spinner_count_type"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_count_type"
                 android:layout_width="100dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/tf_count"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/border_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tf_count" />
+                app:layout_constraintTop_toBottomOf="@id/tv_count">
+
+                <TextView
+                    android:id="@+id/tv_count_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14dp_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_open_countType"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_open_countType"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/btn_expand"
+                    android:tint="@color/dim_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_exdate"
@@ -141,7 +230,7 @@
                 android:text="@string/dial_date"
                 android:textAppearance="@style/Text.Bold_14dp_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tf_count" />
+                app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
 
             <TextView
                 android:id="@+id/tv_input_noti3"
@@ -153,34 +242,81 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_exdate"
                 app:layout_constraintStart_toEndOf="@id/tv_exdate" />
 
-            <Spinner
-                android:id="@+id/spinner_exdate_type"
-                android:layout_width="100dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/tf_exdate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tf_exdate" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tf_exdate"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_exdate_input"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/spinner_exdate_type"
-                app:layout_constraintTop_toBottomOf="@id/tv_exdate">
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/border_bottom"
+                app:layout_constraintBottom_toBottomOf="@id/cl_exdate_type"
+                app:layout_constraintEnd_toStartOf="@id/cl_exdate_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_exdate_type">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <ImageButton
+                    android:id="@+id/btn_open_datePicker"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_calender"
+                    android:tint="@color/dim_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
                     android:id="@+id/et_exdate"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@null"
                     android:hint="@string/dial_hint_date"
                     android:inputType="date"
-                    android:textAppearance="@style/Text.Bold_14dp_Black" />
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14dp_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_open_datePicker"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_exdate_type"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/border_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_exdate">
+
+                <TextView
+                    android:id="@+id/tv_exdate_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14dp_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_open_exdateType"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_open_exdateType"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/btn_expand"
+                    android:tint="@color/dim_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
