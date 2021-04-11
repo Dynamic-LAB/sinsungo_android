@@ -14,6 +14,7 @@
         <item name="android:windowBackground">@color/white_smoke</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/app_font</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <!-- Splash Theme -->
@@ -243,6 +244,14 @@
         <item name="sdMainFabOpenedBackgroundColor">@color/lavender_blue</item>
         <item name="sdMainFabOpenedIconColor">@color/black</item>
         <item name="sdMainFabOpenedSrc">@drawable/btn_close</item>
+    </style>
+
+    <!-- BottomSheet Style -->
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_dialog_gray</item>
     </style>
 
 </resources>

@@ -35,6 +35,11 @@
     <string name="dial_normal_essential">필수 입력사항</string>
     <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
     <string name="dial_date">날짜</string>
+    <string name="dial_date_pick">%d년 %d월 %일</string>
+    <string name="dial_morning">아침</string>
+    <string name="dial_lunch">점</string>
+    <string name="dial_dinner">저녁</string>
+    <string name="dial_menu">메뉴</string>
 
     <!-- 냉장고 TODO: 정렬요소 정해서 넣기 -->
     <string-array name="ref_tabLayout_item">
@@ -57,7 +62,7 @@
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
     <string name="diet_use_ingredient">사용재료</string>
     <string name="diet_custom_edit">직접 입력</string>
-    <string name="diet_add_edit">식단에서 추가하기</string>
+    <string name="diet_add_edit">레시피에서 추가하기</string>
 
     <!-- 레시피 -->
     <string name="reci_hint_search">검색어를 입력해주세요.</string>
