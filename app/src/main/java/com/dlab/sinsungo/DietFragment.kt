@@ -9,13 +9,15 @@ import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.FragmentDietBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.leinardi.android.speeddial.SpeedDialView
 
-class DietFragment : Fragment() {
+class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentDietBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDietBinding.inflate(inflater, container, false)
         initSpeedDialItem()
+        binding.sdvDiet.setOnActionSelectedListener(this)
         return binding.root
     }
 
@@ -44,4 +46,20 @@ class DietFragment : Fragment() {
                 .create(), 1
         )
     }
+
+    override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean{
+        when (actionItem?.id){
+            R.id.fab_custom_diet -> {
+                val dialog = Custom_bottom_sheet_diet()
+                dialog.show(requireActivity().supportFragmentManager, "Custom_bottom_sheet_diet")
+                binding.sdvDiet.close()
+            }
+            R.id.fab_add_diet -> {
+                binding.sdvDiet.close()
+                (activity as MainActivity).changeBottomNavMenu(R.id.bottom_nav_menu_recipe)
+            }
+        }
+        return true
+    }
+
 }

@@ -21,8 +21,8 @@
             android:id="@+id/iv_userinfo"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:padding="8dp"
             android:contentDescription="@string/all_img_description"
+            android:padding="8dp"
             android:src="@drawable/btn_userinfo"
             app:layout_constraintBottom_toBottomOf="@+id/tv_fragment_title"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -59,12 +59,12 @@
                 android:id="@+id/iv_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/all_img_description"
                 android:foregroundGravity="center"
                 android:src="@drawable/image_empty_diet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/all_img_description" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_empty"

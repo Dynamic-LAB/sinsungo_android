@@ -48,4 +48,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .replace(R.id.main_frame, fragment)
             .commit()
     }
+
+    public fun changeBottomNavMenu(menuID: Int) {
+        binding.bottomNavView.selectedItemId = menuID
+    }
 }
