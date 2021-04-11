@@ -23,16 +23,18 @@
     <string name="btn_accept">확인</string>
 
     <!-- 커스텀 다이얼로그 -->
-    <string name="dial_ref_title">냉장고 재료</string>
+    <string name="dial_ref_title">냉장고 재료 추가</string>
     <string name="dial_shop_title">장바구니 목록</string>
     <string name="dial_add">추가</string>
     <string name="dial_ingredient">재료</string>
+    <string name="dial_count">수량</string>
     <string name="dial_memo">메모</string>
     <string name="dial_hint_ingredient">재료명을 입력해주세요.</string>
     <string name="dial_hint_count">수량을 입력해주세요.</string>
-    <string name="dial_hint_date">날짜를 선택해주세요.</string>
+    <string name="dial_hint_date">날짜를 입력해주세요.</string>
     <string name="dial_hint_memo">내용을 작성해주세요.</string>
-    <string name="dial_normal_essential">필수 입력사항</string>
+    <string name="dial_normal_essential">* 필수 입력사항</string>
+    <string name="dial_exdate_mismatch_regex">* 형식에 맞게 입력하세요 (yyyy.MM.dd)</string>
     <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
     <string name="dial_date">날짜</string>
     <string name="dial_date_pick">%d년 %d월 %일</string>
@@ -40,15 +42,39 @@
     <string name="dial_lunch">점</string>
     <string name="dial_dinner">저녁</string>
     <string name="dial_menu">메뉴</string>
+    <string name="dial_exdate">유통기한</string>
+    <string name="dial_make_date">제조일자</string>
+    <string name="dial_storage_date">보관일자</string>
+    <string-array name="dial_count_types">
+        <item>g</item>
+        <item>ml</item>
+        <item>개</item>
+    </string-array>
+    <string-array name="dial_exdate_types">
+        <item>유통기한</item>
+        <item>제조일자</item>
+        <item>보관일자</item>
+    </string-array>
 
-    <!-- 냉장고 TODO: 정렬요소 정해서 넣기 -->
-    <string-array name="ref_tabLayout_item">
+    <!-- 냉장고 -->
+    <string-array name="ref_categories">
         <item>냉장</item>
         <item>냉동</item>
         <item>신선</item>
         <item>상온</item>
         <item>조미료/양념</item>
     </string-array>
+    <string-array name="ref_sort_types">
+        <item>유통기한 임박 순</item>
+        <item>재료명 순</item>
+        <item>수량 순</item>
+        <item>최근 추가 순</item>
+    </string-array>
+    <string name="ref_category_cold">냉장</string>
+    <string name="ref_category_iced">냉동</string>
+    <string name="ref_category_fresh">신선</string>
+    <string name="ref_category_indoor">상온</string>
+    <string name="ref_category_seasoning">조미료/양념</string>
     <string name="ref_custom_edit">직접 입력</string>
     <string name="ref_scan_receipt">영수증 촬영</string>
     <string name="ref_picture_ingredient">재료 촬영</string>
@@ -97,4 +123,7 @@
     <string name="my_logout">로그아웃</string>
     <string name="my_withdraw">회원 탈퇴</string>
 
+    <!-- 로그인 타입 -->
+    <string name="login_type_kakao">kakao</string>
+    <string name="login_type_google">google</string>
 </resources>
