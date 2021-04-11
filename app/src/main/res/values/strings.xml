@@ -35,6 +35,9 @@
     <string name="dial_normal_essential">* 필수 입력사항</string>
     <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
     <string name="dial_date">날짜</string>
+    <string name="dial_exdate">유통기한</string>
+    <string name="dial_make_date">제조일자</string>
+    <string name="dial_storage_date">보관일자</string>
     <string-array name="dial_count_types">
         <item>g</item>
         <item>ml</item>
@@ -46,7 +49,7 @@
         <item>보관일자</item>
     </string-array>
 
-    <!-- 냉장고 TODO: 정렬요소 정해서 넣기 -->
+    <!-- 냉장고 -->
     <string-array name="ref_categories">
         <item>냉장</item>
         <item>냉동</item>
@@ -60,6 +63,11 @@
         <item>수량 순</item>
         <item>최근 추가 순</item>
     </string-array>
+    <string name="ref_category_cold">냉장</string>
+    <string name="ref_category_iced">냉동</string>
+    <string name="ref_category_fresh">신선</string>
+    <string name="ref_category_indoor">상온</string>
+    <string name="ref_category_seasoning">조미료/양념</string>
     <string name="ref_custom_edit">직접 입력</string>
     <string name="ref_scan_receipt">영수증 촬영</string>
     <string name="ref_picture_ingredient">재료 촬영</string>
