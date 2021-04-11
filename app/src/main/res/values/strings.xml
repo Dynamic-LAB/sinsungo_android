@@ -30,9 +30,10 @@
     <string name="dial_memo">메모</string>
     <string name="dial_hint_ingredient">재료명을 입력해주세요.</string>
     <string name="dial_hint_count">수량을 입력해주세요.</string>
-    <string name="dial_hint_date">날짜를 선택해주세요.</string>
+    <string name="dial_hint_date">날짜를 입력해주세요.</string>
     <string name="dial_hint_memo">내용을 작성해주세요.</string>
     <string name="dial_normal_essential">* 필수 입력사항</string>
+    <string name="dial_exdate_mismatch_regex">* 형식에 맞게 입력하세요 (yyyy.MM.dd)</string>
     <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
     <string name="dial_date">날짜</string>
     <string name="dial_exdate">유통기한</string>

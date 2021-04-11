@@ -3,16 +3,22 @@ package com.dlab.sinsungo
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.graphics.BlendMode
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.DialogRefrigeratorBinding
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
@@ -91,15 +97,18 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_edit -> {
                 openRefrigeratorDialog()
+                binding.sdvRefrigerator.close()
             }
         }
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun openRefrigeratorDialog() {
         dialogView = DialogRefrigeratorBinding.inflate(layoutInflater)
         dialog = AlertDialog.Builder(context)
@@ -112,19 +121,18 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         dialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun init() {
-        setTitleSpanColor(R.color.royal_blue)
+        setTitleSpanColor(resources.getColor(R.color.royal_blue, context!!.theme))
         initPopupMenus()
+        setTextWatcher()
         dialogView.btnCanel.setOnClickListener { view: View ->
             dialog.dismiss()
         }
         dialogView.btnOpenDatePicker.setOnClickListener { view: View ->
-            if (!dialogView.etExdate.text.isNullOrEmpty()) {
-                parsingDate(dialogView.etExdate.text.toString())
-            }
             DatePickerDialog(
                 requireContext(),
-                android.R.style.Theme_Material_Light_Dialog_Alert,
+                android.R.style.Theme_Material_Dialog_Alert,
                 mOnDateSetListener,
                 mCalendar.get(Calendar.YEAR),
                 mCalendar.get(Calendar.MONTH),
@@ -133,6 +141,7 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setTitleSpanColor(color: Int) {
         val title = dialogView.tvDialogTitle.text
         val spannableString = SpannableString(title)
@@ -145,15 +154,185 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         dialogView.tvDialogTitle.text = spannableString
     }
 
+    private fun setTextWatcher() {
+        dialogView.etIngredient.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isEmpty() || input.isBlank()) {
+                    dialogView.tvInputNoti1.setTextColor(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.tvInputNoti1.visibility = View.VISIBLE
+                    dialogView.ivIngredientCutlery.drawable.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clIngredientInput.background.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                } else {
+                    dialogView.tvInputNoti1.visibility = View.GONE
+                    dialogView.ivIngredientCutlery.drawable.setTint(
+                        resources.getColor(
+                            R.color.dim_grey,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clIngredientInput.background.setTint(
+                        resources.getColor(
+                            R.color.dim_grey,
+                            context!!.theme
+                        )
+                    )
+                }
+            }
+        })
+        dialogView.etCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isEmpty() || input.isBlank()) {
+                    dialogView.tvInputNoti2.setTextColor(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.tvInputNoti2.visibility = View.VISIBLE
+                    dialogView.ivCountCutlery.drawable.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clCountInput.background.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                } else {
+                    dialogView.tvInputNoti2.visibility = View.GONE
+                    dialogView.ivCountCutlery.drawable.setTint(
+                        resources.getColor(
+                            R.color.dim_grey,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clCountInput.background.setTint(
+                        resources.getColor(
+                            R.color.dim_grey,
+                            context!!.theme
+                        )
+                    )
+                }
+            }
+        })
+        dialogView.etExdate.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                val dateRegex = Regex("(19|20)\\d{2}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])")
+                if (input.isEmpty() || input.isBlank()) {
+                    dialogView.tvInputNoti3.text = resources.getString(R.string.dial_normal_essential)
+                    dialogView.tvInputNoti3.setTextColor(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.tvInputNoti3.visibility = View.VISIBLE
+                    dialogView.btnOpenDatePicker.drawable.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clExdateInput.background.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                } else if (!dateRegex.matches(input)) {
+                    dialogView.tvInputNoti3.text = resources.getString(R.string.dial_exdate_mismatch_regex)
+                    dialogView.tvInputNoti3.setTextColor(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.tvInputNoti3.visibility = View.VISIBLE
+                    dialogView.btnOpenDatePicker.drawable.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clExdateInput.background.setTint(
+                        resources.getColor(
+                            R.color.free_speech_red,
+                            context!!.theme
+                        )
+                    )
+                } else {
+                    dialogView.tvInputNoti3.visibility = View.GONE
+                    dialogView.btnOpenDatePicker.drawable.setTint(
+                        resources.getColor(
+                            R.color.dim_grey,
+                            context!!.theme
+                        )
+                    )
+                    dialogView.clExdateInput.background.setTint(
+                        resources.getColor(
+                            R.color.dim_grey,
+                            context!!.theme
+                        )
+                    )
+                    parsingDate(dialogView.etExdate.text.toString())
+                }
+            }
+        })
+    }
+
     private fun initPopupMenus() {
         dialogView.btnOpenCategory.setOnClickListener {
-            showRefCategories(dialogView.tvRefCategory, R.menu.menu_ref_categories)
+            showRefCategories(dialogView.clIngredientCategory, R.menu.menu_ref_categories)
         }
         dialogView.btnOpenCountType.setOnClickListener {
-            showCountTypes(dialogView.tvCountType, R.menu.menu_count_type)
+            showCountTypes(dialogView.clCountType, R.menu.menu_count_type)
         }
         dialogView.btnOpenExdateType.setOnClickListener {
-            showExdateTypes(dialogView.tvExdateType, R.menu.menu_exdate_type)
+            showExdateTypes(dialogView.clExdateType, R.menu.menu_exdate_type)
         }
     }
 

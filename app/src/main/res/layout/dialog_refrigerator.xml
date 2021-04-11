@@ -49,6 +49,7 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
                 android:textAppearance="@style/Text.Bold_08_Black"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient"
                 app:layout_constraintStart_toEndOf="@id/tv_ingredient" />
 
@@ -83,6 +84,8 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_ingredient"
                     android:inputType="text"
+                    android:maxLength="20"
+                    android:singleLine="true"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -144,6 +147,7 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
                 android:textAppearance="@style/Text.Bold_08_Black"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_count"
                 app:layout_constraintStart_toEndOf="@id/tv_count" />
 
@@ -178,6 +182,8 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_count"
                     android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -241,6 +247,7 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
                 android:textAppearance="@style/Text.Bold_08_Black"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_exdate"
                 app:layout_constraintStart_toEndOf="@id/tv_exdate" />
 
@@ -275,6 +282,8 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_date"
                     android:inputType="date"
+                    android:maxLength="10"
+                    android:singleLine="true"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
