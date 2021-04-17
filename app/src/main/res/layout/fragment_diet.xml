@@ -38,7 +38,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_fragment_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcview_ingredient"
+            android:id="@+id/rcview_diet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -81,14 +81,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.leinardi.android.speeddial.SpeedDialOverlayLayout
-            android:id="@+id/sdv_overlay"
+            android:id="@+id/sdv_overlay_diet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:clickable_overlay="true" />
 
         <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/sdv_diet"
-            style="@style/SpeedDial.Refrigerator"
+            style="@style/SpeedDial.Diet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="bottom|end"

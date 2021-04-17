@@ -50,7 +50,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean{
         when (actionItem?.id){
             R.id.fab_custom_diet -> {
-                val dialog = Custom_bottom_sheet_diet()
+                val dialog = CustomBottomSheetDiet()
                 dialog.show(requireActivity().supportFragmentManager, "Custom_bottom_sheet_diet")
                 binding.sdvDiet.close()
             }
