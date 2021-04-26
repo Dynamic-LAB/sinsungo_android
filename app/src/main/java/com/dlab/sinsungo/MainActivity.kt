@@ -20,23 +20,24 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.bottom_nav_menu_refrigerator ->{
+        when (item.itemId) {
+            R.id.bottom_nav_menu_refrigerator -> {
                 val fragment = RefrigeratorFragment()
                 changeFragment(fragment)
             }
-            R.id.bottom_nav_menu_diet ->{
+            R.id.bottom_nav_menu_diet -> {
                 val fragment = DietFragment()
                 changeFragment(fragment)
             }
-            R.id.bottom_nav_menu_recipe ->{
+            R.id.bottom_nav_menu_recipe -> {
                 // changeFragment()
             }
-            R.id.bottom_nav_menu_notification ->{
+            R.id.bottom_nav_menu_notification -> {
                 // changeFragment()
             }
-            R.id.bottom_nav_menu_shopping_basket ->{
-                // changeFragment()
+            R.id.bottom_nav_menu_shopping_basket -> {
+                val fragment = ShoppingFragment()
+                changeFragment(fragment)
             }
         }
         return true

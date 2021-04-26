@@ -5,4 +5,6 @@
     <item name="fab_picture_ingredient" type="id" />
     <item name="fab_add_diet" type="id" />
     <item name="fab_custom_diet" type="id" />
+    <item name="fab_share_shopping" type="id" />
+    <item name="fab_add_shopping" type="id" />
 </resources>
