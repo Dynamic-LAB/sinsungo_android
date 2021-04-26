@@ -259,6 +259,18 @@
         <item name="sdMainFabOpenedSrc">@drawable/btn_close</item>
     </style>
 
+    <style name="SpeedDial.Shopping" parent="SpeedDial">
+        <item name="sdOverlayLayout">@id/sdv_overlay_shopping</item>
+        <item name="sdUseReverseAnimationOnClose">true</item>
+        <item name="sdExpansionMode">top</item>
+        <item name="sdMainFabClosedBackgroundColor">@color/lavender_blue</item>
+        <item name="sdMainFabClosedIconColor">@color/black</item>
+        <item name="sdMainFabClosedSrc">@drawable/btn_dehaze</item>
+        <item name="sdMainFabOpenedBackgroundColor">@color/lavender_blue</item>
+        <item name="sdMainFabOpenedIconColor">@color/black</item>
+        <item name="sdMainFabOpenedSrc">@drawable/btn_close</item>
+    </style>
+
     <!-- BottomSheet Style -->
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
