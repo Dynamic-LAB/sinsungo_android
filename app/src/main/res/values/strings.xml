@@ -24,7 +24,7 @@
 
     <!-- 커스텀 다이얼로그 -->
     <string name="dial_ref_title">냉장고 재료 추가</string>
-    <string name="dial_shop_title">장바구니 목록</string>
+    <string name="dial_shop_title">장바구니 목록 추가</string>
     <string name="dial_add">추가</string>
     <string name="dial_ingredient">재료</string>
     <string name="dial_count">수량</string>
