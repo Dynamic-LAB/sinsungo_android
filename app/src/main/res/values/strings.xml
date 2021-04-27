@@ -136,4 +136,6 @@
 
     <!-- 색상 -->
     <string name="color_royal_blue">#FF3C82D9</string>
+    <string name="color_free_speech_red">#FFCF0000</string>
+    <string name="color_dim_grey">#FF707070</string>
 </resources>

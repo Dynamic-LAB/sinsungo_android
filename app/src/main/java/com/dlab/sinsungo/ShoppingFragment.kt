@@ -3,8 +3,10 @@ package com.dlab.sinsungo
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.PopupMenu
@@ -24,8 +26,8 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShoppingBinding.inflate(inflater, container, false)
-        initSpeedDialItem()
         binding.sdvShopping.setOnActionSelectedListener(this)
+        initSpeedDialItem()
         return binding.root
     }
 
@@ -88,6 +90,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun init() {
         setTitleSpanColor(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+        setTextWatcher()
         initPopupMenus()
         dialogView.btnCancel.setOnClickListener {
             dialog.dismiss()
@@ -115,12 +118,75 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private fun showCountTypes(view: View, @MenuRes menuRes: Int) {
         val countTypePopup = PopupMenu(context, view)
         countTypePopup.menuInflater.inflate(menuRes, countTypePopup.menu)
-
         countTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
             dialogView.tvCountType.text = menuItem.title
             true
         }
-
         countTypePopup.show()
+    }
+
+    private fun setTextWatcher() {
+        dialogView.etIngredient.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isEmpty() || input.isBlank()) {
+                    dialogView.tvInputNoti1.setTextColor(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                    dialogView.tvInputNoti1.visibility = View.VISIBLE
+                    dialogView.ivIngredientCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                    dialogView.clIngredientInput.background.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                } else {
+                    dialogView.tvInputNoti1.visibility = View.GONE
+                    dialogView.ivIngredientCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    dialogView.clIngredientInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                }
+            }
+        })
+        dialogView.etCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isEmpty() || input.isBlank()) {
+                    dialogView.tvInputNoti2.setTextColor(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                    dialogView.tvInputNoti2.visibility = View.VISIBLE
+                    dialogView.ivCountCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                    dialogView.clCountInput.background.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                } else {
+                    dialogView.tvInputNoti2.visibility = View.GONE
+                    dialogView.ivCountCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    dialogView.clCountInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                }
+            }
+        })
+        dialogView.etMemo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isNotEmpty() && input.isNotBlank()) {
+                    dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                } else {
+                    dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                    dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                }
+            }
+        })
     }
 }

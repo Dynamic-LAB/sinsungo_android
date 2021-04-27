@@ -168,8 +168,8 @@
 
                 <TextView
                     android:id="@+id/tv_count_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="49dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/all_gram"
@@ -205,16 +205,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
 
-            <TextView
-                android:id="@+id/tv_input_noti3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/dial_normal_essential"
-                android:textAppearance="@style/Text.Bold_08_Black"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/tv_memo"
-                app:layout_constraintStart_toEndOf="@id/tv_memo" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_memo_input"
