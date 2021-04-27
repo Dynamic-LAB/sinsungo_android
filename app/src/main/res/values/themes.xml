@@ -276,7 +276,7 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_dialog_gray</item>
+        <item name="android:background">@drawable/bg_dialog_gray_2</item>
     </style>
 
     <!-- Button Style -->

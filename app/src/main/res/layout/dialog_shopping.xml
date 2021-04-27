@@ -6,7 +6,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_dialog_smoke"
         android:paddingHorizontal="16dp"
         android:paddingVertical="24dp">
 
@@ -251,8 +250,8 @@
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_memo"
-                    android:inputType="date"
-                    android:maxLength="10"
+                    android:inputType="text"
+                    android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -268,7 +267,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_dialog_body">
