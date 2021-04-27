@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="data"
+            type="com.dlab.sinsungo.IngredientModel" />
+        <variable
+            name="vm"
+            type="com.dlab.sinsungo.IngredientViewModel" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Text.Bold_16_Black"
+                android:text="@{data.name}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textAppearance="@style/Text.Regular_13_Black"
+                android:text="@{@string/ref_format_count_unit(data.count, data.countType)}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient_name"
                 app:layout_constraintStart_toEndOf="@+id/tv_ingredient_name" />
 
@@ -48,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/ref_format_expiration_date"
+                android:text="@{@string/ref_format_expiration_date(data.count)}"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
@@ -59,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/Text.Regular_10_Black"
+                app:exDateFormat="@{data.exdate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
 
