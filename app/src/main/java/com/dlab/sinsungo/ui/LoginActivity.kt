@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //init()
+        init()
     }
 
     // 초기화 함수
@@ -61,12 +61,12 @@ class LoginActivity : AppCompatActivity() {
         setObserver()
 
         val mOAuthLogin = OAuthLogin.getInstance()
-        //mOAuthLogin.init(
-            //this,
-            //getString(R.string.naver_client_id),
-            //getString(R.string.naver_client_secret),
-            //getString(R.string.app_name_kor)
-        //)
+        mOAuthLogin.init(
+            this,
+            getString(R.string.naver_client_id),
+            getString(R.string.naver_client_secret),
+            getString(R.string.app_name_kor)
+        )
 
         val naverLoginHandler = NaverLoginHandler(this, viewModel)
 
