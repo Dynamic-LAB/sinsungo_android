@@ -79,7 +79,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.WRAP_CONTENT
                 )
-                init()
+                initShopping()
                 dialog.setCanceledOnTouchOutside(false)
                 dialog.show()
                 binding.sdvShopping.close()
@@ -88,7 +88,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         return true
     }
 
-    private fun init() {
+    private fun initShopping() {
         setTitleSpanColor(Color.parseColor(resources.getString(R.string.color_royal_blue)))
         setTextWatcher()
         initPopupMenus()
