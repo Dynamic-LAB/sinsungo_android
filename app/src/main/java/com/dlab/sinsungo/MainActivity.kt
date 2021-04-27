@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 changeFragment(fragment)
             }
             R.id.bottom_nav_menu_diet ->{
-                // changeFragment()
+                val fragment = DietFragment()
+                changeFragment(fragment)
             }
             R.id.bottom_nav_menu_recipe ->{
                 // changeFragment()
@@ -46,5 +47,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .beginTransaction()
             .replace(R.id.main_frame, fragment)
             .commit()
+    }
+
+    public fun changeBottomNavMenu(menuID: Int) {
+        binding.bottomNavView.selectedItemId = menuID
     }
 }
