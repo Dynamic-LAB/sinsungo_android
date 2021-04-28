@@ -79,6 +79,10 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.WRAP_CONTENT
                 )
+                dialogView.clIngredientInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                dialogView.clCountInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                dialogView.clCountType.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
                 initShopping()
                 dialog.setCanceledOnTouchOutside(false)
                 dialog.show()
@@ -179,12 +183,12 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
-                if (input.isNotEmpty() && input.isNotBlank()) {
-                    dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
-                    dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
-                } else {
+                if (input.isEmpty() || input.isBlank()) {
                     dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
                     dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                } else {
+                    dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
                 }
             }
         })
