@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="data"
             type="com.dlab.sinsungo.IngredientModel" />
+
         <variable
             name="vm"
             type="com.dlab.sinsungo.IngredientViewModel" />
@@ -29,8 +31,8 @@
                 android:id="@+id/tv_ingredient_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Text.Bold_16_Black"
                 android:text="@{data.name}"
+                android:textAppearance="@style/Text.Bold_16_Black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textAppearance="@style/Text.Regular_13_Black"
                 android:text="@{@string/ref_format_count_unit(data.count, data.countType)}"
+                android:textAppearance="@style/Text.Regular_13_Black"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient_name"
                 app:layout_constraintStart_toEndOf="@+id/tv_ingredient_name" />
 

@@ -62,42 +62,41 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     private fun initSpeedDialItem() {
         binding.sdvRefrigerator.addActionItem(
             SpeedDialActionItem.Builder(R.id.fab_custom_edit, R.drawable.btn_edit)
-                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
+                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
                 .setLabel(R.string.ref_custom_edit)
                 .setLabelClickable(false)
-                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
+                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .create(), 0
         )
 
         binding.sdvRefrigerator.addActionItem(
             SpeedDialActionItem.Builder(R.id.fab_scan_receipt, R.drawable.btn_scan)
-                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
+                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
                 .setLabel(R.string.ref_scan_receipt)
                 .setLabelClickable(false)
-                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
+                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .create(), 1
         )
 
         binding.sdvRefrigerator.addActionItem(
             SpeedDialActionItem.Builder(R.id.fab_picture_ingredient, R.drawable.btn_camera)
-                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
+                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
                 .setLabel(R.string.ref_picture_ingredient)
                 .setLabelClickable(false)
-                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, resources.newTheme()))
+                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .create(), 2
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_edit -> {
@@ -108,7 +107,6 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         return true
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun openRefrigeratorDialog() {
         dialogView = DialogRefrigeratorBinding.inflate(layoutInflater)
         dialog = AlertDialog.Builder(context)
@@ -121,9 +119,8 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         dialog.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun init() {
-        setTitleSpanColor(resources.getColor(R.color.royal_blue, context!!.theme))
+        setTitleSpanColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
         initPopupMenus()
         setTextWatcher()
         dialogView.btnCanel.setOnClickListener { view: View ->
@@ -141,7 +138,6 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun setTitleSpanColor(color: Int) {
         val title = dialogView.tvDialogTitle.text
         val spannableString = SpannableString(title)
@@ -157,49 +153,31 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     private fun setTextWatcher() {
         dialogView.etIngredient.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
             }
 
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 if (input.isEmpty() || input.isBlank()) {
                     dialogView.tvInputNoti1.setTextColor(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.tvInputNoti1.visibility = View.VISIBLE
                     dialogView.ivIngredientCutlery.drawable.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.clIngredientInput.background.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                 } else {
                     dialogView.tvInputNoti1.visibility = View.GONE
                     dialogView.ivIngredientCutlery.drawable.setTint(
-                        resources.getColor(
-                            R.color.dim_grey,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
                     )
                     dialogView.clIngredientInput.background.setTint(
-                        resources.getColor(
-                            R.color.dim_grey,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
                     )
                 }
             }
@@ -211,42 +189,26 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 if (input.isEmpty() || input.isBlank()) {
                     dialogView.tvInputNoti2.setTextColor(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.tvInputNoti2.visibility = View.VISIBLE
                     dialogView.ivCountCutlery.drawable.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.clCountInput.background.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                 } else {
                     dialogView.tvInputNoti2.visibility = View.GONE
                     dialogView.ivCountCutlery.drawable.setTint(
-                        resources.getColor(
-                            R.color.dim_grey,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
                     )
                     dialogView.clCountInput.background.setTint(
-                        resources.getColor(
-                            R.color.dim_grey,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
                     )
                 }
             }
@@ -258,65 +220,40 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 val dateRegex = Regex("(19|20)\\d{2}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])")
                 if (input.isEmpty() || input.isBlank()) {
                     dialogView.tvInputNoti3.text = resources.getString(R.string.dial_normal_essential)
                     dialogView.tvInputNoti3.setTextColor(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.tvInputNoti3.visibility = View.VISIBLE
                     dialogView.btnOpenDatePicker.drawable.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.clExdateInput.background.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                 } else if (!dateRegex.matches(input)) {
                     dialogView.tvInputNoti3.text = resources.getString(R.string.dial_exdate_mismatch_regex)
                     dialogView.tvInputNoti3.setTextColor(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.tvInputNoti3.visibility = View.VISIBLE
                     dialogView.btnOpenDatePicker.drawable.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                     dialogView.clExdateInput.background.setTint(
-                        resources.getColor(
-                            R.color.free_speech_red,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
                 } else {
                     dialogView.tvInputNoti3.visibility = View.GONE
                     dialogView.btnOpenDatePicker.drawable.setTint(
-                        resources.getColor(
-                            R.color.dim_grey,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
                     )
                     dialogView.clExdateInput.background.setTint(
-                        resources.getColor(
-                            R.color.dim_grey,
-                            context!!.theme
-                        )
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
                     )
                     parsingDate(dialogView.etExdate.text.toString())
                 }
