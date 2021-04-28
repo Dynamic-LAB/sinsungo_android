@@ -16,10 +16,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(binding.root)
 
         binding.bottomNavView.setOnNavigationItemSelectedListener(this)
-        binding.bottomNavView.selectedItemId = R.id.bottom_nav_menu_refrigerator
+        changeBottomNavMenu(R.id.bottom_nav_menu_refrigerator)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        binding.tvFragmentTitle.text = item.title.toString()
         when (item.itemId) {
             R.id.bottom_nav_menu_refrigerator -> {
                 val fragment = RefrigeratorFragment()
