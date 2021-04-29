@@ -58,7 +58,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="@id/cl_ingredient_category"
                 app:layout_constraintEnd_toStartOf="@id/cl_ingredient_category"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +78,7 @@
                 <EditText
                     android:id="@+id/et_ingredient"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_ingredient"
@@ -95,12 +94,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_ingredient_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintEnd_toEndOf="@id/cl_ingredient_input"
+                app:layout_constraintStart_toStartOf="@id/cl_ingredient_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_input" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_ingredient_category"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ingredient">
 
@@ -130,6 +136,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_ingredient_category"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_ingredient_category"
+                app:layout_constraintStart_toStartOf="@id/cl_ingredient_category"
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_category" />
+
             <TextView
                 android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
@@ -138,7 +153,7 @@
                 android:text="@string/dial_count"
                 android:textAppearance="@style/Text.Bold_14dp_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_category" />
+                app:layout_constraintTop_toBottomOf="@id/line_under_ingredient_input" />
 
             <TextView
                 android:id="@+id/tv_input_noti2"
@@ -156,7 +171,6 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="@id/cl_count_type"
                 app:layout_constraintEnd_toStartOf="@id/cl_count_type"
                 app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +191,7 @@
                 <EditText
                     android:id="@+id/et_count"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_count"
@@ -193,12 +207,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_count_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintEnd_toEndOf="@id/cl_count_input"
+                app:layout_constraintStart_toStartOf="@id/cl_count_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_count_type"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_count">
 
@@ -230,6 +251,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_count_type"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_count_type"
+                app:layout_constraintStart_toStartOf="@id/cl_count_type"
+                app:layout_constraintTop_toBottomOf="@id/cl_count_type" />
+
             <TextView
                 android:id="@+id/tv_exdate"
                 android:layout_width="wrap_content"
@@ -238,7 +268,7 @@
                 android:text="@string/dial_date"
                 android:textAppearance="@style/Text.Bold_14dp_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
+                app:layout_constraintTop_toBottomOf="@id/line_under_count_input" />
 
             <TextView
                 android:id="@+id/tv_input_noti3"
@@ -256,7 +286,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="@id/cl_exdate_type"
                 app:layout_constraintEnd_toStartOf="@id/cl_exdate_type"
                 app:layout_constraintStart_toStartOf="parent"
@@ -274,17 +303,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_exdate"
+                <TextView
+                    android:id="@+id/tv_exdate_input"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_date"
-                    android:inputType="date"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -293,12 +321,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_exdate_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_exdate_input"
+                app:layout_constraintStart_toStartOf="@id/cl_exdate_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_exdate_input" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_exdate_type"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_exdate">
@@ -329,6 +365,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_exdate_type"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_exdate_type"
+                app:layout_constraintStart_toStartOf="@id/cl_exdate_type"
+                app:layout_constraintTop_toBottomOf="@id/cl_exdate_type" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
