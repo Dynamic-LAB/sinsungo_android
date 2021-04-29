@@ -1,12 +1,11 @@
 package com.dlab.sinsungo
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.graphics.BlendMode
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
@@ -16,9 +15,8 @@ import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
-import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.DialogRefrigeratorBinding
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
@@ -115,26 +113,64 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         dialog.setCanceledOnTouchOutside(false)
-        init()
+        initDialog()
         dialog.show()
     }
 
-    private fun init() {
+    private fun initDialog() {
         setTitleSpanColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
         initPopupMenus()
         setTextWatcher()
+
         dialogView.btnCanel.setOnClickListener { view: View ->
             dialog.dismiss()
         }
-        dialogView.btnOpenDatePicker.setOnClickListener { view: View ->
-            DatePickerDialog(
+
+        val openDatePicker = OnClickOpenDatePicker()
+        dialogView.btnOpenDatePicker.setOnClickListener(openDatePicker)
+        dialogView.tvExdateInput.setOnClickListener(openDatePicker)
+
+        dialogView.lineUnderIngredientInput.background =
+            context?.let { ContextCompat.getDrawable(it, R.color.dim_grey) }
+        dialogView.lineUnderCountInput.background =
+            context?.let { ContextCompat.getDrawable(it, R.color.dim_grey) }
+    }
+
+    inner class OnClickOpenDatePicker : View.OnClickListener {
+        override fun onClick(v: View?) {
+            val datePicker = DatePickerDialog(
                 requireContext(),
-                android.R.style.Theme_Material_Dialog_Alert,
                 mOnDateSetListener,
                 mCalendar.get(Calendar.YEAR),
                 mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            val datePickerDismissListener = DatePickerDismissListener()
+            datePicker.setOnDismissListener(datePickerDismissListener)
+            datePicker.show()
+        }
+    }
+
+    inner class DatePickerDismissListener : DialogInterface.OnDismissListener {
+        override fun onDismiss(dialog: DialogInterface?) {
+            if (dialogView.tvExdateInput.text.isEmpty() || dialogView.tvExdateInput.text.isBlank()) {
+                dialogView.lineUnderExdateInput.background =
+                    context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+                dialogView.tvInputNoti3.setTextColor(
+                    ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                )
+                dialogView.tvInputNoti3.visibility = View.VISIBLE
+                dialogView.btnOpenDatePicker.drawable.setTint(
+                    ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                )
+            } else {
+                dialogView.btnOpenDatePicker.drawable.setTint(
+                    ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+                )
+                dialogView.lineUnderExdateInput.background =
+                    context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+                dialogView.tvInputNoti3.visibility = View.GONE
+            }
         }
     }
 
@@ -168,17 +204,15 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
                     dialogView.ivIngredientCutlery.drawable.setTint(
                         ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
-                    dialogView.clIngredientInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
+                    dialogView.lineUnderIngredientInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
                 } else {
                     dialogView.tvInputNoti1.visibility = View.GONE
                     dialogView.ivIngredientCutlery.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
+                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
                     )
-                    dialogView.clIngredientInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
-                    )
+                    dialogView.lineUnderIngredientInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
                 }
             }
         })
@@ -199,63 +233,15 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
                     dialogView.ivCountCutlery.drawable.setTint(
                         ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
                     )
-                    dialogView.clCountInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
+                    dialogView.lineUnderCountInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
                 } else {
                     dialogView.tvInputNoti2.visibility = View.GONE
                     dialogView.ivCountCutlery.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
+                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
                     )
-                    dialogView.clCountInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
-                    )
-                }
-            }
-        })
-        dialogView.etExdate.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val input = s.toString()
-                val dateRegex = Regex("(19|20)\\d{2}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])")
-                if (input.isEmpty() || input.isBlank()) {
-                    dialogView.tvInputNoti3.text = resources.getString(R.string.dial_normal_essential)
-                    dialogView.tvInputNoti3.setTextColor(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                    dialogView.tvInputNoti3.visibility = View.VISIBLE
-                    dialogView.btnOpenDatePicker.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                    dialogView.clExdateInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                } else if (!dateRegex.matches(input)) {
-                    dialogView.tvInputNoti3.text = resources.getString(R.string.dial_exdate_mismatch_regex)
-                    dialogView.tvInputNoti3.setTextColor(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                    dialogView.tvInputNoti3.visibility = View.VISIBLE
-                    dialogView.btnOpenDatePicker.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                    dialogView.clExdateInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                } else {
-                    dialogView.tvInputNoti3.visibility = View.GONE
-                    dialogView.btnOpenDatePicker.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
-                    )
-                    dialogView.clExdateInput.background.setTint(
-                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
-                    )
-                    parsingDate(dialogView.etExdate.text.toString())
+                    dialogView.lineUnderCountInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
                 }
             }
         })
@@ -314,13 +300,12 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
         val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
-        dialogView.etExdate.setText(mDateString)
-    }
+        dialogView.tvExdateInput.setText(mDateString)
 
-    @SuppressLint("SimpleDateFormat")
-    private fun parsingDate(date: String) {
-        val mSimpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
-        val mDate = mSimpleDateFormat.parse(date)
-        mCalendar.time = mDate!!
+        dialogView.btnOpenDatePicker.drawable.setTint(
+            ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+        )
+        dialogView.lineUnderExdateInput.background =
+            context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
     }
 }
