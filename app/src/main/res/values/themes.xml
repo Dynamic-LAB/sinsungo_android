@@ -292,4 +292,10 @@
         <item name="android:textAppearance">@style/Text.Regular_16_white</item>
     </style>
 
+    <!-- Search Edit Text Style -->
+    <style name="Theme.SearchEditText" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@color/dim_grey</item>
+        <item name="colorAccent">@color/royal_blue</item>
+    </style>
+
 </resources>
