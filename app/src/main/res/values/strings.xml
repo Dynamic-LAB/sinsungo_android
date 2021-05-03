@@ -85,7 +85,8 @@
     <string name="ref_picture_ingredient">재료 촬영</string>
     <string name="ref_empty_message">냉장고에 재료를 먼저 넣어주세요!</string>
     <string name="ref_format_count_unit">%d %s</string>
-    <string name="ref_format_expiration_date">유통기한 마감까지 %d일 남았어요!</string>
+    <string name="ref_format_until_exdate">%s까지 %d일 남았어요!</string>
+    <string name="ref_format_over_exdate">%s에서 %d일 지났어요!</string>
 
     <!-- 식단 -->
     <string name="diet_morning">아침 메뉴는</string>

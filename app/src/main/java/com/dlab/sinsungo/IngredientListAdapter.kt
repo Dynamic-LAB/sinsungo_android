@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.*
 
 class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
     RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>() {
@@ -29,6 +30,19 @@ class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
     class IngredientViewHolder(val binding: ItemRcviewIngredientBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ingredientModel: IngredientModel) {
             binding.data = ingredientModel
+            binding.remain = calculateRemainDate(ingredientModel)
+        }
+
+        private fun calculateRemainDate(ingredientModel: IngredientModel): Long {
+            val dDay = ingredientModel.exdate.time
+            val today = Calendar.getInstance(Locale.KOREAN).apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.time.time
+
+            return (dDay - today) / (24 * 60 * 60 * 1000)
         }
     }
 
@@ -42,7 +56,7 @@ class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
         }
     }
 
-    fun getDiffResult(updated: List<IngredientModel>): DiffUtil.DiffResult {
+    private fun getDiffResult(updated: List<IngredientModel>): DiffUtil.DiffResult {
         val diffCallback = IngredientDiffCallback(ingredientList, updated)
         return DiffUtil.calculateDiff(diffCallback)
     }
