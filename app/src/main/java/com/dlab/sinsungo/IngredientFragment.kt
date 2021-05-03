@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.FragmentIngredientBinding
 
-class IngredientFragment : Fragment() {
+class IngredientFragment(private val refCategory: String) : Fragment() {
     private lateinit var binding: FragmentIngredientBinding
     private lateinit var viewModel: IngredientViewModel
     private lateinit var viewModelFactory: IngredientViewModelFactory
@@ -29,7 +29,7 @@ class IngredientFragment : Fragment() {
         viewModelFactory = IngredientViewModelFactory(IngredientRepository())
         viewModel = ViewModelProvider(this, viewModelFactory).get(IngredientViewModel::class.java)
 
-        viewModel.ingredients.observe(this) {
+        viewModel.ingredients.observe(viewLifecycleOwner) {
             initRcView(it)
         }
     }
@@ -38,7 +38,7 @@ class IngredientFragment : Fragment() {
         if (::mIngredientListAdapter.isInitialized) {
             mIngredientListAdapter.update(ingredients)
         } else {
-            mIngredientListAdapter = IngredientListAdapter(ingredients)
+            mIngredientListAdapter = IngredientListAdapter(ingredients.filter { it.refCategory == refCategory })
 
             binding.rcviewIngredient.run {
                 setHasFixedSize(true)
