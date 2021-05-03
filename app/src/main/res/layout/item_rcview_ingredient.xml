@@ -10,6 +10,10 @@
             type="com.dlab.sinsungo.IngredientModel" />
 
         <variable
+            name="remain"
+            type="Long" />
+
+        <variable
             name="vm"
             type="com.dlab.sinsungo.IngredientViewModel" />
     </data>
@@ -50,21 +54,39 @@
                 android:id="@+id/pb_ingredient_exdate_remain"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="8dp"
                 android:layout_marginTop="11dp"
+                android:indeterminate="false"
+                android:max="100"
+                app:drawableBad="@{@drawable/bg_progress_bad}"
+                app:drawableGood="@{@drawable/bg_progress_good}"
+                app:exdateType="@{data.exdateType}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name"
+                app:remain="@{remain}" />
 
             <TextView
                 android:id="@+id/tv_ingredient_exdate_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{@string/ref_format_expiration_date(data.count)}"
+                app:tvRemain="@{remain}"
+                app:tvExdateType="@{data.exdateType}"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
+
+            <TextView
+                android:id="@+id/tv_ingredient_exdate_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@{data.exdateType}"
+                android:textAppearance="@style/Text.Regular_10_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ingredient_exdate"
+                app:layout_constraintEnd_toStartOf="@id/tv_ingredient_exdate"
+                app:layout_constraintTop_toTopOf="@id/tv_ingredient_exdate" />
 
             <TextView
                 android:id="@+id/tv_ingredient_exdate"

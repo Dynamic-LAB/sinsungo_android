@@ -1,6 +1,7 @@
 package com.dlab.sinsungo
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class IngredientModel(
     @SerializedName("id")
@@ -13,7 +14,7 @@ data class IngredientModel(
     val count: Int,
 
     @SerializedName("expiration_date")
-    val exdate: String,
+    val exdate: Date,
 
     @SerializedName("category")
     val refCategory: String,
