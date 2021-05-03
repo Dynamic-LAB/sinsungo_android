@@ -7,36 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_fragment_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/all_shopping_basket"
-            android:textAppearance="@style/Text.Bold_32_Blue"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_userinfo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="@string/all_img_description"
-            android:padding="8dp"
-            android:src="@drawable/btn_userinfo"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_fragment_title"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toTopOf="@+id/tv_fragment_title" />
-
-        <View
-            android:id="@+id/line_title_underbar"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="19.5dp"
-            android:background="@color/dim_grey"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_fragment_title" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcview_shopping"
             android:layout_width="0dp"
@@ -53,7 +23,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/line_title_underbar">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_empty"
