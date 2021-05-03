@@ -1,13 +1,13 @@
-package com.dlab.sinsungo.data.repository.login
+package com.dlab.sinsungo.data
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object LoginRemoteDataSource {
+object RemoteDataSource {
     /**
-     * 로그인을 위한 RemoteDataSource
+     * RemoteDataSource
      * BASE_URL로 서버 주소
-     * LoginService 인터페이스를 구현한 retrofit 인스터스 생성
+     * RetrofitService 인터페이스를 구현한 retrofit 인스터스 생성
      */
     private const val BASE_URL = "http://158.247.218.140:5001"
 
@@ -16,5 +16,5 @@ object LoginRemoteDataSource {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val service: LoginService = retrofit.create(LoginService::class.java)
+    val service: RetrofitService = retrofit.create(RetrofitService::class.java)
 }
