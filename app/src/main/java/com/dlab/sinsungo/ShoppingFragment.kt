@@ -96,10 +96,9 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-        dialogView.clIngredientInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
-        dialogView.clCountInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
-        dialogView.clCountType.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
-        dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+        setDialogColor(0, R.color.dim_grey)
+        setDialogColor(1, R.color.dim_grey)
+        setDialogColor(2, R.color.dim_grey)
         initShopping()
         initViewModel()
         dialog.setCanceledOnTouchOutside(false)
@@ -122,17 +121,32 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             dialog.dismiss()
         }
         dialogView.btnAccept.setOnClickListener {
+            val ingredientName = dialogView.etIngredient.text.toString()
+            val ingredientCount = dialogView.etCount.text.toString()
+            if ((ingredientName.isEmpty() || ingredientName.isBlank()) && (ingredientCount.isEmpty() || ingredientCount.isBlank())){
+                dialogView.tvInputNoti1.visibility = View.VISIBLE
+                dialogView.tvInputNoti2.visibility = View.VISIBLE
+                setDialogColor(0, R.color.free_speech_red)
+                setDialogColor(1, R.color.free_speech_red)
+            } else if (ingredientName.isEmpty() || ingredientName.isBlank()){
+                dialogView.tvInputNoti1.visibility = View.VISIBLE
+                setDialogColor(0, R.color.free_speech_red)
+            } else if (ingredientCount.isEmpty() || ingredientCount.isBlank()){
+                dialogView.tvInputNoti2.visibility = View.VISIBLE
+                setDialogColor(1, R.color.free_speech_red)
+            } else {
+                val newShopping =
+                    Shopping(
+                        ingredientName,
+                        ingredientCount.toInt(),
+                        dialogView.tvCountType.text.toString(),
+                        dialogView.etMemo.text.toString(),
+                        5
+                    )
+                viewModel.requestShopping(newShopping)
+                dialog.dismiss()
+            }
 
-            val newShopping =
-                Shopping(
-                    dialogView.etIngredient.text.toString(),
-                    dialogView.etCount.text.toString().toInt(),
-                    dialogView.tvCountType.text.toString(),
-                    dialogView.etMemo.text.toString(),
-                    5
-                )
-            viewModel.requestShopping(newShopping)
-            dialog.dismiss()
         }
     }
 
@@ -177,14 +191,11 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 if (input.isEmpty() || input.isBlank()) {
-                    dialogView.tvInputNoti1.setTextColor(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
                     dialogView.tvInputNoti1.visibility = View.VISIBLE
-                    dialogView.ivIngredientCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
-                    dialogView.clIngredientInput.background.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                    setDialogColor(0, R.color.free_speech_red)
                 } else {
                     dialogView.tvInputNoti1.visibility = View.GONE
-                    dialogView.ivIngredientCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
-                    dialogView.clIngredientInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    setDialogColor(0, R.color.royal_blue)
                 }
             }
         })
@@ -198,14 +209,11 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 if (input.isEmpty() || input.isBlank()) {
-                    dialogView.tvInputNoti2.setTextColor(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
                     dialogView.tvInputNoti2.visibility = View.VISIBLE
-                    dialogView.ivCountCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
-                    dialogView.clCountInput.background.setTint(Color.parseColor(resources.getString(R.string.color_free_speech_red)))
+                    setDialogColor(1, R.color.free_speech_red)
                 } else {
                     dialogView.tvInputNoti2.visibility = View.GONE
-                    dialogView.ivCountCutlery.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
-                    dialogView.clCountInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    setDialogColor(1, R.color.royal_blue)
                 }
             }
         })
@@ -219,15 +227,29 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 if (input.isEmpty() || input.isBlank()) {
-                    dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
-                    dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_dim_grey)))
+                    setDialogColor(2, R.color.free_speech_red)
                 } else {
-                    dialogView.btnMemo.drawable.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
-                    dialogView.clMemoInput.background.setTint(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+                    setDialogColor(2, R.color.dim_grey)
                 }
             }
         })
     }
 
-
+    private fun setDialogColor(choice: Int, color: Int) {
+        val newColor = ResourcesCompat.getColor(resources, color, context?.theme)
+        when (choice) {
+            0 -> {
+                dialogView.ivIngredientCutlery.drawable.setTint(newColor)
+                dialogView.clIngredientInput.background.setTint(newColor)
+            }
+            1 -> {
+                dialogView.ivCountCutlery.drawable.setTint(newColor)
+                dialogView.clCountInput.background.setTint(newColor)
+            }
+            2 -> {
+                dialogView.btnMemo.drawable.setTint(newColor)
+                dialogView.clMemoInput.background.setTint(newColor)
+            }
+        }
+    }
 }

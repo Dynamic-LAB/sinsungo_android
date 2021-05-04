@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
-                android:textAppearance="@style/Text.Bold_08_Black"
+                android:textAppearance="@style/Text.Bold_08_Red"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient"
                 app:layout_constraintStart_toEndOf="@id/tv_ingredient" />
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
-                android:textAppearance="@style/Text.Bold_08_Black"
+                android:textAppearance="@style/Text.Bold_08_Red"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_count"
                 app:layout_constraintStart_toEndOf="@id/tv_count" />
