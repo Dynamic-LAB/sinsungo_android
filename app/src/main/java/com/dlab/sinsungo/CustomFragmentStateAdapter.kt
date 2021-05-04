@@ -11,11 +11,11 @@ class CustomFragmentStateAdapter(fragmentActivity: FragmentActivity) : FragmentS
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> IngredientFragment()
-            1 -> IngredientFragment()
-            2 -> IngredientFragment()
-            3 -> IngredientFragment()
-            else -> IngredientFragment()
+            0 -> IngredientFragment("냉장")
+            1 -> IngredientFragment("냉동")
+            2 -> IngredientFragment("신선")
+            3 -> IngredientFragment("상온")
+            else -> IngredientFragment("조미료/양념")
         }
     }
 }
