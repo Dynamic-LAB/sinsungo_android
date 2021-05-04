@@ -1,10 +1,10 @@
 package com.dlab.sinsungo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BindingConversion
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +20,7 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
         binding = FragmentIngredientBinding.inflate(inflater, container, false)
 
         initViewModel()
-        getIngredients(5)
+        getIngredients(5, refCategory)
 
         return binding.root
     }
@@ -31,6 +31,7 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
         viewModel.ingredients.observe(viewLifecycleOwner) {
             initRcView(it)
+            Log.d("cur data", it.toString())
         }
     }
 
@@ -49,7 +50,7 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
         binding.listSize = ingredients.size
     }
 
-    private fun getIngredients(refID: Int) {
-        viewModel.requestIngredients(refID)
+    private fun getIngredients(refID: Int, refCategory: String) {
+        viewModel.requestIngredients(refID, refCategory)
     }
 }
