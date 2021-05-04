@@ -47,13 +47,17 @@ class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
     }
 
     fun update(updated: List<IngredientModel>) {
-        CoroutineScope(Dispatchers.Main).launch {
+        /*CoroutineScope(Dispatchers.Main).launch {
             val diffResult = async(Dispatchers.IO) {
                 getDiffResult(updated)
             }
             ingredientList = updated
             diffResult.await().dispatchUpdatesTo(this@IngredientListAdapter)
-        }
+        }*/
+        // 코루틴으로 구현시 동작 안
+        val diffResult = getDiffResult(updated)
+        diffResult.dispatchUpdatesTo(this)
+        ingredientList = updated
     }
 
     private fun getDiffResult(updated: List<IngredientModel>): DiffUtil.DiffResult {
