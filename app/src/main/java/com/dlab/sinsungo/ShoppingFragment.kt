@@ -10,13 +10,11 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.*
-import android.widget.ImageButton
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.DialogShoppingBinding
 import com.dlab.sinsungo.databinding.FragmentShoppingBinding
@@ -143,7 +141,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                         dialogView.etMemo.text.toString(),
                         5
                     )
-                viewModel.requestShopping(newShopping)
+                viewModel.setShopping(newShopping)
                 dialog.dismiss()
             }
 

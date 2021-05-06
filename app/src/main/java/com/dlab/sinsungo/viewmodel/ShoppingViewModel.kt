@@ -15,7 +15,7 @@ class ShoppingViewModel : ViewModel() {
     private val _shoppings = MutableLiveData<Shopping>()
     val shoppings = _shoppings
 
-    fun requestShopping(newShopping: Shopping) {
+    fun setShopping(newShopping: Shopping) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 ShoppingRepository.setShopping(newShopping).let {
