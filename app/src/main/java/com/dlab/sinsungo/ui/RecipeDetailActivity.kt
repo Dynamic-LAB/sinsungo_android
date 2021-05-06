@@ -38,10 +38,6 @@ class RecipeDetailActivity : AppCompatActivity() {
         intent.getParcelableExtra<Recipe>("recipe")?.let { viewModel.setRecipe(it) }
     }
 
-    fun finishActivity() {
-        finish()
-    }
-
     fun viewRecipe(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
