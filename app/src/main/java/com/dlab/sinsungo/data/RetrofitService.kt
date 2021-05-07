@@ -1,6 +1,7 @@
 package com.dlab.sinsungo.data
 
 import com.dlab.sinsungo.data.model.Recipe
+import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.data.model.User
 import retrofit2.Response
 import retrofit2.http.*
@@ -32,4 +33,26 @@ interface RetrofitService {
         @Query("end") end: Int,
         @Query("query") query: String
     ): Response<ArrayList<Recipe>>
+
+    // Shopping
+    @POST("/shoppinglist")
+    suspend fun setShopping(
+        @Body shopping: Shopping
+    ): Response<Shopping>
+
+    @GET("/shoppinglist/{id}")
+    suspend fun getShopping(
+        @Path("id") refId: Int
+    ): Response<List<Shopping>>
+
+    @PUT("/shoppinglist/{id}")
+    suspend fun editShopping(
+        @Path("id") refId: Int,
+        @Body shopping: Shopping
+    ): Response<Shopping>
+
+    @DELETE("/shoppinglist/{id}")
+    suspend fun delShopping(
+        @Path("id") shopId: Int
+    ): Response<List<Shopping>>
 }

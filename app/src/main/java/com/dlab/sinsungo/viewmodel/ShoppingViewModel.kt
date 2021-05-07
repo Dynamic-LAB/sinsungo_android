@@ -4,28 +4,32 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dlab.sinsungo.IngredientRepository
 import com.dlab.sinsungo.data.model.Shopping
-import com.dlab.sinsungo.data.repository.login.LoginRepository
-import com.dlab.sinsungo.data.repository.shopping.ShoppingRepository
-import kotlinx.coroutines.CoroutineScope
+import com.dlab.sinsungo.data.repository.ShoppingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class ShoppingViewModel : ViewModel() {
-    private val _shoppings = MutableLiveData<Shopping>()
-    val shoppings = _shoppings
+    private val shoppingList = mutableListOf<Shopping>()
+    private val _shoppings = MutableLiveData<List<Shopping>>()
+    val shoppings: MutableLiveData<List<Shopping>> = _shoppings
+    var visible = false
 
-    fun requestShopping(newShopping: Shopping) {
+    init {
+        getShopping(5)
+    }
+
+    fun setShopping(newShopping: Shopping) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                ShoppingRepository.shopping(newShopping).let {
+                ShoppingRepository.setShopping(newShopping).let {
                     if (it.isSuccessful) {
                         it.body()?.let { res ->
                             withContext(Dispatchers.Main) {
-                                _shoppings.postValue(res)
+                                shoppingList.add(res)
+                                _shoppings.postValue(shoppingList)
                             }
                         }
                     } else {
@@ -37,5 +41,33 @@ class ShoppingViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun getShopping(refID: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                ShoppingRepository.getShopping(refID).let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { res ->
+                            withContext(Dispatchers.Main) {
+                                shoppingList.addAll(res)
+                                _shoppings.postValue(shoppingList)
+                                checkNull(res)
+                            }
+                        }
+                    } else {
+                        Log.e("shopping_error", it.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("io_error", e.message!!)
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+    private fun checkNull(item: List<Shopping>) {
+        visible = item.isEmpty()
     }
 }
