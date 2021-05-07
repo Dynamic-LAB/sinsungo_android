@@ -43,7 +43,7 @@ interface RetrofitService {
     @GET("/shoppinglist/{id}")
     suspend fun getShopping(
         @Path("id") refId: Int
-    ): Response<ArrayList<Shopping>>
+    ): Response<List<Shopping>>
 
     @PUT("/shoppinglist/{id}")
     suspend fun editShopping(
@@ -54,5 +54,5 @@ interface RetrofitService {
     @DELETE("/shoppinglist/{id}")
     suspend fun delShopping(
         @Path("id") shopId: Int
-    ): Response<ArrayList<Shopping>>
+    ): Response<List<Shopping>>
 }
