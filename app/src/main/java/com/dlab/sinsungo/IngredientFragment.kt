@@ -3,8 +3,11 @@ package com.dlab.sinsungo
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.MenuRes
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,19 +23,21 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
         binding = FragmentIngredientBinding.inflate(inflater, container, false)
 
         initViewModel()
+        initSortMenu()
+
         getIngredients(5, refCategory)
-
-        return binding.root
-    }
-
-    fun initViewModel() {
-        viewModelFactory = IngredientViewModelFactory(IngredientRepository())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(IngredientViewModel::class.java)
 
         viewModel.ingredients.observe(viewLifecycleOwner) {
             initRcView(it)
             Log.d("cur data", it.toString())
         }
+
+        return binding.root
+    }
+
+    private fun initViewModel() {
+        viewModelFactory = IngredientViewModelFactory(IngredientRepository())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(IngredientViewModel::class.java)
     }
 
     private fun initRcView(ingredients: List<IngredientModel>) {
@@ -48,6 +53,25 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
             }
         }
         binding.listSize = ingredients.size
+    }
+
+    private fun initSortMenu() {
+        binding.clIngredientSort.setOnClickListener { view: View ->
+            showSortMenu(view, R.menu.menu_ingredient_sortby)
+        }
+    }
+
+    private fun showSortMenu(view: View, @MenuRes menuRes: Int) {
+        val popup = PopupMenu(requireContext(), view)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+
+        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            binding.tvSort.text = menuItem.title
+            viewModel.sortList(menuItem.title.toString())
+            true
+        }
+
+        popup.show()
     }
 
     private fun getIngredients(refID: Int, refCategory: String) {

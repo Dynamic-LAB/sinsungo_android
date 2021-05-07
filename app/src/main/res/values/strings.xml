@@ -69,12 +69,9 @@
         <item>상온</item>
         <item>조미료/양념</item>
     </string-array>
-    <string-array name="ref_sort_types">
-        <item>유통기한 임박 순</item>
-        <item>재료명 순</item>
-        <item>수량 순</item>
-        <item>최근 추가 순</item>
-    </string-array>
+    <string name="ref_sortby_name">재료명 순</string>
+    <string name="ref_sortby_fresh">신선도 순</string>
+    <string name="ref_sortby_recent">최근 추가 순</string>
     <string name="ref_category_cold">냉장</string>
     <string name="ref_category_iced">냉동</string>
     <string name="ref_category_fresh">신선</string>

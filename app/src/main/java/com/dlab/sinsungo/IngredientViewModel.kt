@@ -35,4 +35,22 @@ class IngredientViewModel(private val ingredientRepository: IngredientRepository
 
         _ingredients.postValue(filteredList)
     }
+
+    fun sortList(key: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            var data = _ingredients.value
+
+            when (key) {
+                "재료명 순" -> data = data!!.sortedBy { it.name }
+                "신선도 순" -> {
+                    val exDateList = data!!.filter { it.exdateType == "유통기한" }
+                    val notExDateList = data.filter { it.exdateType != "유통기한" }
+                    data = exDateList.sortedBy { it.exdate } + notExDateList.sortedBy { it.exdate }
+                }
+                "최근 추가 순" -> data = data!!.sortedBy { it.id }
+            }
+
+            _ingredients.postValue(data!!)
+        }
+    }
 }

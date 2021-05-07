@@ -15,22 +15,34 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/iv_sort"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/btn_sort"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_sort"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_ingredient_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_sort"
-            app:layout_constraintStart_toEndOf="@+id/iv_sort"
-            app:layout_constraintTop_toTopOf="@+id/iv_sort" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_sort"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/btn_sort"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/ref_sortby_recent"
+                android:textAppearance="@style/Text.Regular_13_Black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_sort"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcview_ingredient"
@@ -39,7 +51,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_sort" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_ingredient_sort" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_describe_image"
