@@ -1,6 +1,7 @@
 package com.dlab.sinsungo
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Recipe
+import com.dlab.sinsungo.data.model.Shopping
 
 object CustomBindingAdapter {
     @BindingConversion
@@ -86,5 +88,12 @@ object CustomBindingAdapter {
                 recyclerView.scrollToPosition(0)
             }
         }
+    }
+
+    @BindingAdapter("shoppingData")
+    @JvmStatic
+    fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
+        val adapter = recyclerView.adapter as ShoppingListAdapter
+        adapter.submitList(shopping)
     }
 }

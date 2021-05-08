@@ -49,7 +49,7 @@ class IngredientListAdapter :
         override fun areContentsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
             return oldItem == newItem
         }
-
+      
         override fun areItemsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
             return oldItem.id == newItem.id
         }
