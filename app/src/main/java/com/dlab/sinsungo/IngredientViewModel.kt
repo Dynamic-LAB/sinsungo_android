@@ -1,26 +1,35 @@
 package com.dlab.sinsungo
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
-class IngredientViewModel(private val ingredientRepository: IngredientRepository) : ViewModel() {
+class IngredientViewModel : ViewModel() {
     private val _ingredients = MutableLiveData<List<IngredientModel>>()
-    val ingredients = _ingredients
+    private val _innerList = mutableListOf<IngredientModel>()
+    private val _postFlag = MutableLiveData<Boolean>()
 
-    fun requestIngredients(refID: Int, key: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            ingredientRepository.getIngredient(refID)?.let { response ->
+    val ingredients: MutableLiveData<List<IngredientModel>> = _ingredients
+    val postFlag: LiveData<Boolean> = _postFlag
+
+    init {
+        requestGetIngredients(6)
+    }
+
+    fun requestGetIngredients(refID: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            IngredientRepository.getIngredient(refID).let { response ->
                 if (response.isSuccessful) {
-                    Log.d("api result", response.body().toString())
+                    Log.d("get ingredient result", response.body().toString())
                     response.body()?.let {
                         withContext(Dispatchers.Main) {
-                            filterList(it, key)
+                            _innerList.addAll(it)
+                            _ingredients.postValue(_innerList)
                         }
                     }
                 }
@@ -28,16 +37,28 @@ class IngredientViewModel(private val ingredientRepository: IngredientRepository
         }
     }
 
-    private fun filterList(list: List<IngredientModel>, key: String) {
-        var filteredList = list
+    fun requestPostIngredients(ingredientModel: IngredientModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            IngredientRepository.postIngredient(ingredientModel).let { response ->
+                if (response.isSuccessful) {
+                    Log.d("post ingredient result", response.body().toString())
+                    response.body()?.let {
+                        withContext(Dispatchers.Main) {
+                            _postFlag.postValue(true)
+                            _innerList.add(ingredientModel)
+                            Log.d("add item", ingredientModel.toString())
+                            _ingredients.postValue(_innerList)
+                            Log.d("inner list", _innerList.toString())
 
-        filteredList = filteredList.filter { it.refCategory == key }
-
-        _ingredients.postValue(filteredList)
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    fun sortList(key: String) {
-        CoroutineScope(Dispatchers.Main).launch {
+    /*fun sortList(key: String) {
+        viewModelScope.launch(Dispatchers.Main) {
             var data = _ingredients.value
 
             when (key) {
@@ -52,5 +73,5 @@ class IngredientViewModel(private val ingredientRepository: IngredientRepository
 
             _ingredients.postValue(data!!)
         }
-    }
+    }*/
 }
