@@ -6,7 +6,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 import android.widget.ImageView
@@ -15,20 +14,14 @@ import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Recipe
 
 object CustomBindingAdapter {
-    @JvmStatic
     @BindingConversion
+    @JvmStatic
     fun convertBooleanToVisibility(visible: Boolean): Int {
         return if (visible) View.VISIBLE else View.GONE
     }
 
-    @JvmStatic
-    @BindingAdapter("exDateFormat")
-    fun dateFormatting(view: TextView, value: Date) {
-        view.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(value)
-    }
-
-    @JvmStatic
     @BindingAdapter("tvRemain", "tvExdateType")
+    @JvmStatic
     fun setExDateMessage(view: TextView, value: Long, type: String) {
         if (type == "유통기한") {
             if (value >= 0) view.text = "%s까지 %d일 남았습니다.".format(type, value)
@@ -36,8 +29,8 @@ object CustomBindingAdapter {
         } else view.text = "%s에서 %d일 지났습니다.".format(type, abs(value))
     }
 
-    @JvmStatic
     @BindingAdapter("remain", "exdateType", "drawableGood", "drawableBad")
+    @JvmStatic
     fun setProgressBarState(
         view: ProgressBar,
         value: Long,
@@ -64,6 +57,16 @@ object CustomBindingAdapter {
         }
         if (view.progress > 50) view.progressDrawable = drawableBad
         else view.progressDrawable = drawableGood
+    }
+
+    @BindingAdapter("ingredientData", "category")
+    @JvmStatic
+    fun bindIngredient(recyclerView: RecyclerView, ingredients: List<IngredientModel>?, category: String) {
+        val adapter = recyclerView.adapter as IngredientListAdapter
+
+        val data = ingredients?.filter { it.refCategory == category }
+
+        adapter.submitList(data)
     }
 
     @BindingAdapter("imageUrl")
