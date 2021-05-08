@@ -8,6 +8,14 @@
         <variable
             name="listSize"
             type="int" />
+
+        <variable
+            name="viewmodel"
+            type="com.dlab.sinsungo.IngredientViewModel" />
+
+        <variable
+            name="category"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,8 +55,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcview_ingredient"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            app:ingredientData="@{viewmodel.ingredients}"
+            app:category="@{category}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_ingredient_sort" />
