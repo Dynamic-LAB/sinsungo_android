@@ -3,16 +3,18 @@ package com.dlab.sinsungo
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.databinding.ItemRcviewIngredientBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
-class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
-    RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder>() {
+class IngredientListAdapter :
+    ListAdapter<IngredientModel, IngredientListAdapter.IngredientViewHolder>(IngredientDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val binding = ItemRcviewIngredientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
@@ -20,21 +22,18 @@ class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
     }
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
-        holder.bind(ingredientList[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return ingredientList.size
-    }
-
-    class IngredientViewHolder(val binding: ItemRcviewIngredientBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class IngredientViewHolder(val binding: ItemRcviewIngredientBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ingredientModel: IngredientModel) {
             binding.data = ingredientModel
             binding.remain = calculateRemainDate(ingredientModel)
+            binding.executePendingBindings()
         }
 
         private fun calculateRemainDate(ingredientModel: IngredientModel): Long {
-            val dDay = ingredientModel.exdate.time
+            val dDay = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).parse(ingredientModel.exdate).time
             val today = Calendar.getInstance(Locale.KOREAN).apply {
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
@@ -46,22 +45,13 @@ class IngredientListAdapter(var ingredientList: List<IngredientModel>) :
         }
     }
 
-    fun update(updated: List<IngredientModel>) {
-        /*CoroutineScope(Dispatchers.Main).launch {
-            val diffResult = async(Dispatchers.IO) {
-                getDiffResult(updated)
-            }
-            ingredientList = updated
-            diffResult.await().dispatchUpdatesTo(this@IngredientListAdapter)
-        }*/
-        // 코루틴으로 구현시 동작 안
-        val diffResult = getDiffResult(updated)
-        diffResult.dispatchUpdatesTo(this)
-        ingredientList = updated
-    }
-
-    private fun getDiffResult(updated: List<IngredientModel>): DiffUtil.DiffResult {
-        val diffCallback = IngredientDiffCallback(ingredientList, updated)
-        return DiffUtil.calculateDiff(diffCallback)
+    companion object IngredientDiffUtil : DiffUtil.ItemCallback<IngredientModel>() {
+        override fun areContentsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
+            return oldItem == newItem
+        }
+      
+        override fun areItemsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
+            return oldItem.id == newItem.id
+        }
     }
 }
