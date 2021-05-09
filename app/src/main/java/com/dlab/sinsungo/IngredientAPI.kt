@@ -15,8 +15,8 @@ interface IngredientAPI {
         @Body ingredientModel: IngredientModel
     ): Response<IngredientModel>
 
-    @DELETE("/refrigerator/ingredient/")
+    @DELETE("/refrigerator/ingredient/{id}")
     suspend fun deleteIngredient(
-        @Path("id") ingredientID: Int
+        @Path("id") ingredientID: Int?
     ): Response<JSONObject>
 }
