@@ -9,50 +9,38 @@ import android.view.ViewGroup
 import androidx.annotation.MenuRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.FragmentIngredientBinding
 
 class IngredientFragment(private val refCategory: String) : Fragment() {
     private lateinit var binding: FragmentIngredientBinding
-    private lateinit var viewModel: IngredientViewModel
-    private lateinit var viewModelFactory: IngredientViewModelFactory
+    private val viewModel: IngredientViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private lateinit var mIngredientListAdapter: IngredientListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentIngredientBinding.inflate(inflater, container, false)
+        binding.category = refCategory
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        initViewModel()
+        initRcView()
         initSortMenu()
 
-        getIngredients(5, refCategory)
-
         viewModel.ingredients.observe(viewLifecycleOwner) {
-            initRcView(it)
-            Log.d("cur data", it.toString())
+            binding.listSize = it.filter { ingredientModel -> ingredientModel.refCategory == refCategory }.size
         }
 
         return binding.root
     }
 
-    private fun initViewModel() {
-        viewModelFactory = IngredientViewModelFactory(IngredientRepository())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(IngredientViewModel::class.java)
-    }
-
-    private fun initRcView(ingredients: List<IngredientModel>) {
-        if (::mIngredientListAdapter.isInitialized) {
-            mIngredientListAdapter.update(ingredients)
-        } else {
-            mIngredientListAdapter = IngredientListAdapter(ingredients.filter { it.refCategory == refCategory })
-
-            binding.rcviewIngredient.run {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
-                adapter = mIngredientListAdapter
-            }
+    private fun initRcView() {
+        binding.rcviewIngredient.apply {
+            mIngredientListAdapter = IngredientListAdapter()
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = mIngredientListAdapter
         }
-        binding.listSize = ingredients.size
     }
 
     private fun initSortMenu() {
@@ -67,14 +55,20 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
         popup.setOnMenuItemClickListener { menuItem: MenuItem ->
             binding.tvSort.text = menuItem.title
-            viewModel.sortList(menuItem.title.toString())
+            var data = mIngredientListAdapter.currentList
+            when (menuItem.title.toString()) {
+                "재료명 순" -> data = data.sortedBy { it.name }
+                "신선도 순" -> {
+                    val exDateList = data.filter { it.exdateType == "유통기한" }
+                    val notExDateList = data.filter { it.exdateType != "유통기한" }
+                    data = exDateList.sortedBy { it.exdate } + notExDateList.sortedBy { it.exdate }
+                }
+                "최근 추가 순" -> data = data.sortedBy { it.id }
+            }
+            mIngredientListAdapter.submitList(data)
             true
         }
 
         popup.show()
-    }
-
-    private fun getIngredients(refID: Int, refCategory: String) {
-        viewModel.requestIngredients(refID, refCategory)
     }
 }

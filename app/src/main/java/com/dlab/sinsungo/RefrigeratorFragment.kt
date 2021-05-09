@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
@@ -14,6 +15,7 @@ import com.leinardi.android.speeddial.SpeedDialView
 
 class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentRefrigeratorBinding
+    private val viewModel: IngredientViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRefrigeratorBinding.inflate(inflater, container, false)
@@ -25,7 +27,10 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
 
     private fun initTabLayout() {
         val tabTextList = resources.getStringArray(R.array.ref_categories)
-        binding.pagerIngredient.adapter = CustomFragmentStateAdapter(requireActivity())
+        binding.pagerIngredient.apply {
+            adapter = CustomFragmentStateAdapter(childFragmentManager, lifecycle)
+            offscreenPageLimit = 4
+        }
         TabLayoutMediator(binding.tablayoutRefrigerator, binding.pagerIngredient) { tab, position ->
             tab.text = tabTextList[position]
         }.attach()
@@ -72,9 +77,8 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_edit -> {
-                // openRefrigeratorDialog()
                 val dialog = RefrigeratorCustomDialog()
-                dialog.show(requireActivity().supportFragmentManager, "refrigerator_custom_dialog")
+                dialog.show(childFragmentManager, "refrigerator_custom_dialog")
                 binding.sdvRefrigerator.close()
             }
         }

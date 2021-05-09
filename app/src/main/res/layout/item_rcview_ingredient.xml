@@ -12,10 +12,6 @@
         <variable
             name="remain"
             type="Long" />
-
-        <variable
-            name="vm"
-            type="com.dlab.sinsungo.IngredientViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -94,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/Text.Regular_10_Black"
-                app:exDateFormat="@{data.exdate}"
+                app:text="@{data.exdate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
 
