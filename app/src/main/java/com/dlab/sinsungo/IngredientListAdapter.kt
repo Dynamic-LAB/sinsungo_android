@@ -9,7 +9,7 @@ import com.dlab.sinsungo.databinding.ItemRcviewIngredientBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class IngredientListAdapter :
+class IngredientListAdapter(val deleteMenuClick: (IngredientModel) -> Unit) :
     ListAdapter<IngredientModel, IngredientListAdapter.IngredientViewHolder>(IngredientDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val binding = ItemRcviewIngredientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -44,11 +44,10 @@ class IngredientListAdapter :
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             menu?.add("편집")?.setOnMenuItemClickListener {
-                val select = getItem(adapterPosition)
-                Log.d("편집 선택", select.toString())
                 true
             }
             menu?.add("삭제")?.setOnMenuItemClickListener {
+                deleteMenuClick(getItem(adapterPosition))
                 true
             }
         }

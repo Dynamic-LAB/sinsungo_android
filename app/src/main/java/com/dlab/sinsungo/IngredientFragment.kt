@@ -36,7 +36,7 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
     private fun initRcView() {
         binding.rcviewIngredient.apply {
-            mIngredientListAdapter = IngredientListAdapter()
+            mIngredientListAdapter = IngredientListAdapter({ ingredientModel ->  deleteIngredient(ingredientModel) })
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = mIngredientListAdapter
@@ -70,5 +70,9 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
         }
 
         popup.show()
+    }
+
+    fun deleteIngredient(ingredientModel: IngredientModel) {
+        viewModel.requestDeleteIngredient(ingredientModel)
     }
 }
