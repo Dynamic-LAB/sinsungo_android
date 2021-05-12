@@ -12,10 +12,9 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class ShoppingViewModel : ViewModel() {
-    private val shoppingList = mutableListOf<Shopping>()
+    private val _shoppingList = mutableListOf<Shopping>()
     private var _shoppings = MutableLiveData<List<Shopping>>()
     val shoppings: MutableLiveData<List<Shopping>> = _shoppings
-    var visible = false
 
     init {
         getShopping(5)
@@ -24,15 +23,15 @@ class ShoppingViewModel : ViewModel() {
     fun setShopping(newShopping: Shopping?) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                newShopping?.let {
+                newShopping?.let { it ->
                     ShoppingRepository.setShopping(it).let {
                         if (it.isSuccessful) {
                             it.body()?.let { res ->
                                 withContext(Dispatchers.Main) {
                                     Log.d("set res result", res.toString())
                                     Log.d("set data", newShopping.toString())
-                                    shoppingList.add(res)
-                                    _shoppings.postValue(shoppingList)
+                                    _shoppingList.add(res)
+                                    _shoppings.postValue(_shoppingList)
                                 }
                             }
                         } else {
@@ -54,9 +53,8 @@ class ShoppingViewModel : ViewModel() {
                     if (it.isSuccessful) {
                         it.body()?.let { res ->
                             withContext(Dispatchers.Main) {
-                                shoppingList.addAll(res)
-                                checkNull(res)
-                                _shoppings.postValue(shoppingList)
+                                _shoppingList.addAll(res)
+                                _shoppings.postValue(_shoppingList)
                             }
                         }
                     } else {
@@ -70,27 +68,20 @@ class ShoppingViewModel : ViewModel() {
         }
     }
 
-    fun deleteShopping(shopping: Shopping?){
+    fun deleteShopping(shopping: Shopping) {
         viewModelScope.launch(Dispatchers.IO) {
+            val shopID = shopping.id
             try {
-                if (shopping != null) {
-                    shopping.id?.let { it ->
-                        ShoppingRepository.delShopping(it).let {
-                            if (it.isSuccessful) {
-                                it.body()?.let { res ->
-                                    withContext(Dispatchers.Main) {
-                                        Log.d("shoppingList",shoppingList.size.toString())
-                                        shoppingList.remove(shopping)
-                                        checkNull(shoppingList)
-                                        _shoppings.postValue(shoppingList)
-                                        Log.d("postValue ", res.toString())
-                                        Log.d("shoppingList",shoppingList.size.toString())
-                                    }
-                                }
-                            } else {
-                                Log.e("shopping_error", it.message())
+                ShoppingRepository.delShopping(shopID).let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { res ->
+                            withContext(Dispatchers.Main) {
+                                _shoppingList.remove(shopping)
+                                _shoppings.postValue(_shoppingList)
                             }
                         }
+                    } else {
+                        Log.e("shopping_error", it.message())
                     }
                 }
             } catch (e: IOException) {
@@ -100,9 +91,4 @@ class ShoppingViewModel : ViewModel() {
         }
     }
 
-
-
-    private fun checkNull(item: List<Shopping>) {
-        visible = item.isEmpty()
-    }
 }

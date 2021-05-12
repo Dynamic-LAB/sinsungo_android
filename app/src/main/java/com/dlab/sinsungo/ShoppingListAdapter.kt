@@ -12,15 +12,14 @@ import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.ItemRcviewShoppingListBinding
 import com.dlab.sinsungo.viewmodel.ShoppingViewModel
 
-class ShoppingListAdapter(shoppingViewModel: ShoppingViewModel)
-    : ListAdapter<Shopping, ShoppingListAdapter.ViewHolder>(ShoppingDiffUtil) {
-    val shop = shoppingViewModel
+class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit) :
+    ListAdapter<Shopping, ShoppingListAdapter.ViewHolder>(ShoppingDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Log.d("onCreateViewHolder", "호출")
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ItemRcviewShoppingListBinding>(layoutInflater, viewType, parent, false)
         binding.cvShoppingItem.setBackgroundResource(R.drawable.bg_dialog_white)
-        return ViewHolder(binding, shop)
+        return ViewHolder(binding)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -32,22 +31,14 @@ class ShoppingListAdapter(shoppingViewModel: ShoppingViewModel)
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(val binding: ItemRcviewShoppingListBinding, shoppingViewModel: ShoppingViewModel) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        val viewModel = shoppingViewModel
-
-        init {
-            binding.btnDeleteShopping.setOnClickListener(this)
-        }
+    inner class ViewHolder(val binding: ItemRcviewShoppingListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(shopping: Shopping) {
             Log.d("binding_result", "호출")
             binding.dataModel = shopping
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
-        }
-
-        override fun onClick(v: View) {
-            when (v.id) {
-                R.id.btn_delete_shopping -> viewModel.deleteShopping(binding.dataModel!!)
+            binding.btnDeleteShopping.setOnClickListener {
+                deleteClick(getItem(adapterPosition))
             }
         }
     }

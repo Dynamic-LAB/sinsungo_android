@@ -31,13 +31,18 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var dialogView: DialogShoppingBinding
     private lateinit var dialog: AlertDialog
 
+    private lateinit var mShoppingListAdapter: ShoppingListAdapter
+
     private val viewModel: ShoppingViewModel by viewModels()
     private val REF_ID = 5
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShoppingBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        viewModel.shoppings.observe(viewLifecycleOwner){
+            binding.listSize = it.size
+        }
         binding.sdvShopping.setOnActionSelectedListener(this)
 
         initSpeedDialItem()
@@ -156,16 +161,21 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.rcviewShopping)
+
         binding.rcviewShopping.apply {
+            mShoppingListAdapter = ShoppingListAdapter { shopping -> deleteShoppingItem(shopping) }
             layoutManager = LinearLayoutManager(this.context)
-            adapter = ShoppingListAdapter(viewModel)
-            setHasFixedSize(true)
             addItemDecoration(ItemDecoration())
+            adapter = mShoppingListAdapter
             setOnTouchListener { _, _ ->
                 swipeHelperCallback.removePreviousClamp(this)
                 false
             }
         }
+    }
+
+    private fun deleteShoppingItem(shopping: Shopping) {
+        viewModel.deleteShopping(shopping)
     }
 
     private fun initPopupMenus() {
