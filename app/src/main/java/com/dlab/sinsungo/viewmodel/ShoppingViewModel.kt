@@ -68,6 +68,31 @@ class ShoppingViewModel : ViewModel() {
         }
     }
 
+    fun editShopping(refID: Int, shopping: Shopping, newShopping: Shopping) {
+        val pos = _shoppingList.indexOf(shopping)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                ShoppingRepository.editShopping(refID, newShopping).let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { res ->
+                            withContext(Dispatchers.Main) {
+                                _shoppingList.removeAt(pos)
+                                _shoppingList.add(pos, res)
+                                _shoppings.postValue(_shoppingList)
+                                Log.d("edit data", res.toString())
+                            }
+                        }
+                    } else {
+                        Log.e("shopping_error", it.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("io_error", e.message!!)
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun deleteShopping(shopping: Shopping) {
         viewModelScope.launch(Dispatchers.IO) {
             val shopID = shopping.id

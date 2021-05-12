@@ -1,20 +1,19 @@
 package com.dlab.sinsungo
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.math.abs
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.abs
 
 object CustomBindingAdapter {
     @JvmStatic

@@ -2,7 +2,6 @@ package com.dlab.sinsungo
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -10,9 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.ItemRcviewShoppingListBinding
-import com.dlab.sinsungo.viewmodel.ShoppingViewModel
 
-class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit) :
+class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit, val editClick: (Shopping) -> Unit) :
     ListAdapter<Shopping, ShoppingListAdapter.ViewHolder>(ShoppingDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Log.d("onCreateViewHolder", "호출")
@@ -39,6 +37,9 @@ class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit) :
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
             binding.btnDeleteShopping.setOnClickListener {
                 deleteClick(getItem(adapterPosition))
+            }
+            binding.btnEditShopping.setOnClickListener {
+                editClick(getItem(adapterPosition))
             }
         }
     }

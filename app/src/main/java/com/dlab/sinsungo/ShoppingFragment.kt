@@ -2,7 +2,6 @@ package com.dlab.sinsungo
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
@@ -40,7 +39,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         binding = FragmentShoppingBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        viewModel.shoppings.observe(viewLifecycleOwner){
+        viewModel.shoppings.observe(viewLifecycleOwner) {
             binding.listSize = it.size
         }
         binding.sdvShopping.setOnActionSelectedListener(this)
@@ -85,6 +84,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             }
             R.id.fab_add_shopping -> {
                 initDialog()
+                dialogSetting(null)
                 dialog.show()
                 binding.sdvShopping.close()
             }
@@ -111,23 +111,37 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         setDialogColor(0, R.color.dim_grey)
         setDialogColor(1, R.color.dim_grey)
         setDialogColor(2, R.color.dim_grey)
-        initShopping()
+        setTitleSpanColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.royal_blue,
+                context?.theme
+            )
+        )
+        setTextWatcher()
+        initPopupMenus()
         dialog.setCanceledOnTouchOutside(false)
     }
 
 
-    private fun initShopping() {
-        setTitleSpanColor(Color.parseColor(resources.getString(R.string.color_royal_blue)))
-        setTextWatcher()
-        initPopupMenus()
-
+    private fun dialogSetting(shopping: Shopping?) {
+        var id = REF_ID
+        if (shopping != null) {
+            id = shopping.id
+            dialogView.etIngredient.setText(shopping.shopName)
+            dialogView.etCount.setText(shopping.shopAmount.toString())
+            dialogView.tvCountType.text = shopping.shopUnit
+            if (shopping.shopMemo != null) {
+                dialogView.etMemo.setText(shopping.shopMemo)
+            }
+        }
         dialogView.btnCancel.setOnClickListener {
             dialog.dismiss()
         }
         dialogView.btnAccept.setOnClickListener {
             val ingredientName = dialogView.etIngredient.text.toString()
             val ingredientCount = dialogView.etCount.text.toString()
-
+            val newShopping: Shopping
             if ((ingredientName.isEmpty() || ingredientName.isBlank()) && (ingredientCount.isEmpty() || ingredientCount.isBlank())) {
                 dialogView.tvInputNoti1.visibility = View.VISIBLE
                 dialogView.tvInputNoti2.visibility = View.VISIBLE
@@ -140,15 +154,19 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                 dialogView.tvInputNoti2.visibility = View.VISIBLE
                 setDialogColor(1, R.color.free_speech_red)
             } else {
-                val newShopping =
+                newShopping =
                     Shopping(
                         ingredientName,
                         ingredientCount.toInt(),
                         dialogView.tvCountType.text.toString(),
                         dialogView.etMemo.text.toString(),
-                        REF_ID
+                        id
                     )
-                viewModel.setShopping(newShopping)
+                if (shopping != null) {
+                    viewModel.editShopping(REF_ID, shopping, newShopping)
+                } else {
+                    viewModel.setShopping(newShopping)
+                }
                 dialog.dismiss()
             }
         }
@@ -163,7 +181,8 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         itemTouchHelper.attachToRecyclerView(binding.rcviewShopping)
 
         binding.rcviewShopping.apply {
-            mShoppingListAdapter = ShoppingListAdapter { shopping -> deleteShoppingItem(shopping) }
+            mShoppingListAdapter = ShoppingListAdapter({ shopping -> deleteShoppingItem(shopping) },
+                { shopping -> editShoppingItem(shopping) })
             layoutManager = LinearLayoutManager(this.context)
             addItemDecoration(ItemDecoration())
             adapter = mShoppingListAdapter
@@ -176,6 +195,12 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun deleteShoppingItem(shopping: Shopping) {
         viewModel.deleteShopping(shopping)
+    }
+
+    private fun editShoppingItem(shopping: Shopping) {
+        initDialog()
+        dialogSetting(shopping)
+        dialog.show()
     }
 
     private fun initPopupMenus() {
@@ -273,6 +298,13 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             1 -> {
                 dialogView.ivCountCutlery.drawable.setTint(newColor)
                 dialogView.clCountInput.background.setTint(newColor)
+                dialogView.clCountType.background.setTint(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.dim_grey,
+                        context?.theme
+                    )
+                )
             }
             2 -> {
                 dialogView.btnMemo.drawable.setTint(newColor)
