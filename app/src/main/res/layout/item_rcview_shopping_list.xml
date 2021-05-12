@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{dataModel.shopName}"
-                    android:textAppearance="@style/Text.Regular_16_Black"
+                    android:textAppearance="@style/Text.Bold_16_Black"
                     app:layout_constraintBottom_toTopOf="@id/tv_rc_shopping_memo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -84,34 +84,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_rc_shopping_name" />
 
-                <ImageView
-                    android:id="@+id/btn_add"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:contentDescription="@string/all_img_description"
-                    android:src="@drawable/btn_circle_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_ingredient_count"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/tv_ingredient_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="4dp"
                     android:text="@{Integer.toString(dataModel.shopAmount)}"
                     android:textAppearance="@style/Text.Regular_20_Blue"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_remove"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_unit"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_unit"
+                    app:layout_constraintTop_toTopOf="@+id/tv_unit" />
 
-                <ImageView
-                    android:id="@+id/btn_remove"
+                <TextView
+                    android:id="@+id/tv_unit"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:contentDescription="@string/all_img_description"
-                    android:src="@drawable/btn_circle_remove"
+                    android:text="@{dataModel.shopUnit}"
+                    android:textAppearance="@style/Text.Regular_20_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
