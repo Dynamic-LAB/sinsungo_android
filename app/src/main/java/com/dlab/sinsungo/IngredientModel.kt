@@ -14,7 +14,7 @@ data class IngredientModel(
     val count: Int,
 
     @SerializedName("expiration_date")
-    val exdate: Date,
+    val exdate: String,
 
     @SerializedName("category")
     val refCategory: String,
