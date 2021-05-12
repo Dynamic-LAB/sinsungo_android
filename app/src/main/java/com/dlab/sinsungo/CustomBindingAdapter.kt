@@ -94,6 +94,6 @@ object CustomBindingAdapter {
     @JvmStatic
     fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
         val adapter = recyclerView.adapter as ShoppingListAdapter
-        adapter.submitList(shopping)
+        adapter.submitList(shopping?.toMutableList())
     }
 }

@@ -1,5 +1,6 @@
 package com.dlab.sinsungo
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -8,12 +9,14 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.util.TypedValue
 import android.view.*
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.DialogShoppingBinding
@@ -28,13 +31,18 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var dialogView: DialogShoppingBinding
     private lateinit var dialog: AlertDialog
 
+    private lateinit var mShoppingListAdapter: ShoppingListAdapter
+
     private val viewModel: ShoppingViewModel by viewModels()
     private val REF_ID = 5
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShoppingBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        viewModel.shoppings.observe(viewLifecycleOwner){
+            binding.listSize = it.size
+        }
         binding.sdvShopping.setOnActionSelectedListener(this)
 
         initSpeedDialItem()
@@ -146,11 +154,28 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initRcView() {
-        binding.rcviewShopping.apply {
-            layoutManager = LinearLayoutManager(this.context)
-            adapter = ShoppingListAdapter()
+        val swipeHelperCallback = SwipeHelperCallback().apply {
+            setClamp(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130f, context?.resources?.displayMetrics))
         }
+        val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.rcviewShopping)
+
+        binding.rcviewShopping.apply {
+            mShoppingListAdapter = ShoppingListAdapter { shopping -> deleteShoppingItem(shopping) }
+            layoutManager = LinearLayoutManager(this.context)
+            addItemDecoration(ItemDecoration())
+            adapter = mShoppingListAdapter
+            setOnTouchListener { _, _ ->
+                swipeHelperCallback.removePreviousClamp(this)
+                false
+            }
+        }
+    }
+
+    private fun deleteShoppingItem(shopping: Shopping) {
+        viewModel.deleteShopping(shopping)
     }
 
     private fun initPopupMenus() {

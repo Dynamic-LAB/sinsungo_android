@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="listSize"
+            type="int"/>
+        <variable
             name="viewModel"
             type="com.dlab.sinsungo.viewmodel.ShoppingViewModel" />
     </data>
@@ -16,7 +19,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcview_shopping"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -27,7 +30,7 @@
             android:id="@+id/layout_describe_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.visible}"
+            android:visibility="@{listSize==0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -3,6 +3,7 @@ package com.dlab.sinsungo.data
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.data.model.User
+import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -54,5 +55,5 @@ interface RetrofitService {
     @DELETE("/shoppinglist/{id}")
     suspend fun delShopping(
         @Path("id") shopId: Int
-    ): Response<List<Shopping>>
+    ): Response<JsonObject>
 }
