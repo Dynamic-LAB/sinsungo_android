@@ -1,7 +1,9 @@
 package com.dlab.sinsungo
 
-import android.util.Log
-import android.view.*
+import android.view.ContextMenu
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -27,11 +29,12 @@ class IngredientListAdapter(val deleteMenuClick: (IngredientModel) -> Unit) :
             binding.data = ingredientModel
             binding.remain = calculateRemainDate(ingredientModel)
             binding.root.setOnCreateContextMenuListener(this)
-            // binding.executePendingBindings()
         }
 
+        @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         private fun calculateRemainDate(ingredientModel: IngredientModel): Long {
-            val dDay = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).parse(ingredientModel.exdate).time
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+            val dDay = dateFormat.parse(ingredientModel.exdate).time
             val today = Calendar.getInstance(Locale.KOREAN).apply {
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)

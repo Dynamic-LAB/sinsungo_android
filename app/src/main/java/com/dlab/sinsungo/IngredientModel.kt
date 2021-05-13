@@ -5,24 +5,24 @@ import java.util.*
 
 data class IngredientModel(
     @SerializedName("id")
-    val id: Int?,
+    var id: Int?,
 
     @SerializedName("name")
-    val name: String,
+    var name: String,
 
     @SerializedName("amount")
-    val count: Int,
+    var count: Int,
 
     @SerializedName("expiration_date")
-    val exdate: String,
+    var exdate: String,
 
     @SerializedName("category")
-    val refCategory: String,
+    var refCategory: String,
 
     @SerializedName("unit")
-    val countType: String,
+    var countType: String,
 
     @SerializedName("expiration_type")
-    val exdateType: String
+    var exdateType: String
 ) {
 }

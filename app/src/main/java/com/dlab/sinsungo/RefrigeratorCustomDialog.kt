@@ -12,6 +12,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -52,27 +53,26 @@ class RefrigeratorCustomDialog : DialogFragment() {
 
     private val mDatePickerDismissListener = DialogInterface.OnDismissListener {
         if (binding.tvExdateInput.text.isEmpty() || binding.tvExdateInput.text.isBlank()) {
-            binding.lineUnderExdateInput.background =
-                context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
-            binding.tvInputNoti3.setTextColor(
-                ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-            )
             binding.tvInputNoti3.visibility = View.VISIBLE
             binding.btnOpenDatePicker.drawable.setTint(
                 ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
             )
+            binding.lineUnderExdateInput.background =
+                context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
         } else {
+            binding.tvInputNoti3.visibility = View.GONE
             binding.btnOpenDatePicker.drawable.setTint(
                 ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
             )
             binding.lineUnderExdateInput.background =
                 context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
-            binding.tvInputNoti3.visibility = View.GONE
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogRefrigeratorBinding.inflate(layoutInflater)
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
         val dialog = AlertDialog.Builder(requireContext())
             .setView(binding.root)
             .create()
@@ -91,29 +91,15 @@ class RefrigeratorCustomDialog : DialogFragment() {
             }
         }
 
+        viewModel.inputIngredient.observe(this) {
+            Log.d("change input", it.toString())
+        }
+
         setTitleSpanColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
         setTextWatcher()
         initPopupMenus()
 
         binding.clExdateInput.setOnClickListener(mOnClickOpenDatePicker)
-
-        binding.lineUnderIngredientInput.background =
-            context?.let { ContextCompat.getDrawable(it, R.color.dim_grey) }
-        binding.lineUnderCountInput.background =
-            context?.let { ContextCompat.getDrawable(it, R.color.dim_grey) }
-
-        binding.btnAccept.setOnClickListener { view: View ->
-            val addIngredient = IngredientModel(
-                6,
-                binding.etIngredient.text.toString(),
-                binding.etCount.text.toString().toInt(),
-                binding.tvExdateInput.text.toString(),
-                binding.tvRefCategory.text.toString(),
-                binding.tvCountType.text.toString(),
-                binding.tvExdateType.text.toString()
-            )
-            viewModel.requestPostIngredients(addIngredient)
-        }
 
         binding.btnCanel.setOnClickListener { view: View ->
             dismiss()
@@ -125,13 +111,7 @@ class RefrigeratorCustomDialog : DialogFragment() {
         val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
         val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
-        binding.tvExdateInput.setText(mDateString)
-
-        binding.btnOpenDatePicker.drawable.setTint(
-            ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
-        )
-        binding.lineUnderExdateInput.background =
-            context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+        viewModel.setInputModelValue("exdate", mDateString)
     }
 
     private fun setTitleSpanColor(color: Int) {
@@ -147,35 +127,32 @@ class RefrigeratorCustomDialog : DialogFragment() {
     }
 
     private fun setTextWatcher() {
-        binding.etIngredient.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val input = s.toString()
-                if (input.isEmpty() || input.isBlank()) {
-                    binding.tvInputNoti1.setTextColor(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                    binding.tvInputNoti1.visibility = View.VISIBLE
-                    binding.ivIngredientCutlery.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
-                    binding.lineUnderIngredientInput.background =
-                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
-                } else {
-                    binding.tvInputNoti1.visibility = View.GONE
-                    binding.ivIngredientCutlery.drawable.setTint(
-                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
-                    )
-                    binding.lineUnderIngredientInput.background =
-                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
-                }
-            }
-        })
+//        binding.etIngredient.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                val input = s.toString()
+//                if (input.isEmpty() || input.isBlank()) {
+//                    binding.tvInputNoti1.visibility = View.VISIBLE
+//                    binding.ivIngredientCutlery.drawable.setTint(
+//                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+//                    )
+//                    binding.lineUnderIngredientInput.background =
+//                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+//                } else {
+//                    binding.tvInputNoti1.visibility = View.GONE
+//                    binding.ivIngredientCutlery.drawable.setTint(
+//                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+//                    )
+//                    binding.lineUnderIngredientInput.background =
+//                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+//                }
+//            }
+//        })
 
         binding.etCount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -186,10 +163,7 @@ class RefrigeratorCustomDialog : DialogFragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
-                if (input.isEmpty() || input.isBlank()) {
-                    binding.tvInputNoti2.setTextColor(
-                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-                    )
+                if (input.isBlank() || input.isEmpty() || input == "0") {
                     binding.tvInputNoti2.visibility = View.VISIBLE
                     binding.ivCountCutlery.drawable.setTint(
                         ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
@@ -225,7 +199,8 @@ class RefrigeratorCustomDialog : DialogFragment() {
         refCategoryPopup.menuInflater.inflate(menuRes, refCategoryPopup.menu)
 
         refCategoryPopup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            binding.tvRefCategory.text = menuItem.title
+            // binding.tvRefCategory.text = menuItem.title
+            viewModel.setInputModelValue("refCategory", menuItem.title.toString())
             true
         }
 
@@ -237,7 +212,8 @@ class RefrigeratorCustomDialog : DialogFragment() {
         countTypePopup.menuInflater.inflate(menuRes, countTypePopup.menu)
 
         countTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            binding.tvCountType.text = menuItem.title
+//            binding.tvCountType.text = menuItem.title
+            viewModel.setInputModelValue("countType", menuItem.title.toString())
             true
         }
 
@@ -249,7 +225,8 @@ class RefrigeratorCustomDialog : DialogFragment() {
         exdateTypePopup.menuInflater.inflate(menuRes, exdateTypePopup.menu)
 
         exdateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            binding.tvExdateType.text = menuItem.title
+//            binding.tvExdateType.text = menuItem.title
+            viewModel.setInputModelValue("exdateType", menuItem.title.toString())
             true
         }
 

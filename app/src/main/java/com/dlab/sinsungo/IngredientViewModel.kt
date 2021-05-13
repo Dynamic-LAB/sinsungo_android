@@ -12,12 +12,14 @@ class IngredientViewModel : ViewModel() {
     private val _ingredients = MutableLiveData<List<IngredientModel>>()
     private val _innerList = mutableListOf<IngredientModel>()
     private val _postFlag = MutableLiveData<Boolean>()
+    private val _inputIngredient = MutableLiveData<IngredientModel>(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
 
     val ingredients: MutableLiveData<List<IngredientModel>> = _ingredients
     val postFlag: MutableLiveData<Boolean> = _postFlag
+    val inputIngredient: MutableLiveData<IngredientModel> = _inputIngredient
 
     init {
-        requestGetIngredients(6)
+        requestGetIngredients(6) // 나중에 냉장고 id 받아줘야함
     }
 
     fun requestGetIngredients(refID: Int) {
@@ -36,7 +38,7 @@ class IngredientViewModel : ViewModel() {
         }
     }
 
-    fun requestPostIngredients(ingredientModel: IngredientModel) {
+    /*fun requestPostIngredients(ingredientModel: IngredientModel) {
         viewModelScope.launch(Dispatchers.IO) {
             IngredientRepository.postIngredient(ingredientModel).let { response ->
                 if (response.isSuccessful) {
@@ -48,6 +50,29 @@ class IngredientViewModel : ViewModel() {
                             Log.d("add item", ingredientModel.toString())
                             _ingredients.postValue(_innerList)
                             Log.d("inner list", _innerList.toString())
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+
+    fun requestPostIngredients() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val data = _inputIngredient.value
+            data?.id = 6 // 나중에 냉장고 id 받아줘야함
+            Log.d("current inputIng", data.toString())
+            IngredientRepository.postIngredient(data!!).let { response ->
+                if (response.isSuccessful) {
+                    Log.d("post ingredient result", response.body().toString())
+                    response.body()?.let {
+                        withContext(Dispatchers.Main) {
+                            _postFlag.postValue(true)
+                            _innerList.add(it)
+                            Log.d("add item", it.toString())
+                            _ingredients.postValue(_innerList)
+                            Log.d("inner list", _innerList.toString())
+                            _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
                         }
                     }
                 }
@@ -76,6 +101,18 @@ class IngredientViewModel : ViewModel() {
 
     fun setPostFlag(flag: Boolean) {
         _postFlag.value = flag
+    }
+
+    fun setInputModelValue(key: String, value: String) {
+        val data = _inputIngredient.value
+        when (key) {
+            "name" -> data?.name = value
+            "exdate" -> data?.exdate = value
+            "refCategory" -> data?.refCategory = value
+            "countType" -> data?.countType = value
+            "exdateType" -> data?.exdateType = value
+        }
+        _inputIngredient.value = data!!
     }
 
     /*fun sortList(key: String) {
