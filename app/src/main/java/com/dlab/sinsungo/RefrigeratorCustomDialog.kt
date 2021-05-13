@@ -12,7 +12,9 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
-import android.view.*
+import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import androidx.core.content.ContextCompat
@@ -81,18 +83,10 @@ class RefrigeratorCustomDialog : DialogFragment() {
         return dialog
     }
 
-    /*override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DialogRefrigeratorBinding.inflate(layoutInflater)
-        initDialog()
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialog?.setCanceledOnTouchOutside(false)
-        return binding.root
-    }*/
-
     private fun initDialog() {
         viewModel.postFlag.observe(this) {
             if (it) {
+                viewModel.setPostFlag(false)
                 dismiss()
             }
         }
