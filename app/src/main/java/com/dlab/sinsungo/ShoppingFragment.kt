@@ -2,6 +2,11 @@ package com.dlab.sinsungo
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
@@ -12,11 +17,14 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
+import androidx.collection.LruCache
+import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.DialogShoppingBinding
 import com.dlab.sinsungo.databinding.FragmentShoppingBinding
@@ -24,6 +32,10 @@ import com.dlab.sinsungo.viewmodel.ShoppingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+
 
 class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentShoppingBinding
@@ -79,7 +91,31 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_share_shopping -> {
-                //TODO
+                try {
+                    val cachePath = File(this.context?.cacheDir, "images")
+                    cachePath.mkdirs() // don't forget to make the directory
+                    val stream =
+                        FileOutputStream("$cachePath/image.png") // overwrites this image every time
+                    getScreenshotFromRecyclerView(binding.rcviewShopping)?.compress(
+                        Bitmap.CompressFormat.PNG,
+                        100,
+                        stream
+                    )
+                    stream.close()
+                    val newFile = File(cachePath, "image.png")
+                    val contentUri: Uri? = this.context?.let {
+                        FileProvider.getUriForFile(
+                            it,
+                            "com.dlab.sinsungo.fileprovider", newFile
+                        )
+                    }
+                    val sharingIntent = Intent(Intent.ACTION_SEND)
+                    sharingIntent.type = "image/png"
+                    sharingIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                    startActivity(Intent.createChooser(sharingIntent, "Share image"))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
                 binding.sdvShopping.close()
             }
             R.id.fab_add_shopping -> {
@@ -312,4 +348,67 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             }
         }
     }
+
+    private fun getScreenshotFromRecyclerView(view: RecyclerView): Bitmap? {
+        val adapter = view.adapter
+        var bigBitmap: Bitmap? = null
+        if (adapter != null) {
+            val size = adapter.itemCount
+            var height = 0
+            val paint = Paint()
+            var iHeight = 32
+            val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
+            // Use 1/8th of the available memory for this memory cache.
+            val cacheSize = maxMemory / 8
+            val bitmaCache =
+                LruCache<String, Bitmap>(cacheSize)
+            for (i in 0 until size) {
+                val holder =
+                    adapter.createViewHolder(view, adapter.getItemViewType(i))
+                adapter.onBindViewHolder(holder, i)
+                holder.itemView.measure(
+                    View.MeasureSpec.makeMeasureSpec(
+                        view.width,
+                        View.MeasureSpec.EXACTLY
+                    ),
+                    View.MeasureSpec.makeMeasureSpec(
+                        0,
+                        View.MeasureSpec.UNSPECIFIED
+                    )
+                )
+                holder.itemView.layout(
+                    0,
+                    0,
+                    holder.itemView.measuredWidth,
+                    holder.itemView.measuredHeight
+                )
+                holder.itemView.isDrawingCacheEnabled = true
+                holder.itemView.buildDrawingCache()
+                val drawingCache = holder.itemView.drawingCache
+                if (drawingCache != null) {
+                    bitmaCache.put(i.toString(), drawingCache)
+                }
+                height += holder.itemView.measuredHeight
+            }
+            if (height < view.height) height = view.height
+            bigBitmap =
+                Bitmap.createBitmap(view.measuredWidth, height, Bitmap.Config.ARGB_8888)
+            val bigCanvas = Canvas(bigBitmap)
+            bigCanvas.drawColor(
+                ResourcesCompat.getColor(
+                    resources,
+                    R.color.white_smoke,
+                    context?.theme
+                )
+            )
+            for (i in 0 until size) {
+                val bitmap = bitmaCache[i.toString()]
+                bigCanvas.drawBitmap(bitmap!!, 0f, iHeight.toFloat(), paint)
+                iHeight += bitmap.height
+                bitmap.recycle()
+            }
+        }
+        return bigBitmap
+    }
+
 }

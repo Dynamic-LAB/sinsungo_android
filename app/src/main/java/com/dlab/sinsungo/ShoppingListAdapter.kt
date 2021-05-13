@@ -41,6 +41,9 @@ class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit, val editClick: (S
             binding.btnEditShopping.setOnClickListener {
                 editClick(getItem(adapterPosition))
             }
+            binding.cvShoppingItem.setOnClickListener {
+                true
+            }
         }
     }
 

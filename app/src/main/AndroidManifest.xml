@@ -37,6 +37,17 @@
                     android:scheme="kakaoee3f134157c1c12681be4c972668fcea" />
             </intent-filter>
         </activity>
+        <!-- 사진 공유 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.dlab.sinsungo.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
     </application>
 
 </manifest>
