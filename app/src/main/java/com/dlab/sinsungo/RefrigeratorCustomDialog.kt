@@ -127,32 +127,32 @@ class RefrigeratorCustomDialog : DialogFragment() {
     }
 
     private fun setTextWatcher() {
-//        binding.etIngredient.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                val input = s.toString()
-//                if (input.isEmpty() || input.isBlank()) {
-//                    binding.tvInputNoti1.visibility = View.VISIBLE
-//                    binding.ivIngredientCutlery.drawable.setTint(
-//                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-//                    )
-//                    binding.lineUnderIngredientInput.background =
-//                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
-//                } else {
-//                    binding.tvInputNoti1.visibility = View.GONE
-//                    binding.ivIngredientCutlery.drawable.setTint(
-//                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
-//                    )
-//                    binding.lineUnderIngredientInput.background =
-//                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
-//                }
-//            }
-//        })
+        binding.etIngredient.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isEmpty() || input.isBlank()) {
+                    binding.tvInputNoti1.visibility = View.VISIBLE
+                    binding.ivIngredientCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                    )
+                    binding.lineUnderIngredientInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+                } else {
+                    binding.tvInputNoti1.visibility = View.GONE
+                    binding.ivIngredientCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+                    )
+                    binding.lineUnderIngredientInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+                }
+            }
+        })
 
         binding.etCount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
