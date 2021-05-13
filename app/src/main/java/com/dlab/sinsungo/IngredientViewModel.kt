@@ -1,7 +1,6 @@
 package com.dlab.sinsungo
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,7 @@ class IngredientViewModel : ViewModel() {
     private val _postFlag = MutableLiveData<Boolean>()
 
     val ingredients: MutableLiveData<List<IngredientModel>> = _ingredients
-    val postFlag: LiveData<Boolean> = _postFlag
+    val postFlag: MutableLiveData<Boolean> = _postFlag
 
     init {
         requestGetIngredients(6)
@@ -45,7 +44,7 @@ class IngredientViewModel : ViewModel() {
                     response.body()?.let {
                         withContext(Dispatchers.Main) {
                             _postFlag.postValue(true)
-                            _innerList.add(ingredientModel)
+                            _innerList.add(it)
                             Log.d("add item", ingredientModel.toString())
                             _ingredients.postValue(_innerList)
                             Log.d("inner list", _innerList.toString())
@@ -73,6 +72,10 @@ class IngredientViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun setPostFlag(flag: Boolean) {
+        _postFlag.value = flag
     }
 
     /*fun sortList(key: String) {
