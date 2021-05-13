@@ -1,19 +1,15 @@
 package com.dlab.sinsungo
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.databinding.ItemRcviewIngredientBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class IngredientListAdapter :
+class IngredientListAdapter(val deleteMenuClick: (IngredientModel) -> Unit) :
     ListAdapter<IngredientModel, IngredientListAdapter.IngredientViewHolder>(IngredientDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val binding = ItemRcviewIngredientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,11 +21,13 @@ class IngredientListAdapter :
         holder.bind(getItem(position))
     }
 
-    inner class IngredientViewHolder(val binding: ItemRcviewIngredientBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class IngredientViewHolder(val binding: ItemRcviewIngredientBinding) : RecyclerView.ViewHolder(binding.root),
+        View.OnCreateContextMenuListener {
         fun bind(ingredientModel: IngredientModel) {
             binding.data = ingredientModel
             binding.remain = calculateRemainDate(ingredientModel)
-            binding.executePendingBindings()
+            binding.root.setOnCreateContextMenuListener(this)
+            // binding.executePendingBindings()
         }
 
         private fun calculateRemainDate(ingredientModel: IngredientModel): Long {
@@ -43,13 +41,23 @@ class IngredientListAdapter :
 
             return (dDay - today) / (24 * 60 * 60 * 1000)
         }
+
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+            menu?.add("편집")?.setOnMenuItemClickListener {
+                true
+            }
+            menu?.add("삭제")?.setOnMenuItemClickListener {
+                deleteMenuClick(getItem(adapterPosition))
+                true
+            }
+        }
     }
 
     companion object IngredientDiffUtil : DiffUtil.ItemCallback<IngredientModel>() {
         override fun areContentsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
             return oldItem == newItem
         }
-      
+
         override fun areItemsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
             return oldItem.id == newItem.id
         }

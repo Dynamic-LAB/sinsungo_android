@@ -1,10 +1,8 @@
 package com.dlab.sinsungo
 
+import org.json.JSONObject
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface IngredientAPI {
     @GET("/refrigerator/ingredient/{id}")
@@ -16,4 +14,9 @@ interface IngredientAPI {
     suspend fun postIngredient(
         @Body ingredientModel: IngredientModel
     ): Response<IngredientModel>
+
+    @DELETE("/refrigerator/ingredient/{id}")
+    suspend fun deleteIngredient(
+        @Path("id") ingredientID: Int?
+    ): Response<JSONObject>
 }

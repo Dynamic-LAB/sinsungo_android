@@ -49,7 +49,25 @@ class IngredientViewModel : ViewModel() {
                             Log.d("add item", ingredientModel.toString())
                             _ingredients.postValue(_innerList)
                             Log.d("inner list", _innerList.toString())
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    fun requestDeleteIngredient(ingredientModel: IngredientModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val ingredientID = ingredientModel.id
+            IngredientRepository.deleteIngredient(ingredientID).let { response ->
+                if (response.isSuccessful) {
+                    Log.d("del ingredient result", response.body().toString())
+                    response.body()?.let {
+                        withContext(Dispatchers.Main) {
+                            _innerList.remove(ingredientModel)
+                            Log.d("delete item", ingredientModel.toString())
+                            _ingredients.postValue(_innerList)
+                            Log.d("inner list", _innerList.toString())
                         }
                     }
                 }
