@@ -6,17 +6,18 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import java.util.*
 import kotlin.math.abs
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
+import java.text.SimpleDateFormat
 
 object CustomBindingAdapter {
     @BindingConversion
@@ -97,7 +98,7 @@ object CustomBindingAdapter {
     @JvmStatic
     fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
         val adapter = recyclerView.adapter as ShoppingListAdapter
-        adapter.submitList(shopping)
+        adapter.submitList(shopping?.toMutableList())
     }
 
     @BindingAdapter("span_text", "span_color")

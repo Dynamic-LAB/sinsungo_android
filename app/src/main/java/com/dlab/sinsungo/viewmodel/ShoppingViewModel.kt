@@ -12,28 +12,31 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class ShoppingViewModel : ViewModel() {
-    private val shoppingList = mutableListOf<Shopping>()
-    private val _shoppings = MutableLiveData<List<Shopping>>()
+    private val _shoppingList = mutableListOf<Shopping>()
+    private var _shoppings = MutableLiveData<List<Shopping>>()
     val shoppings: MutableLiveData<List<Shopping>> = _shoppings
-    var visible = false
 
     init {
         getShopping(5)
     }
 
-    fun setShopping(newShopping: Shopping) {
+    fun setShopping(newShopping: Shopping?) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                ShoppingRepository.setShopping(newShopping).let {
-                    if (it.isSuccessful) {
-                        it.body()?.let { res ->
-                            withContext(Dispatchers.Main) {
-                                shoppingList.add(res)
-                                _shoppings.postValue(shoppingList)
+                newShopping?.let { it ->
+                    ShoppingRepository.setShopping(it).let {
+                        if (it.isSuccessful) {
+                            it.body()?.let { res ->
+                                withContext(Dispatchers.Main) {
+                                    Log.d("set res result", res.toString())
+                                    Log.d("set data", newShopping.toString())
+                                    _shoppingList.add(res)
+                                    _shoppings.postValue(_shoppingList)
+                                }
                             }
+                        } else {
+                            Log.e("shopping_error", it.message())
                         }
-                    } else {
-                        Log.e("shopping_error", it.message())
                     }
                 }
             } catch (e: IOException) {
@@ -50,9 +53,8 @@ class ShoppingViewModel : ViewModel() {
                     if (it.isSuccessful) {
                         it.body()?.let { res ->
                             withContext(Dispatchers.Main) {
-                                shoppingList.addAll(res)
-                                _shoppings.postValue(shoppingList)
-                                checkNull(res)
+                                _shoppingList.addAll(res)
+                                _shoppings.postValue(_shoppingList)
                             }
                         }
                     } else {
@@ -66,8 +68,52 @@ class ShoppingViewModel : ViewModel() {
         }
     }
 
-
-    private fun checkNull(item: List<Shopping>) {
-        visible = item.isEmpty()
+    fun editShopping(refID: Int, shopping: Shopping, newShopping: Shopping) {
+        val pos = _shoppingList.indexOf(shopping)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                ShoppingRepository.editShopping(refID, newShopping).let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { res ->
+                            withContext(Dispatchers.Main) {
+                                _shoppingList.removeAt(pos)
+                                _shoppingList.add(pos, res)
+                                _shoppings.postValue(_shoppingList)
+                                Log.d("edit data", res.toString())
+                            }
+                        }
+                    } else {
+                        Log.e("shopping_error", it.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("io_error", e.message!!)
+                e.printStackTrace()
+            }
+        }
     }
+
+    fun deleteShopping(shopping: Shopping) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val shopID = shopping.id
+            try {
+                ShoppingRepository.delShopping(shopID).let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { res ->
+                            withContext(Dispatchers.Main) {
+                                _shoppingList.remove(shopping)
+                                _shoppings.postValue(_shoppingList)
+                            }
+                        }
+                    } else {
+                        Log.e("shopping_error", it.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("io_error", e.message!!)
+                e.printStackTrace()
+            }
+        }
+    }
+
 }
