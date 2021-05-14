@@ -77,8 +77,9 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_edit -> {
-                val dialog = RefrigeratorCustomDialog()
-                dialog.show(childFragmentManager, "refrigerator_custom_dialog")
+                val dialog = RefrigeratorSelfInputIngredientDialog()
+                viewModel.setModify(false)
+                dialog.show(childFragmentManager, "input ingredient dialog")
                 binding.sdvRefrigerator.close()
             }
         }

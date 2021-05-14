@@ -1,5 +1,6 @@
 package com.dlab.sinsungo
 
+import android.util.Log
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,10 @@ import com.dlab.sinsungo.databinding.ItemRcviewIngredientBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class IngredientListAdapter(val deleteMenuClick: (IngredientModel) -> Unit) :
+class IngredientListAdapter(
+    val deleteMenuClick: (IngredientModel) -> Unit,
+    val updateMenuClick: (IngredientModel) -> Unit
+) :
     ListAdapter<IngredientModel, IngredientListAdapter.IngredientViewHolder>(IngredientDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val binding = ItemRcviewIngredientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -47,6 +51,7 @@ class IngredientListAdapter(val deleteMenuClick: (IngredientModel) -> Unit) :
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             menu?.add("편집")?.setOnMenuItemClickListener {
+                updateMenuClick(getItem(adapterPosition))
                 true
             }
             menu?.add("삭제")?.setOnMenuItemClickListener {

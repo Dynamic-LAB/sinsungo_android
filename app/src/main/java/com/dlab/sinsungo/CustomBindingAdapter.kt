@@ -1,6 +1,9 @@
 package com.dlab.sinsungo
 
 import android.graphics.drawable.Drawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -95,5 +98,18 @@ object CustomBindingAdapter {
     fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
         val adapter = recyclerView.adapter as ShoppingListAdapter
         adapter.submitList(shopping)
+    }
+
+    @BindingAdapter("span_text", "span_color")
+    @JvmStatic
+    fun setDialogTitle(textView: TextView, value: String, color: Int) {
+        val spannableString = SpannableString(value)
+        spannableString.setSpan(
+            ForegroundColorSpan(color),
+            7,
+            9,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        textView.text = spannableString
     }
 }
