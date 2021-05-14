@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.dlab.sinsungo.Converter" />
+        <variable
+            name="viewmodel"
+            type="com.dlab.sinsungo.IngredientViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
-                android:textAppearance="@style/Text.Bold_08_Black"
+                android:textAppearance="@style/Text.Bold_08_Red"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient"
                 app:layout_constraintStart_toEndOf="@id/tv_ingredient" />
@@ -58,7 +65,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="@id/cl_ingredient_category"
                 app:layout_constraintEnd_toStartOf="@id/cl_ingredient_category"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,10 +85,11 @@
                 <EditText
                     android:id="@+id/et_ingredient"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_ingredient"
+                    android:text="@={viewmodel.inputIngredient.name}"
                     android:inputType="text"
                     android:maxLength="20"
                     android:singleLine="true"
@@ -95,12 +102,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_ingredient_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_ingredient_input"
+                app:layout_constraintStart_toStartOf="@id/cl_ingredient_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_input" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_ingredient_category"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ingredient">
 
@@ -109,7 +124,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="냉장"
+                    android:text="@={viewmodel.inputIngredient.refCategory}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -130,6 +145,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_ingredient_category"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_ingredient_category"
+                app:layout_constraintStart_toStartOf="@id/cl_ingredient_category"
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_category" />
+
             <TextView
                 android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
@@ -138,7 +162,7 @@
                 android:text="@string/dial_count"
                 android:textAppearance="@style/Text.Bold_14dp_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_category" />
+                app:layout_constraintTop_toBottomOf="@id/line_under_ingredient_input" />
 
             <TextView
                 android:id="@+id/tv_input_noti2"
@@ -146,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
-                android:textAppearance="@style/Text.Bold_08_Black"
+                android:textAppearance="@style/Text.Bold_08_Red"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_count"
                 app:layout_constraintStart_toEndOf="@id/tv_count" />
@@ -156,7 +180,6 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="@id/cl_count_type"
                 app:layout_constraintEnd_toStartOf="@id/cl_count_type"
                 app:layout_constraintStart_toStartOf="parent"
@@ -177,10 +200,12 @@
                 <EditText
                     android:id="@+id/et_count"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
+                    android:text="@={Converter.intToString(viewmodel.inputIngredient.count)}"
                     android:hint="@string/dial_hint_count"
+                    android:selectAllOnFocus="true"
                     android:inputType="number"
                     android:maxLength="10"
                     android:singleLine="true"
@@ -193,12 +218,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_count_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_count_input"
+                app:layout_constraintStart_toStartOf="@id/cl_count_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_count_type"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_count">
 
@@ -208,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/all_gram"
+                    android:text="@={viewmodel.inputIngredient.countType}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -230,6 +263,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_count_type"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_count_type"
+                app:layout_constraintStart_toStartOf="@id/cl_count_type"
+                app:layout_constraintTop_toBottomOf="@id/cl_count_type" />
+
             <TextView
                 android:id="@+id/tv_exdate"
                 android:layout_width="wrap_content"
@@ -238,7 +280,7 @@
                 android:text="@string/dial_date"
                 android:textAppearance="@style/Text.Bold_14dp_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
+                app:layout_constraintTop_toBottomOf="@id/line_under_count_input" />
 
             <TextView
                 android:id="@+id/tv_input_noti3"
@@ -246,7 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/dial_normal_essential"
-                android:textAppearance="@style/Text.Bold_08_Black"
+                android:textAppearance="@style/Text.Bold_08_Red"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_exdate"
                 app:layout_constraintStart_toEndOf="@id/tv_exdate" />
@@ -256,7 +298,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="@id/cl_exdate_type"
                 app:layout_constraintEnd_toStartOf="@id/cl_exdate_type"
                 app:layout_constraintStart_toStartOf="parent"
@@ -274,17 +315,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_exdate"
+                <TextView
+                    android:id="@+id/tv_exdate_input"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_date"
-                    android:inputType="date"
+                    android:text="@={viewmodel.inputIngredient.exdate}"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -293,12 +334,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/line_under_exdate_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_exdate_input"
+                app:layout_constraintStart_toStartOf="@id/cl_exdate_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_exdate_input" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_exdate_type"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/border_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_exdate">
@@ -308,7 +357,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="@string/dial_exdate"
+                    android:text="@={viewmodel.inputIngredient.exdateType}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14dp_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -329,6 +378,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_exdate_type"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_exdate_type"
+                app:layout_constraintStart_toStartOf="@id/cl_exdate_type"
+                app:layout_constraintTop_toBottomOf="@id/cl_exdate_type" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -358,6 +416,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_accept"
+                android:onClick="@{() -> viewmodel.requestPostIngredients()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -24,7 +24,7 @@
 
     <!-- 커스텀 다이얼로그 -->
     <string name="dial_ref_title">냉장고 재료 추가</string>
-    <string name="dial_shop_title">장바구니 목록</string>
+    <string name="dial_shop_title">장바구니 목록 추가</string>
     <string name="dial_add">추가</string>
     <string name="dial_ingredient">재료</string>
     <string name="dial_count">수량</string>
@@ -69,12 +69,9 @@
         <item>상온</item>
         <item>조미료/양념</item>
     </string-array>
-    <string-array name="ref_sort_types">
-        <item>유통기한 임박 순</item>
-        <item>재료명 순</item>
-        <item>수량 순</item>
-        <item>최근 추가 순</item>
-    </string-array>
+    <string name="ref_sortby_name">재료명 순</string>
+    <string name="ref_sortby_fresh">신선도 순</string>
+    <string name="ref_sortby_recent">최근 추가 순</string>
     <string name="ref_category_cold">냉장</string>
     <string name="ref_category_iced">냉동</string>
     <string name="ref_category_fresh">신선</string>
@@ -84,7 +81,9 @@
     <string name="ref_scan_receipt">영수증 촬영</string>
     <string name="ref_picture_ingredient">재료 촬영</string>
     <string name="ref_empty_message">냉장고에 재료를 먼저 넣어주세요!</string>
-    <string name="ref_format_expiration_date">유통기한 마감까지 %d일 남았어요!</string>
+    <string name="ref_format_count_unit">%d %s</string>
+    <string name="ref_format_until_exdate">%s까지 %d일 남았어요!</string>
+    <string name="ref_format_over_exdate">%s에서 %d일 지났어요!</string>
 
     <!-- 식단 -->
     <string name="diet_morning">아침 메뉴는</string>
@@ -117,6 +116,8 @@
     <string name="shop_often_ingredient">자주 사용하는 재료</string>
     <string name="shop_list_title">장 볼 목록</string>
     <string name="shop_empty_message">장보기 목록이 비어있어요!</string>
+    <string name="shop_share">공유하기</string>
+    <string name="shop_add">장바구니 목록 추가하기</string>
 
     <!-- 마이페이지 -->
     <string name="my_add_member">멤버 추가하기</string>
@@ -134,4 +135,6 @@
 
     <!-- 색상 -->
     <string name="color_royal_blue">#FF3C82D9</string>
+    <string name="color_free_speech_red">#FFCF0000</string>
+    <string name="color_dim_grey">#FF707070</string>
 </resources>

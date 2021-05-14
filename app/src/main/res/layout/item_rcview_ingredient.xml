@@ -3,6 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="data"
+            type="com.dlab.sinsungo.IngredientModel" />
+
+        <variable
+            name="remain"
+            type="Long" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +31,7 @@
                 android:id="@+id/tv_ingredient_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{data.name}"
                 android:textAppearance="@style/Text.Bold_16_Black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:text="@{@string/ref_format_count_unit(data.count, data.countType)}"
                 android:textAppearance="@style/Text.Regular_13_Black"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient_name"
                 app:layout_constraintStart_toEndOf="@+id/tv_ingredient_name" />
@@ -37,21 +50,39 @@
                 android:id="@+id/pb_ingredient_exdate_remain"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="8dp"
                 android:layout_marginTop="11dp"
+                android:indeterminate="false"
+                android:max="100"
+                app:drawableBad="@{@drawable/bg_progress_bad}"
+                app:drawableGood="@{@drawable/bg_progress_good}"
+                app:exdateType="@{data.exdateType}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name"
+                app:remain="@{remain}" />
 
             <TextView
                 android:id="@+id/tv_ingredient_exdate_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/ref_format_expiration_date"
+                app:tvRemain="@{remain}"
+                app:tvExdateType="@{data.exdateType}"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
+
+            <TextView
+                android:id="@+id/tv_ingredient_exdate_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@{data.exdateType}"
+                android:textAppearance="@style/Text.Regular_10_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ingredient_exdate"
+                app:layout_constraintEnd_toStartOf="@id/tv_ingredient_exdate"
+                app:layout_constraintTop_toTopOf="@id/tv_ingredient_exdate" />
 
             <TextView
                 android:id="@+id/tv_ingredient_exdate"
@@ -59,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/Text.Regular_10_Black"
+                app:text="@{data.exdate}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
 
