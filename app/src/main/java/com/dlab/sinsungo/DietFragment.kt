@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.FragmentDietBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
@@ -47,8 +48,8 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         )
     }
 
-    override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean{
-        when (actionItem?.id){
+    override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
+        when (actionItem?.id) {
             R.id.fab_custom_diet -> {
                 val dialog = CustomBottomSheetDiet()
                 dialog.show(requireActivity().supportFragmentManager, "Custom_bottom_sheet_diet")

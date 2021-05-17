@@ -9,7 +9,6 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import java.util.*
 import kotlin.math.abs
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Recipe

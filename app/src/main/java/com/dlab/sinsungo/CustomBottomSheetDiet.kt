@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import com.dlab.sinsungo.databinding.DialogDietBinding
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -36,20 +37,12 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
         updateLabel(Color.parseColor(resources.getString(R.string.color_royal_blue)))
     }
 
-    private val mOnAlertListener = DialogInterface.OnClickListener { dialog, which ->
-        when (which) {
-            0 -> binding.tvDialogDietChoice.text = resources.getString(R.string.dial_morning)
-            1 -> binding.tvDialogDietChoice.text = resources.getString(R.string.dial_lunch)
-            2 -> binding.tvDialogDietChoice.text = resources.getString(R.string.dial_dinner)
-        }
-        dialog.dismiss()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DialogDietBinding.inflate(inflater, container, false)
         init()
-        updateLabel(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+        updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
         return binding.root
     }
 
@@ -62,7 +55,7 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
         binding.btnSave.setOnClickListener {
             //TODO: 저장하는 과정 추가
         }
-        binding.tvBottomTitleDate.setOnClickListener {
+        binding.constDate.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
                 mOnDateSetListener,
@@ -71,11 +64,7 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
                 mCalendar.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
-        binding.tvDialogDietChoice.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setSingleChoiceItems(R.array.dial_day_types, 0, mOnAlertListener)
-                .show()
-        }
+
         binding.etMenuName.setOnEditorActionListener { v, action, _ ->
             if (action == EditorInfo.IME_ACTION_DONE) {
                 val et = v as EditText
