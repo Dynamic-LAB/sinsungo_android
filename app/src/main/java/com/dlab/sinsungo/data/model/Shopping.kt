@@ -19,5 +19,5 @@ data class Shopping(
     val shopMemo: String?,
 
     @SerializedName("id")
-    val id: Int?
+    val id: Int
 ) : Parcelable
