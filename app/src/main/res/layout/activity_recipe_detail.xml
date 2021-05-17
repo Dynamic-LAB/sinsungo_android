@@ -25,15 +25,34 @@
             app:title="@{@string/all_recipe}"
             app:activity="@{view}"/>
 
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="30dp"
+            android:scaleType="fitXY"
+            app:imageUrl="@{viewModel.recipe.thumbnail}"
+            app:layout_constraintBottom_toTopOf="@id/sv_recipe"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@+id/layout_title"
+            app:layout_constraintVertical_weight="0.75"/>
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/sv_recipe"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scrollbarDefaultDelayBeforeFade="50"
+            android:scrollbarThumbVertical="@color/free_speech_red"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/cl_btn_container"
             app:layout_constraintEnd_toEndOf="@+id/gl_end"
             app:layout_constraintStart_toStartOf="@+id/gl_start"
-            app:layout_constraintTop_toBottomOf="@+id/layout_title">
+            app:layout_constraintTop_toBottomOf="@+id/iv_thumbnail"
+            app:layout_constraintVertical_weight="1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_recipe_info"
@@ -41,21 +60,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp">
-
-                <ImageView
-                    android:id="@+id/iv_thumbnail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginEnd="36dp"
-                    android:layout_marginBottom="30dp"
-                    android:scaleType="fitXY"
-                    app:imageUrl="@{viewModel.recipe.thumbnail}"
-                    app:layout_constraintBottom_toTopOf="@id/tv_recipe_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_recipe_name"
@@ -68,7 +72,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/tv_recipe_description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_thumbnail" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_recipe_description"
