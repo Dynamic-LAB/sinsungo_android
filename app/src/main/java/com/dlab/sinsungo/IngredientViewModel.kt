@@ -11,26 +11,31 @@ import kotlinx.coroutines.withContext
 class IngredientViewModel : ViewModel() {
     private val _ingredients = MutableLiveData<List<IngredientModel>>()
     private val _innerList = mutableListOf<IngredientModel>()
-    private val _postFlag = MutableLiveData<Boolean>()
-    private val _inputIngredient = MutableLiveData<IngredientModel>(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+    private val _dialogDismissFlag = MutableLiveData<Boolean>()
+    private val _inputIngredient =
+        MutableLiveData<IngredientModel>(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+    private val _isModify = MutableLiveData<Boolean>()
+    private val _position = MutableLiveData<Int>()
 
     val ingredients: MutableLiveData<List<IngredientModel>> = _ingredients
-    val postFlag: MutableLiveData<Boolean> = _postFlag
+    val dialogDismissFlag: MutableLiveData<Boolean> = _dialogDismissFlag
     val inputIngredient: MutableLiveData<IngredientModel> = _inputIngredient
+    val isModify: MutableLiveData<Boolean> = _isModify
 
     init {
         requestGetIngredients(6) // 나중에 냉장고 id 받아줘야함
     }
 
+    // select all
     fun requestGetIngredients(refID: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             IngredientRepository.getIngredient(refID).let { response ->
                 if (response.isSuccessful) {
-                    Log.d("get ingredient result", response.body().toString())
                     response.body()?.let {
                         withContext(Dispatchers.Main) {
                             _innerList.addAll(it)
                             _ingredients.postValue(_innerList)
+                            Log.d("get ingredients result", it.toString())
                         }
                     }
                 }
@@ -38,41 +43,19 @@ class IngredientViewModel : ViewModel() {
         }
     }
 
-    /*fun requestPostIngredients(ingredientModel: IngredientModel) {
-        viewModelScope.launch(Dispatchers.IO) {
-            IngredientRepository.postIngredient(ingredientModel).let { response ->
-                if (response.isSuccessful) {
-                    Log.d("post ingredient result", response.body().toString())
-                    response.body()?.let {
-                        withContext(Dispatchers.Main) {
-                            _postFlag.postValue(true)
-                            _innerList.add(it)
-                            Log.d("add item", ingredientModel.toString())
-                            _ingredients.postValue(_innerList)
-                            Log.d("inner list", _innerList.toString())
-                        }
-                    }
-                }
-            }
-        }
-    }*/
-
-    fun requestPostIngredients() {
+    // 추가
+    fun requestPostIngredient() {
         viewModelScope.launch(Dispatchers.IO) {
             val data = _inputIngredient.value
-            data?.id = 6 // 나중에 냉장고 id 받아줘야함
-            Log.d("current inputIng", data.toString())
+            data?.id = 6
             IngredientRepository.postIngredient(data!!).let { response ->
                 if (response.isSuccessful) {
-                    Log.d("post ingredient result", response.body().toString())
                     response.body()?.let {
                         withContext(Dispatchers.Main) {
-                            _postFlag.postValue(true)
                             _innerList.add(it)
                             Log.d("add item", it.toString())
                             _ingredients.postValue(_innerList)
                             Log.d("inner list", _innerList.toString())
-                            _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
                         }
                     }
                 }
@@ -80,12 +63,34 @@ class IngredientViewModel : ViewModel() {
         }
     }
 
+    // 수정
+    fun requestPutIngredient() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val data = _inputIngredient.value
+            val position = _position.value
+            Log.d("current inputIng", data.toString())
+            IngredientRepository.putIngredient(6, data!!).let { response ->
+                if (response.isSuccessful) {
+                    Log.d("put ingredient result", response.body().toString())
+                    response.body()?.let {
+                        withContext(Dispatchers.Main) {
+                            Log.d("update item", it.toString())
+                            _innerList[position!!] = it
+                            Log.d("inner list", _innerList.toString())
+                            _ingredients.postValue(_innerList)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 삭제
     fun requestDeleteIngredient(ingredientModel: IngredientModel) {
         viewModelScope.launch(Dispatchers.IO) {
             val ingredientID = ingredientModel.id
             IngredientRepository.deleteIngredient(ingredientID).let { response ->
                 if (response.isSuccessful) {
-                    Log.d("del ingredient result", response.body().toString())
                     response.body()?.let {
                         withContext(Dispatchers.Main) {
                             _innerList.remove(ingredientModel)
@@ -99,14 +104,38 @@ class IngredientViewModel : ViewModel() {
         }
     }
 
-    fun setPostFlag(flag: Boolean) {
-        _postFlag.value = flag
+    // 다이얼로그 확인 버튼
+    fun inputOnClick() {
+        when (_isModify.value) {
+            true -> requestPutIngredient() // 수정
+            false -> requestPostIngredient() // 추가
+        }
+        _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+        _dialogDismissFlag.postValue(true)
     }
 
-    fun setInputModelValue(key: String, value: String) {
+    // 다이얼로그 취소 버튼
+    fun dismissOnClick() {
+        setInputIngredient(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+        setDialogDismissFlag(true)
+    }
+
+    fun setDialogDismissFlag(flag: Boolean) {
+        _dialogDismissFlag.value = flag
+    }
+
+    fun setInputIngredient(ingredientModel: IngredientModel) {
+        _inputIngredient.value = ingredientModel.copy()
+        _position.value = _innerList.indexOf(ingredientModel)
+    }
+
+    fun setModify(flag: Boolean) {
+        _isModify.value = flag
+    }
+
+    fun setInputIngredientValue(key: String, value: String) {
         val data = _inputIngredient.value
         when (key) {
-            "name" -> data?.name = value
             "exdate" -> data?.exdate = value
             "refCategory" -> data?.refCategory = value
             "countType" -> data?.countType = value

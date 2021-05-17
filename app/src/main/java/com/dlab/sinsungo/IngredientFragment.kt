@@ -36,7 +36,8 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
     private fun initRcView() {
         binding.rcviewIngredient.apply {
-            mIngredientListAdapter = IngredientListAdapter({ ingredientModel ->  deleteIngredient(ingredientModel) })
+            mIngredientListAdapter = IngredientListAdapter({ ingredientModel -> deleteIngredient(ingredientModel) },
+                { ingredientModel -> updateIngredientDialogShow(ingredientModel) })
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = mIngredientListAdapter
@@ -74,5 +75,12 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
     fun deleteIngredient(ingredientModel: IngredientModel) {
         viewModel.requestDeleteIngredient(ingredientModel)
+    }
+
+    fun updateIngredientDialogShow(ingredientModel: IngredientModel) {
+        val dialog = RefrigeratorSelfInputIngredientDialog()
+        viewModel.setModify(true)
+        viewModel.setInputIngredient(ingredientModel)
+        dialog.show(parentFragmentManager, "input ingredient dialog")
     }
 }
