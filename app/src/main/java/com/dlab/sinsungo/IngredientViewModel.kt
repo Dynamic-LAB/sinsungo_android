@@ -7,13 +7,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class IngredientViewModel : ViewModel() {
     private val _ingredients = MutableLiveData<List<IngredientModel>>()
     private val _innerList = mutableListOf<IngredientModel>()
     private val _dialogDismissFlag = MutableLiveData<Boolean>()
     private val _inputIngredient =
-        MutableLiveData<IngredientModel>(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+        MutableLiveData<IngredientModel>()
     private val _isModify = MutableLiveData<Boolean>()
     private val _position = MutableLiveData<Int>()
 
@@ -24,21 +25,30 @@ class IngredientViewModel : ViewModel() {
 
     init {
         requestGetIngredients(6) // 나중에 냉장고 id 받아줘야함
+        _inputIngredient.value = IngredientModel(null, "", 0, "", "냉장", "g", "유통기한")
     }
 
     // select all
     fun requestGetIngredients(refID: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            IngredientRepository.getIngredient(refID).let { response ->
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        withContext(Dispatchers.Main) {
-                            _innerList.addAll(it)
-                            _ingredients.postValue(_innerList)
-                            Log.d("get ingredients result", it.toString())
+            try {
+                IngredientRepository.getIngredient(refID).let { response ->
+                    if (response.isSuccessful) {
+                        Log.d("get ing response", response.toString())
+                        response.body()?.let {
+                            withContext(Dispatchers.Main) {
+                                _innerList.addAll(it)
+                                _ingredients.postValue(_innerList)
+                                Log.d("ingredient list", it.toString())
+                            }
                         }
+                    } else {
+                        Log.e("get ing not success", response.message())
                     }
                 }
+            } catch (e: IOException) {
+                Log.e("get ing ioexception", e.message.toString())
+                e.printStackTrace()
             }
         }
     }
@@ -48,17 +58,25 @@ class IngredientViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val data = _inputIngredient.value
             data?.id = 6
-            IngredientRepository.postIngredient(data!!).let { response ->
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        withContext(Dispatchers.Main) {
-                            _innerList.add(it)
-                            Log.d("add item", it.toString())
-                            _ingredients.postValue(_innerList)
-                            Log.d("inner list", _innerList.toString())
+            Log.d("input ing", data.toString())
+            try {
+                IngredientRepository.postIngredient(data!!).let { response ->
+                    if (response.isSuccessful) {
+                        Log.d("post ing response", response.toString())
+                        response.body()?.let {
+                            withContext(Dispatchers.Main) {
+                                _innerList.add(it)
+                                _ingredients.postValue(_innerList)
+                                Log.d("add ing item", it.toString())
+                            }
                         }
+                    } else {
+                        Log.e("post ing not success", response.message())
                     }
                 }
+            } catch (e: IOException) {
+                Log.e("post ing ioexception", e.message.toString())
+                e.printStackTrace()
             }
         }
     }
@@ -68,19 +86,25 @@ class IngredientViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val data = _inputIngredient.value
             val position = _position.value
-            Log.d("current inputIng", data.toString())
-            IngredientRepository.putIngredient(6, data!!).let { response ->
-                if (response.isSuccessful) {
-                    Log.d("put ingredient result", response.body().toString())
-                    response.body()?.let {
-                        withContext(Dispatchers.Main) {
-                            Log.d("update item", it.toString())
-                            _innerList[position!!] = it
-                            Log.d("inner list", _innerList.toString())
-                            _ingredients.postValue(_innerList)
+            Log.d("modify input ing", data.toString())
+            try {
+                IngredientRepository.putIngredient(6, data!!).let { response ->
+                    if (response.isSuccessful) {
+                        Log.d("put ing response", response.toString())
+                        response.body()?.let {
+                            withContext(Dispatchers.Main) {
+                                Log.d("update ing item", it.toString())
+                                _innerList[position!!] = it
+                                _ingredients.postValue(_innerList)
+                            }
                         }
+                    } else {
+                        Log.e("put ing not success", response.message())
                     }
                 }
+            } catch (e: IOException) {
+                Log.e("put ing ioexception", e.message.toString())
+                e.printStackTrace()
             }
         }
     }
@@ -89,17 +113,24 @@ class IngredientViewModel : ViewModel() {
     fun requestDeleteIngredient(ingredientModel: IngredientModel) {
         viewModelScope.launch(Dispatchers.IO) {
             val ingredientID = ingredientModel.id
-            IngredientRepository.deleteIngredient(ingredientID).let { response ->
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        withContext(Dispatchers.Main) {
-                            _innerList.remove(ingredientModel)
-                            Log.d("delete item", ingredientModel.toString())
-                            _ingredients.postValue(_innerList)
-                            Log.d("inner list", _innerList.toString())
+            Log.d("delete item", ingredientModel.toString())
+            try {
+                IngredientRepository.deleteIngredient(ingredientID).let { response ->
+                    if (response.isSuccessful) {
+                        Log.d("delete ing response", response.toString())
+                        response.body()?.let {
+                            withContext(Dispatchers.Main) {
+                                _innerList.remove(ingredientModel)
+                                _ingredients.postValue(_innerList)
+                            }
                         }
+                    } else {
+                        Log.e("delete ing not success", response.message())
                     }
                 }
+            } catch (e: IOException) {
+                Log.e("delete ing ioexception", e.message.toString())
+                e.printStackTrace()
             }
         }
     }
@@ -124,6 +155,7 @@ class IngredientViewModel : ViewModel() {
         _dialogDismissFlag.value = flag
     }
 
+    // 수정 때만 호출
     fun setInputIngredient(ingredientModel: IngredientModel) {
         _inputIngredient.value = ingredientModel.copy()
         _position.value = _innerList.indexOf(ingredientModel)
