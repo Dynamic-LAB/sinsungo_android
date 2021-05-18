@@ -1,5 +1,6 @@
 package com.dlab.sinsungo.data
 
+import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.data.model.User
@@ -56,4 +57,27 @@ interface RetrofitService {
     suspend fun delShopping(
         @Path("id") shopId: Int
     ): Response<JsonObject>
+
+    // Diet (식단)
+    @GET("/diet/refrigerator/{id}")
+    suspend fun getDiet(
+        @Path("id") refId: Int
+    ): Response<List<Diet>>
+
+    @POST("/diet")
+    suspend fun setDiet(
+        @Body diet: Diet
+    ): Response<Diet>
+
+    @PUT("/diet/{id}")
+    suspend fun editDiet(
+        @Path("id") refId: Int,
+        @Body diets: List<Diet>
+    ): Response<Diet>
+
+    @DELETE("/diet/{id}")
+    suspend fun delDiet(
+        @Path("id") dietId: Int
+    ): Response<JsonObject>
+
 }
