@@ -4,8 +4,8 @@ import com.dlab.sinsungo.IngredientModel
 import com.google.gson.annotations.SerializedName
 
 data class Diet(
-    @SerializedName("name")
-    val dietName: String,
+    @SerializedName("id")
+    val id: Int,
 
     @SerializedName("memo")
     val dietMemo: Int,
@@ -16,6 +16,6 @@ data class Diet(
     @SerializedName("memo")
     val dietMenus: List<String>,
 
-    @SerializedName("id")
+    @SerializedName("ingredients")
     val dietIngredients: List<IngredientModel>
 )
