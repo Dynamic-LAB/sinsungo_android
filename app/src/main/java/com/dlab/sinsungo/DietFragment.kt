@@ -107,7 +107,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     }
 
     private fun deleteDietItem(diet: Diet) {
-
+        viewModel.deleteDiet(diet)
     }
 
     private fun editDietItem(diet: Diet) {
