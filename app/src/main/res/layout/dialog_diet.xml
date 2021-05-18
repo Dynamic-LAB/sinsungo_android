@@ -105,7 +105,7 @@
 
             <TextView
                 android:id="@+id/tv_dialog_memo_title"
-                style="@style/Text.Bold_14dp_Black"
+                style="@style/Text.Bold_14_Black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -163,7 +163,7 @@
 
             <TextView
                 android:id="@+id/tv_dialog_menu_title"
-                style="@style/Text.Bold_14dp_Black"
+                style="@style/Text.Bold_14_Black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -230,7 +230,7 @@
 
             <TextView
                 android:id="@+id/tv_dialog_ingredient_title"
-                style="@style/Text.Bold_14dp_Black"
+                style="@style/Text.Bold_14_Black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

@@ -5,12 +5,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import java.util.*
 import kotlin.math.abs
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
 import java.text.SimpleDateFormat
@@ -97,5 +99,32 @@ object CustomBindingAdapter {
     fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
         val adapter = recyclerView.adapter as ShoppingListAdapter
         adapter.submitList(shopping?.toMutableList())
+    }
+
+    @BindingAdapter("tvDietDate")
+    @JvmStatic
+    fun setDietDate(view: TextView, value: String) {
+        view.text = value
+    }
+
+    @BindingAdapter("tvDietMenus")
+    @JvmStatic
+    fun setDietMenus(view: TextView, value: List<String>) {
+        val diets = value.filterNotNull()
+        view.text = diets.joinToString(",")
+    }
+
+    @BindingAdapter("tvDietIngredient")
+    @JvmStatic
+    fun setDietIngredient(view: TextView, value: List<IngredientModel>) {
+        val valueString: List<String> = value.map { it.name }
+        view.text = valueString.joinToString(",")
+    }
+
+    @BindingAdapter("dietData")
+    @JvmStatic
+    fun bindDiet(recyclerView: RecyclerView, diet: List<Diet>?) {
+        val adapter = recyclerView.adapter as DietListAdapter
+        adapter.submitList(diet?.toMutableList())
     }
 }

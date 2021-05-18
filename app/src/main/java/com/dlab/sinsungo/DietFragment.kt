@@ -1,23 +1,44 @@
 package com.dlab.sinsungo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dlab.sinsungo.data.model.Diet
+import com.dlab.sinsungo.databinding.DialogDietBinding
 import com.dlab.sinsungo.databinding.FragmentDietBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.dlab.sinsungo.viewmodel.DietViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
 
 class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentDietBinding
+    private lateinit var dialogView: DialogDietBinding
+    private lateinit var dialog: CustomBottomSheetDiet
+    private lateinit var mDietListAdapter: DietListAdapter
+
+
+    private val viewModel: DietViewModel by viewModels()
+    private val REF_ID = 5
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDietBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        viewModel.diets.observe(viewLifecycleOwner) {
+            binding.listSize = it.size
+        }
         initSpeedDialItem()
+        initRcView()
         binding.sdvDiet.setOnActionSelectedListener(this)
         return binding.root
     }
@@ -51,7 +72,8 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_diet -> {
-                val dialog = CustomBottomSheetDiet()
+                dialog = CustomBottomSheetDiet()
+                dialogView = DialogDietBinding.inflate(layoutInflater)
                 dialog.show(requireActivity().supportFragmentManager, "Custom_bottom_sheet_diet")
                 binding.sdvDiet.close()
             }
@@ -61,6 +83,35 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
             }
         }
         return true
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initRcView() {
+        val swipeHelperCallback = SwipeHelperCallback().apply {
+            setClamp(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130f, context?.resources?.displayMetrics))
+            setType("diet")
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.rcviewDiet)
+
+        binding.rcviewDiet.apply {
+            mDietListAdapter = DietListAdapter({ diet -> deleteDietItem(diet) }, { diet -> editDietItem(diet) })
+            layoutManager = LinearLayoutManager(this.context)
+            addItemDecoration(ItemDecoration())
+            adapter = mDietListAdapter
+            setOnTouchListener { _, _ ->
+                swipeHelperCallback.removePreviousClamp(this)
+                false
+            }
+        }
+    }
+
+    private fun deleteDietItem(diet: Diet) {
+
+    }
+
+    private fun editDietItem(diet: Diet) {
+
     }
 
 }

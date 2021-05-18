@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <data>
+        <variable
+            name="listSize"
+            type="int"/>
+        <variable
+            name="viewModel"
+            type="com.dlab.sinsungo.viewmodel.DietViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -10,8 +17,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcview_diet"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
+            app:dietData="@{viewModel.diets}"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="parent" />
@@ -20,6 +28,7 @@
             android:id="@+id/layout_describe_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{listSize==0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

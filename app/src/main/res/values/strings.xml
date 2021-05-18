@@ -87,9 +87,7 @@
     <string name="ref_format_over_exdate">%s에서 %d일 지났어요!</string>
 
     <!-- 식단 -->
-    <string name="diet_morning">아침 메뉴는</string>
-    <string name="diet_lunch">점심 메뉴는</string>
-    <string name="diet_dinner">저녁 메뉴는</string>
+    <string name="diet_main_ingredient">주재료: </string>
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
     <string name="diet_use_ingredient">사용재료</string>
     <string name="diet_custom_edit">직접 입력</string>

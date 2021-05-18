@@ -8,12 +8,12 @@ data class Diet(
     val id: Int,
 
     @SerializedName("memo")
-    val dietMemo: Int,
+    val dietMemo: String,
 
     @SerializedName("date")
     val dietDate: String,
 
-    @SerializedName("memo")
+    @SerializedName("menus")
     val dietMenus: List<String>,
 
     @SerializedName("ingredients")

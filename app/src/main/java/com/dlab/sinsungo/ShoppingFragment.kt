@@ -212,6 +212,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private fun initRcView() {
         val swipeHelperCallback = SwipeHelperCallback().apply {
             setClamp(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130f, context?.resources?.displayMetrics))
+            setType("shopping")
         }
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.rcviewShopping)
