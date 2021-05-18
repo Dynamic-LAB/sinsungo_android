@@ -24,7 +24,7 @@ class IngredientViewModel : ViewModel() {
     val isModify: MutableLiveData<Boolean> = _isModify
 
     init {
-        requestGetIngredients(6) // 나중에 냉장고 id 받아줘야함출
+        requestGetIngredients(6) // 나중에 냉장고 id 받아줘야함
         _inputIngredient.value = IngredientModel(null, "", 0, "", "냉장", "g", "유통기한")
     }
 
@@ -155,7 +155,7 @@ class IngredientViewModel : ViewModel() {
         _dialogDismissFlag.value = flag
     }
 
-    // 수정 때만 호
+    // 수정 때만 호출
     fun setInputIngredient(ingredientModel: IngredientModel) {
         _inputIngredient.value = ingredientModel.copy()
         _position.value = _innerList.indexOf(ingredientModel)
