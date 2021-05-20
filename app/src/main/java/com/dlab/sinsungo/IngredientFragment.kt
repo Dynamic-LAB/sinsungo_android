@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.annotation.MenuRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.FragmentIngredientBinding
 
 class IngredientFragment(private val refCategory: String) : Fragment() {
     private lateinit var binding: FragmentIngredientBinding
-    private val viewModel: IngredientViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: IngredientViewModel by activityViewModels()
     private lateinit var mIngredientListAdapter: IngredientListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -17,6 +17,7 @@ import androidx.annotation.MenuRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.dlab.sinsungo.databinding.DialogSelfInputIngredientBinding
 import java.text.SimpleDateFormat
@@ -24,7 +25,7 @@ import java.util.*
 
 class RefrigeratorSelfInputIngredientDialog : DialogFragment() {
     private lateinit var binding: DialogSelfInputIngredientBinding
-    private val viewModel: IngredientViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: IngredientViewModel by activityViewModels()
 
     private val mCalendar = Calendar.getInstance()
 
