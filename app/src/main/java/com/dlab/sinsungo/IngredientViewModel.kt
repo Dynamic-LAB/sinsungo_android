@@ -68,6 +68,8 @@ class IngredientViewModel : ViewModel() {
                                 _innerList.add(it)
                                 _ingredients.postValue(_innerList)
                                 Log.d("add ing item", it.toString())
+                                _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+                                _dialogDismissFlag.postValue(true)
                             }
                         }
                     } else {
@@ -96,12 +98,15 @@ class IngredientViewModel : ViewModel() {
                                 Log.d("update ing item", it.toString())
                                 _innerList[position!!] = it
                                 _ingredients.postValue(_innerList)
+                                _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
+                                _dialogDismissFlag.postValue(true)
                             }
                         }
                     } else {
                         Log.e("put ing not success", response.message())
                     }
                 }
+
             } catch (e: IOException) {
                 Log.e("put ing ioexception", e.message.toString())
                 e.printStackTrace()
@@ -141,8 +146,6 @@ class IngredientViewModel : ViewModel() {
             true -> requestPutIngredient() // 수정
             false -> requestPostIngredient() // 추가
         }
-        _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
-        _dialogDismissFlag.postValue(true)
     }
 
     // 다이얼로그 취소 버튼
