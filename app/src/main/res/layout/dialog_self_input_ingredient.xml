@@ -22,7 +22,8 @@
             android:id="@+id/tv_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dial_ref_title"
+            app:span_text="@{viewmodel.isModify == true ? @string/dial_ref_title_modify : @string/dial_ref_title_add}"
+            app:span_color="@{@color/royal_blue}"
             android:textAppearance="@style/Text.Bold_24_Black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -89,6 +90,7 @@
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_ingredient"
+                    android:selectAllOnFocus="true"
                     android:text="@={viewmodel.inputIngredient.name}"
                     android:inputType="text"
                     android:maxLength="20"
@@ -303,14 +305,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/cl_exdate_type">
 
-                <ImageButton
-                    android:id="@+id/btn_open_datePicker"
+                <ImageView
+                    android:id="@+id/iv_exdate_calendar"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/ic_calender"
-                    android:tint="@color/dim_grey"
+                    app:tint="@color/dim_grey"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -329,7 +331,7 @@
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btn_open_datePicker"
+                    app:layout_constraintStart_toEndOf="@+id/iv_exdate_calendar"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -405,6 +407,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="@string/btn_cancel"
+                android:onClick="@{() -> viewmodel.dismissOnClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_accept"
                 app:layout_constraintStart_toStartOf="parent"
@@ -416,7 +419,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_accept"
-                android:onClick="@{() -> viewmodel.requestPostIngredients()}"
+                android:onClick="@{() -> viewmodel.inputOnClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

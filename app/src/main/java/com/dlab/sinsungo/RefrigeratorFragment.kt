@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,7 +16,7 @@ import com.leinardi.android.speeddial.SpeedDialView
 
 class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentRefrigeratorBinding
-    private val viewModel: IngredientViewModel by viewModels()
+    private val viewModel: IngredientViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRefrigeratorBinding.inflate(inflater, container, false)
@@ -77,8 +78,9 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_edit -> {
-                val dialog = RefrigeratorCustomDialog()
-                dialog.show(childFragmentManager, "refrigerator_custom_dialog")
+                val dialog = RefrigeratorSelfInputIngredientDialog()
+                viewModel.setModify(false)
+                dialog.show(childFragmentManager, "input ingredient dialog")
                 binding.sdvRefrigerator.close()
             }
         }

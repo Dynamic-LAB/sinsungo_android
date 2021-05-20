@@ -6,4 +6,6 @@ object IngredientRepository {
     suspend fun getIngredient(refID: Int) = client.getIngredient(refID)
     suspend fun postIngredient(ingredientModel: IngredientModel) = client.postIngredient(ingredientModel)
     suspend fun deleteIngredient(ingredientID: Int?) = client.deleteIngredient(ingredientID)
+    suspend fun putIngredient(refID: Int, ingredientModel: IngredientModel) =
+        client.putIngredient(refID, ingredientModel)
 }

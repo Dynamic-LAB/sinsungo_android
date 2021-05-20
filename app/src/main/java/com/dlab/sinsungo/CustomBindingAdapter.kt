@@ -1,6 +1,10 @@
 package com.dlab.sinsungo
 
 import android.graphics.drawable.Drawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -16,8 +20,6 @@ import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.math.abs
 
 object CustomBindingAdapter {
     @BindingConversion
@@ -99,6 +101,19 @@ object CustomBindingAdapter {
     fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
         val adapter = recyclerView.adapter as ShoppingListAdapter
         adapter.submitList(shopping?.toMutableList())
+    }
+
+    @BindingAdapter("span_text", "span_color")
+    @JvmStatic
+    fun setDialogTitle(textView: TextView, value: String, color: Int) {
+        val spannableString = SpannableString(value)
+        spannableString.setSpan(
+            ForegroundColorSpan(color),
+            7,
+            9,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        textView.text = spannableString
     }
 
     @BindingAdapter("tvDietDate")

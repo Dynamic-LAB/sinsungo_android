@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.annotation.MenuRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.FragmentIngredientBinding
 
 class IngredientFragment(private val refCategory: String) : Fragment() {
     private lateinit var binding: FragmentIngredientBinding
-    private val viewModel: IngredientViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewModel: IngredientViewModel by activityViewModels()
     private lateinit var mIngredientListAdapter: IngredientListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -36,7 +37,8 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
     private fun initRcView() {
         binding.rcviewIngredient.apply {
-            mIngredientListAdapter = IngredientListAdapter({ ingredientModel ->  deleteIngredient(ingredientModel) })
+            mIngredientListAdapter = IngredientListAdapter({ ingredientModel -> deleteIngredient(ingredientModel) },
+                { ingredientModel -> updateIngredientDialogShow(ingredientModel) })
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = mIngredientListAdapter
@@ -74,5 +76,12 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
 
     fun deleteIngredient(ingredientModel: IngredientModel) {
         viewModel.requestDeleteIngredient(ingredientModel)
+    }
+
+    fun updateIngredientDialogShow(ingredientModel: IngredientModel) {
+        val dialog = RefrigeratorSelfInputIngredientDialog()
+        viewModel.setModify(true)
+        viewModel.setInputIngredient(ingredientModel)
+        dialog.show(parentFragmentManager, "input ingredient dialog")
     }
 }

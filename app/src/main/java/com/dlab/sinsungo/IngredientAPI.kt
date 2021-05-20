@@ -19,4 +19,10 @@ interface IngredientAPI {
     suspend fun deleteIngredient(
         @Path("id") ingredientID: Int?
     ): Response<JSONObject>
+
+    @PUT("/refrigerator/ingredient/{id}")
+    suspend fun putIngredient(
+        @Path("id") refID: Int,
+        @Body ingredientModel: IngredientModel
+    ): Response<IngredientModel>
 }
