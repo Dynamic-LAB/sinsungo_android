@@ -1,5 +1,6 @@
 package com.dlab.sinsungo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
@@ -78,9 +78,14 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_custom_edit -> {
-                val dialog = RefrigeratorSelfInputIngredientDialog()
+                val dialog = IngredientSelfInputDialog()
                 viewModel.setModify(false)
                 dialog.show(childFragmentManager, "input ingredient dialog")
+                binding.sdvRefrigerator.close()
+            }
+            R.id.fab_scan_receipt -> {
+                val intent = Intent(requireActivity(), ReceiptOCRActivity::class.java)
+                startActivity(intent)
                 binding.sdvRefrigerator.close()
             }
         }
