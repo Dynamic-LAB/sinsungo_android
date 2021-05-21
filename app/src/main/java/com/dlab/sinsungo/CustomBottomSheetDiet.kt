@@ -1,5 +1,6 @@
 package com.dlab.sinsungo
 
+import android.R.*
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -33,6 +34,7 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDietBinding
     private val mCalendar = Calendar.getInstance()
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val chipList = mutableListOf<String>()
 
     private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
@@ -82,11 +84,26 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
             if (action == EditorInfo.IME_ACTION_DONE) {
                 val et = v as EditText
                 val name = et.text.toString()
-                if (name == "") {
-                    Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
-                } else {
-                    binding.flexMenu.addNewChip(name)
-                    et.text = null
+                when {
+                    name == "" -> {
+                        Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
+                    }
+                    chipList.size == 9 -> {
+                        binding.flexMenu.addNewChip(name)
+                        binding.etMenuName.height = 0
+                        et.text = null
+                        et.hint = null
+                        et.setBackgroundColor(resources.getColor(color.transparent))
+                        et.clearFocus()
+                        et.isClickable = false
+                    }
+                    name in chipList -> {
+                        Toast.makeText(context, "이미 존재하는 메뉴입니다!", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        binding.flexMenu.addNewChip(name)
+                        et.text = null
+                    }
                 }
             }
             false
@@ -135,8 +152,18 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
             ViewGroup.MarginLayoutParams.WRAP_CONTENT
         )
         layoutParams.rightMargin = context.dpToPx(4)
-        chip.setOnCloseIconClickListener { removeView(chip as View) }
+        chip.setOnCloseIconClickListener {
+            if (chipList.size <= 10) {
+                binding.etMenuName.height = 16
+                binding.etMenuName.hint = getString(R.string.dial_hint_edit_menu)
+                binding.etMenuName.setBackgroundResource(androidx.appcompat.R.drawable.abc_edit_text_material)
+                binding.etMenuName.isClickable = true
+            }
+            removeView(chip as View)
+            chipList.remove(chip.text)
+        }
         addView(chip, childCount - 1, layoutParams)
+        chipList.add(content)
     }
 }
 
