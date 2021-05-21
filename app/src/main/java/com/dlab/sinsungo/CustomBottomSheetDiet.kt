@@ -18,7 +18,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.DialogDietBinding
+import com.dlab.sinsungo.viewmodel.DietViewModel
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -29,6 +32,9 @@ import kotlin.math.roundToInt
 class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDietBinding
     private val mCalendar = Calendar.getInstance()
+    private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
+
+    private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
     private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         mCalendar.set(Calendar.YEAR, year)
@@ -41,12 +47,19 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DialogDietBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
         init()
         updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
         return binding.root
     }
 
     private fun init() {
+        binding.rcDietIngredient.apply {
+            mIngredientListAdapter = DietIngredientListAdapter({ ingredient -> setIngredient(ingredient) },
+                { ingredient -> setIngredient(ingredient) })
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = mIngredientListAdapter
+        }
         //TODO: 이미 추가 되어 있는 메뉴 추가
 
         binding.btnCancel.setOnClickListener {
@@ -72,12 +85,17 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
                 if (name == "") {
                     Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
                 } else {
-                    binding.flexMenu.addNewChip(name, false)
+                    binding.flexMenu.addNewChip(name)
                     et.text = null
                 }
             }
             false
         }
+    }
+
+    private fun setIngredient(ingredient: IngredientModel) {
+        // ON
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -108,11 +126,9 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     }
 
 
-    private fun FlexboxLayout.addNewChip(content: String, Flag: Boolean) {
+    private fun FlexboxLayout.addNewChip(content: String) {
         val chip = LayoutInflater.from(context).inflate(R.layout.chip, null) as Chip
-        if (Flag) {
-            chip.setChipBackgroundColorResource(R.color.almond_frost50)
-        }
+
         chip.text = content
         val layoutParams = ViewGroup.MarginLayoutParams(
             ViewGroup.MarginLayoutParams.WRAP_CONTENT,

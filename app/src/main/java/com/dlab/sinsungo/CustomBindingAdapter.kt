@@ -4,22 +4,19 @@ import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
-import java.util.*
-import kotlin.math.abs
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
-import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.abs
 
 object CustomBindingAdapter {
     @BindingConversion
@@ -141,5 +138,12 @@ object CustomBindingAdapter {
     fun bindDiet(recyclerView: RecyclerView, diet: List<Diet>?) {
         val adapter = recyclerView.adapter as DietListAdapter
         adapter.submitList(diet?.toMutableList())
+    }
+
+    @BindingAdapter("dietIngredientData")
+    @JvmStatic
+    fun bindIngredientDiet(recyclerView: RecyclerView, value: List<IngredientModel>?) {
+        val adapter = recyclerView.adapter as DietIngredientListAdapter
+        adapter.submitList(value?.toMutableList())
     }
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,8 +74,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         when (actionItem?.id) {
             R.id.fab_custom_diet -> {
                 dialog = CustomBottomSheetDiet()
-                dialogView = DialogDietBinding.inflate(layoutInflater)
-                dialog.show(requireActivity().supportFragmentManager, "Custom_bottom_sheet_diet")
+                dialog.show(childFragmentManager, "Custom_bottom_sheet_diet")
                 binding.sdvDiet.close()
             }
             R.id.fab_add_diet -> {
