@@ -4,6 +4,9 @@
 
     <!-- 인터넷 사용 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 -->
+
+    <uses-feature android:name="android.hardware.camera" /> <!-- 카메라 기능 사용 -->
 
     <application
         android:name=".GlobalApplication"
@@ -13,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Sinsungo">
         <activity android:name=".SplashActivity"
             android:theme="@style/Theme.Splash">
@@ -24,6 +28,8 @@
         <activity android:name=".ui.LoginActivity"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.RecipeDetailActivity"/>
+        <activity android:name=".CameraXOCRActivity"/>
+        <activity android:name=".ReceiptOCRActivity" />
 
         <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
