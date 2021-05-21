@@ -18,13 +18,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.dlab.sinsungo.databinding.DialogSelfInputIngredientBinding
+import com.dlab.sinsungo.databinding.DialogIngredientSelfInputBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RefrigeratorSelfInputIngredientDialog : DialogFragment() {
-    private lateinit var binding: DialogSelfInputIngredientBinding
+class IngredientSelfInputDialog : DialogFragment() {
+    private lateinit var binding: DialogIngredientSelfInputBinding
     private val viewModel: IngredientViewModel by activityViewModels()
 
     private val mCalendar = Calendar.getInstance()
@@ -67,7 +66,7 @@ class RefrigeratorSelfInputIngredientDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogSelfInputIngredientBinding.inflate(layoutInflater)
+        binding = DialogIngredientSelfInputBinding.inflate(layoutInflater)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         val dialog = AlertDialog.Builder(requireContext())

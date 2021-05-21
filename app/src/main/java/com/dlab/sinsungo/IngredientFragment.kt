@@ -1,7 +1,6 @@
 package com.dlab.sinsungo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.FragmentIngredientBinding
 
@@ -79,7 +77,7 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
     }
 
     fun updateIngredientDialogShow(ingredientModel: IngredientModel) {
-        val dialog = RefrigeratorSelfInputIngredientDialog()
+        val dialog = IngredientSelfInputDialog()
         viewModel.setModify(true)
         viewModel.setInputIngredient(ingredientModel)
         dialog.show(parentFragmentManager, "input ingredient dialog")
