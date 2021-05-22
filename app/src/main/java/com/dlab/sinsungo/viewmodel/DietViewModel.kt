@@ -54,9 +54,8 @@ class DietViewModel : ViewModel() {
         }
     }
 
-
-
     fun setDiet(newDiet: Diet?) {
+        Log.d("request diet data", newDiet.toString())
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 newDiet?.let { it ->

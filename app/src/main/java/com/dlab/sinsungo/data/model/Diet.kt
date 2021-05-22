@@ -14,7 +14,7 @@ data class Diet(
     val dietDate: String,
 
     @SerializedName("menus")
-    val dietMenus: List<String>,
+    val dietMenus: List<String?>,
 
     @SerializedName("ingredients")
     val dietIngredients: List<IngredientModel>

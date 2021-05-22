@@ -3,7 +3,6 @@ package com.dlab.sinsungo
 import android.R.color
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -14,7 +13,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
@@ -25,6 +23,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.databinding.DialogDietBinding
 import com.dlab.sinsungo.viewmodel.DietViewModel
 import com.google.android.flexbox.FlexboxLayout
@@ -40,9 +39,10 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDietBinding
     private val mCalendar = Calendar.getInstance()
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
-    private val chipList = mutableListOf<String>()
+    private val chipList = mutableListOf<String?>()
 
-    var tracker: SelectionTracker<Long>? = null
+    private var refId = 5
+    private var tracker: SelectionTracker<Long>? = null
     private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
     private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -53,7 +53,7 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DialogDietBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
@@ -83,7 +83,21 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
             this.dismiss()
         }
         binding.btnSave.setOnClickListener {
-            //TODO: 저장하는 과정 추가
+            for (i in 1..(10 - chipList.size)) {
+                chipList.add(null)
+            }
+            val mDateFormat = "yyyy-MM-dd"
+            val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
+            val mDateString = mSimpleDateFormat.format(mCalendar.time)
+            val newDiet = Diet(
+                refId,
+                binding.etMemo.text.toString(),
+                mDateString,
+                chipList,
+                mIngredientListAdapter.ingredientList
+            )
+            viewModel.setDiet(newDiet)
+            this.dismiss()
         }
         binding.constDate.setOnClickListener {
             DatePickerDialog(
@@ -126,7 +140,7 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     }
 
     private fun trackSetting() {
-        tracker = SelectionTracker.Builder<Long>(
+        tracker = SelectionTracker.Builder(
             "mySelection",
             binding.rcDietIngredient,
             StableIdKeyProvider(binding.rcDietIngredient),
