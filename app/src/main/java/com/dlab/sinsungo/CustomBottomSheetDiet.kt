@@ -3,6 +3,7 @@ package com.dlab.sinsungo
 import android.R.color
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
@@ -26,6 +28,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.DialogDietBinding
 import com.dlab.sinsungo.viewmodel.DietViewModel
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import java.text.SimpleDateFormat
@@ -53,7 +57,12 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DialogDietBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
-
+        dialog?.setOnShowListener {
+            val bottomSheet = it as BottomSheetDialog
+            val sheetInternal: View = bottomSheet.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+            BottomSheetBehavior.from(sheetInternal).state = BottomSheetBehavior.STATE_EXPANDED
+            BottomSheetBehavior.from(sheetInternal).isDraggable = false
+        }
         dialogInit()
         trackSetting()
         updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
