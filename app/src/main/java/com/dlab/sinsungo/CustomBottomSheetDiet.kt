@@ -1,11 +1,9 @@
 package com.dlab.sinsungo
 
-import android.R.*
+import android.R.color
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -20,6 +18,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.databinding.DialogDietBinding
 import com.dlab.sinsungo.viewmodel.DietViewModel
@@ -36,6 +38,7 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private val chipList = mutableListOf<String>()
 
+    var tracker: SelectionTracker<Long>? = null
     private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
     private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -50,15 +53,18 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DialogDietBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
-        init()
+
+        dialogInit()
+        trackSetting()
         updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+
+
         return binding.root
     }
 
-    private fun init() {
+    private fun dialogInit() {
         binding.rcDietIngredient.apply {
-            mIngredientListAdapter = DietIngredientListAdapter({ ingredient -> setIngredient(ingredient) },
-                { ingredient -> setIngredient(ingredient) })
+            mIngredientListAdapter = DietIngredientListAdapter()
             layoutManager = LinearLayoutManager(this.context)
             adapter = mIngredientListAdapter
         }
@@ -110,8 +116,17 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setIngredient(ingredient: IngredientModel) {
-        // ON
+    private fun trackSetting() {
+        tracker = SelectionTracker.Builder<Long>(
+            "mySelection",
+            binding.rcDietIngredient,
+            StableIdKeyProvider(binding.rcDietIngredient),
+            MyItemDetailsLookup(binding.rcDietIngredient),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+        mIngredientListAdapter.tracker = tracker
 
     }
 

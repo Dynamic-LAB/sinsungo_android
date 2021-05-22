@@ -62,7 +62,7 @@
                 android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/all_img_description"
-                android:src="@drawable/bnt_circle"
+                android:background="@drawable/select_diet_ingredient"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
