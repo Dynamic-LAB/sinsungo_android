@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.MyPageActivity">
+
+    <data>
+        <variable
+            name="view"
+            type="com.dlab.sinsungo.ui.MyPageActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.dlab.sinsungo.viewmodel.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="21dp">
+
+        <include
+            android:id="@+id/layout_title"
+            layout="@layout/layout_title_with_back_btn"
+            app:title="@{@string/all_mypage}"
+            app:activity="@{view}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_member"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_bottom"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/cl_btns"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@+id/layout_title"
+            app:layout_constraintVertical_weight="0.22"
+            app:master="@{viewModel.refrigerator.master}"
+            app:members="@{viewModel.refrigerator.members}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_btns"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_member"
+            app:layout_constraintVertical_weight="0.78">
+
+            <TextView
+                android:id="@+id/tv_add_member"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_add_member"
+                android:onClick="@{()->view.showDialog(@string/my_add_member)}"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_set_noti"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_set_noti"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_setting_notice"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_notice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_add_member" />
+
+            <TextView
+                android:id="@+id/tv_notice"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_notify"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_help"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_set_noti" />
+
+            <TextView
+                android:id="@+id/tv_help"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_help"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_contact"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_notice" />
+
+            <TextView
+                android:id="@+id/tv_contact"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_contact"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_law"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_help" />
+
+            <TextView
+                android:id="@+id/tv_law"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_law"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_contact" />
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_logout"
+                android:onClick="@{()->view.showDialog(@string/my_logout)}"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toTopOf="@+id/tv_withdraw"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_law" />
+
+            <TextView
+                android:id="@+id/tv_withdraw"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:text="@string/my_withdraw"
+                android:onClick="@{()->view.showDialog(@string/my_withdraw)}"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_logout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="22dp"
+            android:orientation="vertical" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_end="22dp"
+            android:orientation="vertical" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
