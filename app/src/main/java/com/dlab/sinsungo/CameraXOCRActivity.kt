@@ -66,7 +66,7 @@ class CameraXOCRActivity : AppCompatActivity() {
             .setRationaleConfirmText(R.string.btn_accept)
             .setDeniedMessage(R.string.ocr_denied_permission)
             .setDeniedCloseButtonText(R.string.ocr_close)
-            .setPermissions(REQUIRED_PERMISSIONS)
+            .setPermissions(REQUIRED_PERMISSION)
             .check()
     }
 
@@ -110,7 +110,7 @@ class CameraXOCRActivity : AppCompatActivity() {
 
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.KOREA).format(System.currentTimeMillis()) + ".jpg"
+            SimpleDateFormat(FILENAME_FORMAT, Locale.KOREA).format(System.currentTimeMillis()) + ".jpeg"
         )
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
@@ -138,6 +138,6 @@ class CameraXOCRActivity : AppCompatActivity() {
         private const val TAG = "Receipt OCR CameraX"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private const val REQUIRED_PERMISSIONS = Manifest.permission.CAMERA
+        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
 }

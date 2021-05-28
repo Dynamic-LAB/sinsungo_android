@@ -48,7 +48,7 @@ class IngredientSelfInputDialog : DialogFragment() {
     }
 
     private val mDatePickerDismissListener = DialogInterface.OnDismissListener {
-        if (binding.tvExdateInput.text.isEmpty() || binding.tvExdateInput.text.isBlank()) {
+        if (viewModel.inputIngredient.value!!.exdate.isEmpty() || viewModel.inputIngredient.value!!.exdate.isBlank()) {
             binding.tvInputNoti3.visibility = View.VISIBLE
             binding.ivExdateCalendar.drawable.setTint(
                 ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
@@ -63,6 +63,21 @@ class IngredientSelfInputDialog : DialogFragment() {
             binding.lineUnderExdateInput.background =
                 context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
         }
+//        if (binding.tvExdateInput.text.isEmpty() || binding.tvExdateInput.text.isBlank()) {
+//            binding.tvInputNoti3.visibility = View.VISIBLE
+//            binding.ivExdateCalendar.drawable.setTint(
+//                ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+//            )
+//            binding.lineUnderExdateInput.background =
+//                context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+//        } else {
+//            binding.tvInputNoti3.visibility = View.GONE
+//            binding.ivExdateCalendar.drawable.setTint(
+//                ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+//            )
+//            binding.lineUnderExdateInput.background =
+//                context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+//        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -169,6 +184,9 @@ class IngredientSelfInputDialog : DialogFragment() {
             )
             binding.lineUnderExdateInput.background =
                 context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+            val dateValue = dateFormat.parse(viewModel.inputIngredient.value!!.exdate)
+            mCalendar.time = dateValue
         }
     }
 
