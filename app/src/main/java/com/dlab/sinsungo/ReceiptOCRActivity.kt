@@ -40,8 +40,8 @@ class ReceiptOCRActivity : AppCompatActivity() {
 
     private lateinit var functions: FirebaseFunctions
     private lateinit var auth: FirebaseAuth
-    private val EMAIL = "lksy1294@gmail.com"
-    private val PASS_WORD = "asdf1111"
+    private val EMAIL = getString(R.string.firebase_cf_auth_email)
+    private val PASS_WORD = getString(R.string.firebase_cf_auth_password)
 
     private lateinit var mReceiptListAdapter: ReceiptListAdapter
 
