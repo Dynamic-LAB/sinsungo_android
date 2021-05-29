@@ -16,9 +16,9 @@ import java.io.IOException
 
 class DietViewModel : ViewModel() {
     private val _dietList = mutableListOf<Diet>()
+    private val _ingredientList = mutableListOf<IngredientModel>()
     private val _allIngredientList = mutableListOf<IngredientModel>()
-    private val _useIngredientList = mutableListOf<IngredientModel>()
-    private val _notUseIngredientList = mutableListOf<IngredientModel>()
+    private lateinit var _useIngredientList: List<IngredientModel>
     private var _diets = MutableLiveData<List<Diet>>()
     private var _ingredients = MutableLiveData<List<IngredientModel>>()
     val diets: MutableLiveData<List<Diet>> = _diets
@@ -30,6 +30,23 @@ class DietViewModel : ViewModel() {
         requestGetIngredients(5)
     }
 
+    fun setIngredients(useIngredientModel: List<IngredientModel>) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _allIngredientList.clear()
+                _useIngredientList = useIngredientModel
+                _allIngredientList.addAll(useIngredientModel)
+                _allIngredientList.addAll(_ingredientList)
+                _ingredients.postValue(_allIngredientList.distinct())
+                Log.d("allIngredient", _allIngredientList.toString())
+            } catch (e: IOException) {
+                Log.e("get ing ioexception", e.message.toString())
+                e.printStackTrace()
+            }
+        }
+    }
+
     // all ref data
     fun requestGetIngredients(refID: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -39,8 +56,8 @@ class DietViewModel : ViewModel() {
                         Log.d("get ing response", response.toString())
                         response.body()?.let {
                             withContext(Dispatchers.Main) {
-                                _allIngredientList.addAll(it)
-                                _ingredients.postValue(_allIngredientList)
+                                _ingredientList.addAll(it)
+                                _ingredients.postValue(_ingredientList)
                             }
                         }
                     } else {
@@ -102,6 +119,7 @@ class DietViewModel : ViewModel() {
     }
 
     fun editDiet(refId: Int, diet: Diet, newDiet: Diet) {
+        Log.d("보낸 data", diet.toString() + newDiet.toString())
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 DietRepository.editDiet(refId, listOf(diet, newDiet)).let {

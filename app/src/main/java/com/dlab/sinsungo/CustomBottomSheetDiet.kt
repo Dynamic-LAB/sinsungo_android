@@ -18,10 +18,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.databinding.DialogDietBinding
@@ -35,14 +31,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-class CustomBottomSheetDiet : BottomSheetDialogFragment() {
+class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDietBinding
     private val mCalendar = Calendar.getInstance()
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
-    private val chipList = mutableListOf<String?>()
+    private var chipList = mutableListOf<String?>()
 
     private var refId = 5
-    private var tracker: SelectionTracker<Long>? = null
     private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
     private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -64,20 +59,43 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
             BottomSheetBehavior.from(sheetInternal).isDraggable = false
         }
         dialogInit()
-        trackSetting()
         updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
-
 
         return binding.root
     }
 
+    private fun editSetting(diet: Diet) {
+        viewModel.setIngredients(diet.dietIngredients)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+        val dateValue = dateFormat.parse(diet.dietDate)
+        mCalendar.time = dateValue!!
+        updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+        binding.etMemo.setText(diet.dietMemo)
+        val menus = diet.dietMenus.filterNotNull()
+        for (element in menus) {
+            element.let { binding.flexMenu.addNewChip(it) }
+        }
+        if (menus.size == 10) {
+            binding.etMenuName.height = 0
+            binding.etMenuName.text = null
+            binding.etMenuName.hint = null
+            binding.etMenuName.setBackgroundColor(resources.getColor(color.transparent))
+            binding.etMenuName.clearFocus()
+            binding.etMenuName.isClickable = false
+        }
+    }
+
     private fun dialogInit() {
         binding.rcDietIngredient.apply {
-            mIngredientListAdapter = DietIngredientListAdapter()
+            mIngredientListAdapter = if (oldDiet == null) {
+                DietIngredientListAdapter(null)
+            } else {
+                editSetting(oldDiet)
+                DietIngredientListAdapter(oldDiet.dietIngredients)
+            }
             layoutManager = LinearLayoutManager(this.context)
             adapter = mIngredientListAdapter
         }
-        //TODO: 이미 추가 되어 있는 메뉴 추가
 
         binding.btnCancel.setOnClickListener {
             this.dismiss()
@@ -89,15 +107,28 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
             val mDateFormat = "yyyy-MM-dd"
             val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
             val mDateString = mSimpleDateFormat.format(mCalendar.time)
-            val newDiet = Diet(
-                refId,
-                binding.etMemo.text.toString(),
-                mDateString,
-                chipList,
-                mIngredientListAdapter.ingredientList
-            )
-            viewModel.setDiet(newDiet)
-            this.dismiss()
+            if (oldDiet == null) {
+                val newDiet = Diet(
+                    refId,
+                    binding.etMemo.text.toString(),
+                    mDateString,
+                    chipList,
+                    mIngredientListAdapter.ingredientList
+                )
+                viewModel.setDiet(newDiet)
+                this.dismiss()
+            } else {
+                val newDiet = Diet(
+                    oldDiet.id,
+                    binding.etMemo.text.toString(),
+                    mDateString,
+                    chipList,
+                    mIngredientListAdapter.ingredientList.distinct()
+                )
+                viewModel.editDiet(5, oldDiet, newDiet)
+                this.dismiss()
+            }
+
         }
         binding.constDate.setOnClickListener {
             DatePickerDialog(
@@ -137,20 +168,6 @@ class CustomBottomSheetDiet : BottomSheetDialogFragment() {
             }
             false
         }
-    }
-
-    private fun trackSetting() {
-        tracker = SelectionTracker.Builder(
-            "mySelection",
-            binding.rcDietIngredient,
-            StableIdKeyProvider(binding.rcDietIngredient),
-            MyItemDetailsLookup(binding.rcDietIngredient),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
-        mIngredientListAdapter.tracker = tracker
-
     }
 
     @SuppressLint("ResourceAsColor")
