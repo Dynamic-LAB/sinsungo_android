@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
-import java.text.SimpleDateFormat
+import com.dlab.sinsungo.data.model.User
 
 object CustomBindingAdapter {
     @BindingConversion
@@ -82,7 +82,7 @@ object CustomBindingAdapter {
             .into(imageView)
     }
 
-    @BindingAdapter(*["recipeData", "scrollTop"])
+    @BindingAdapter("recipeData", "scrollTop")
     @JvmStatic
     fun bindRecipe(recyclerView: RecyclerView, recipes: ArrayList<Recipe>?, scrollTop: Boolean) {
         val adapter = recyclerView.adapter as RecipeAdapter
@@ -112,5 +112,14 @@ object CustomBindingAdapter {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         textView.text = spannableString
+    }
+
+    @BindingAdapter("members", "master")
+    @JvmStatic
+    fun bindMember(recyclerView: RecyclerView, members: ArrayList<User>?, master: String?) {
+        val adapter = recyclerView.adapter as MemberAdapter
+        master?.let { adapter.master = it }
+
+        adapter.submitList(members)
     }
 }
