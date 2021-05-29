@@ -27,10 +27,10 @@
         </activity>
         <activity android:name=".ui.LoginActivity"/>
         <activity android:name=".MainActivity" />
-        <activity android:name=".ui.RecipeDetailActivity"/>
-        <activity android:name=".CameraXOCRActivity"/>
+        <activity android:name=".ui.RecipeDetailActivity" />
+        <activity android:name=".ui.MyPageActivity" />
+        <activity android:name=".CameraXOCRActivity" />
         <activity android:name=".ReceiptOCRActivity" />
-
         <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
