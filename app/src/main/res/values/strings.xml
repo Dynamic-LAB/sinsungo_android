@@ -153,4 +153,9 @@
     <string name="ocr_result_add">항목 추가</string>
     <string name="ocr_dialog_add">영수증 항목 추가</string>
 
+    <!-- 튜토리얼 -->
+    <string name="tutorial_skip">건너뛰기</string>
+    <string name="tutorial_invite">초대코드 입력하기</string>
+    <string name="tutorial_start">시작하기</string>
+
 </resources>
