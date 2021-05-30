@@ -4,17 +4,22 @@ import android.R.color
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.util.TypedValue
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
@@ -52,20 +57,38 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
         super.onCreateView(inflater, container, savedInstanceState)
         binding = DialogDietBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         dialog?.setOnShowListener {
             val bottomSheet = it as BottomSheetDialog
             val sheetInternal: View = bottomSheet.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
             BottomSheetBehavior.from(sheetInternal).state = BottomSheetBehavior.STATE_EXPANDED
             BottomSheetBehavior.from(sheetInternal).isDraggable = false
         }
+
         dialogInit()
         updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+        binding.etIngredientSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    viewModel.search(binding.etIngredientSearch.text.toString())
+                    hideKeyboard()
+                    return true
+                }
+                return false
+            }
+        })
 
         return binding.root
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        viewModel.clearUseIngredients()
+    }
+
     private fun editSetting(diet: Diet) {
-        viewModel.setIngredients(diet.dietIngredients)
+        viewModel.setUseIngredients(diet.dietIngredients)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
         val dateValue = dateFormat.parse(diet.dietDate)
         mCalendar.time = dateValue!!
@@ -91,7 +114,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
                 DietIngredientListAdapter(null)
             } else {
                 editSetting(oldDiet)
-                DietIngredientListAdapter(oldDiet.dietIngredients)
+                DietIngredientListAdapter(viewModel.useIngredients.value)
             }
             layoutManager = LinearLayoutManager(this.context)
             adapter = mIngredientListAdapter
@@ -219,6 +242,11 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
         }
         addView(chip, childCount - 1, layoutParams)
         chipList.add(content)
+    }
+
+    fun hideKeyboard() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etIngredientSearch.windowToken, 0)
     }
 }
 

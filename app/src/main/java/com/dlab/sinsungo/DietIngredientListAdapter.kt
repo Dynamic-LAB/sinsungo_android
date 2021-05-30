@@ -2,16 +2,12 @@ package com.dlab.sinsungo
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.databinding.ItemRcviewDietIngredientBinding
-import com.dlab.sinsungo.viewmodel.DietViewModel
 
 class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>?) :
     ListAdapter<IngredientModel, DietIngredientListAdapter.ViewHolder>(DietIngredientDiffUtil) {
@@ -28,6 +24,7 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
         val binding = DataBindingUtil.inflate<ItemRcviewDietIngredientBinding>(layoutInflater, viewType, parent, false)
         val holder = ViewHolder(binding)
         binding.cvIngredientDietItem.setBackgroundResource(R.drawable.bg_dialog_white)
+        Log.d("onCreateViewHolder", "")
         return holder
     }
 
@@ -36,6 +33,7 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
     }
 
     override fun onBindViewHolder(holder: DietIngredientListAdapter.ViewHolder, position: Int) {
+        Log.d("onBindViewHolder", "")
         if (useIngredient != null) {
             holder.bind(getItem(position), getItem(position) in useIngredient)
         } else {
@@ -48,6 +46,7 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
         fun bind(ingredientModel: IngredientModel, isActivated: Boolean) {
             binding.dataModel = ingredientModel
             binding.btnCheckIngredient.isActivated = isActivated
+            Log.d("bind", "")
             binding.btnCheckIngredient.setOnClickListener {
                 binding.btnCheckIngredient.isActivated = !binding.btnCheckIngredient.isActivated
                 if (binding.btnCheckIngredient.isActivated) {
@@ -61,7 +60,7 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
             } else {
                 ingredientList.remove(ingredientModel)
             }
-            Log.d("ingredientList", ingredientList.toString())
+            //Log.d("ingredientList", ingredientList.toString())
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
         }
 

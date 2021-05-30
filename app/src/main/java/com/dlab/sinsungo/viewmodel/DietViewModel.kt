@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dlab.sinsungo.IngredientModel
 import com.dlab.sinsungo.IngredientRepository
-import com.dlab.sinsungo.IngredientViewModel
 import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.repository.DietRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,28 +17,27 @@ class DietViewModel : ViewModel() {
     private val _dietList = mutableListOf<Diet>()
     private val _ingredientList = mutableListOf<IngredientModel>()
     private val _allIngredientList = mutableListOf<IngredientModel>()
-    private lateinit var _useIngredientList: List<IngredientModel>
+    private val _useIngredientList = mutableListOf<IngredientModel>()
     private var _diets = MutableLiveData<List<Diet>>()
     private var _ingredients = MutableLiveData<List<IngredientModel>>()
+    private var _useIngredients = MutableLiveData<List<IngredientModel>>()
     val diets: MutableLiveData<List<Diet>> = _diets
     val ingredients: MutableLiveData<List<IngredientModel>> = _ingredients
-
+    val useIngredients = _useIngredients
 
     init {
         getDiet(5)
         requestGetIngredients(5)
     }
 
-    fun setIngredients(useIngredientModel: List<IngredientModel>) {
-
+    fun search(keyWord: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _allIngredientList.clear()
-                _useIngredientList = useIngredientModel
-                _allIngredientList.addAll(useIngredientModel)
-                _allIngredientList.addAll(_ingredientList)
-                _ingredients.postValue(_allIngredientList.distinct())
-                Log.d("allIngredient", _allIngredientList.toString())
+                val searchResult = _ingredientList.distinct().filter { it.name.contains(keyWord) }
+                Log.d("searchResult", searchResult.toString())
+                _ingredients.postValue(searchResult)
+                Log.d("ingredients", _ingredients.toString())
+                Log.d("_allIngredientList", _allIngredientList.toString())
             } catch (e: IOException) {
                 Log.e("get ing ioexception", e.message.toString())
                 e.printStackTrace()
@@ -56,6 +54,7 @@ class DietViewModel : ViewModel() {
                         Log.d("get ing response", response.toString())
                         response.body()?.let {
                             withContext(Dispatchers.Main) {
+                                _ingredientList.clear()
                                 _ingredientList.addAll(it)
                                 _ingredients.postValue(_ingredientList)
                             }
@@ -167,4 +166,13 @@ class DietViewModel : ViewModel() {
         }
     }
 
+    fun setUseIngredients(useIngredients: List<IngredientModel>) {
+        _useIngredientList.addAll(useIngredients)
+        _useIngredients.value = _useIngredientList
+    }
+
+    fun clearUseIngredients() {
+        _useIngredientList.clear()
+        _useIngredients.value = _useIngredientList
+    }
 }

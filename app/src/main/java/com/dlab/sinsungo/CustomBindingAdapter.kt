@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -140,10 +141,18 @@ object CustomBindingAdapter {
         adapter.submitList(diet?.toMutableList())
     }
 
-    @BindingAdapter("dietIngredientData")
+    @BindingAdapter("dietIngredientData", "useIngredientData")
     @JvmStatic
-    fun bindIngredientDiet(recyclerView: RecyclerView, value: List<IngredientModel>?) {
+    fun bindIngredientDiet(recyclerView: RecyclerView, value: List<IngredientModel>?, useIngredients: List<IngredientModel>?) {
+        Log.d("bindIngredientDiet", "")
         val adapter = recyclerView.adapter as DietIngredientListAdapter
-        adapter.submitList(value?.toMutableList())
+
+        val unionList = mutableListOf<IngredientModel>()
+
+        unionList.clear()
+        unionList.addAll(useIngredients!!)
+        unionList.addAll(value!!)
+
+        adapter.submitList(unionList.distinct())
     }
 }
