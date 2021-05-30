@@ -2,14 +2,18 @@ package com.dlab.sinsungo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.ActivityMainBinding
 import com.dlab.sinsungo.ui.MyPageActivity
 import com.dlab.sinsungo.ui.RecipeFragment
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
@@ -23,6 +27,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.view = this
         binding.bottomNavView.setOnNavigationItemSelectedListener(this)
         changeBottomNavMenu(R.id.bottom_nav_menu_refrigerator)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("FCM", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            Log.d("FCM", token!!)
+            Toast.makeText(this, token, Toast.LENGTH_SHORT).show()
+        })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

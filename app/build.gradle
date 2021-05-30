@@ -87,6 +87,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-functions:19.2.0'
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 
     // viewpager indicator
     implementation 'com.tbuonomo:dotsindicator:4.2'
