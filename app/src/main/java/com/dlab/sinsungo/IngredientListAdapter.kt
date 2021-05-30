@@ -50,7 +50,7 @@ class IngredientListAdapter(
         }
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-            menu?.add("편집")?.setOnMenuItemClickListener {
+            menu?.add("수정")?.setOnMenuItemClickListener {
                 updateMenuClick(getItem(adapterPosition))
                 true
             }

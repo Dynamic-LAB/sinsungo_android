@@ -11,7 +11,7 @@ import java.io.IOException
 
 class IngredientViewModel : ViewModel() {
     private val _ingredients = MutableLiveData<List<IngredientModel>>()
-    private val _innerList = mutableListOf<IngredientModel>()
+    private var _innerList = mutableListOf<IngredientModel>()
     private val _dialogDismissFlag = MutableLiveData<Boolean>()
     private val _inputIngredient =
         MutableLiveData<IngredientModel>()
@@ -24,7 +24,7 @@ class IngredientViewModel : ViewModel() {
     val isModify: MutableLiveData<Boolean> = _isModify
 
     init {
-        requestGetIngredients(6) // 나중에 냉장고 id 받아줘야함
+        requestGetIngredients(5) // 나중에 냉장고 id 받아줘야함
         _inputIngredient.value = IngredientModel(null, "", 0, "", "냉장", "g", "유통기한")
     }
 
@@ -37,7 +37,7 @@ class IngredientViewModel : ViewModel() {
                         Log.d("get ing response", response.toString())
                         response.body()?.let {
                             withContext(Dispatchers.Main) {
-                                _innerList.addAll(it)
+                                _innerList = it.toMutableList()
                                 _ingredients.postValue(_innerList)
                                 Log.d("ingredient list", it.toString())
                             }
@@ -56,16 +56,18 @@ class IngredientViewModel : ViewModel() {
     // 추가
     fun requestPostIngredient() {
         viewModelScope.launch(Dispatchers.IO) {
+            val inputList = mutableListOf<IngredientModel>()
             val data = _inputIngredient.value
-            data?.id = 6
+            data?.id = 5
             Log.d("input ing", data.toString())
+            inputList.add(data!!)
             try {
-                IngredientRepository.postIngredient(data!!).let { response ->
+                IngredientRepository.postIngredient(inputList).let { response ->
                     if (response.isSuccessful) {
                         Log.d("post ing response", response.toString())
                         response.body()?.let {
                             withContext(Dispatchers.Main) {
-                                _innerList.add(it)
+                                _innerList.addAll(it)
                                 _ingredients.postValue(_innerList)
                                 Log.d("add ing item", it.toString())
                                 _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
@@ -177,6 +179,11 @@ class IngredientViewModel : ViewModel() {
             "exdateType" -> data?.exdateType = value
         }
         _inputIngredient.value = data!!
+    }
+
+    fun addOcrResult(list: ArrayList<IngredientModel>) {
+        _innerList.addAll(list.toMutableList())
+        _ingredients.value = _innerList
     }
 
     /*fun sortList(key: String) {

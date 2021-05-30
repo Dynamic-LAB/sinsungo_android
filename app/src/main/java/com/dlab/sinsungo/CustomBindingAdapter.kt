@@ -122,4 +122,11 @@ object CustomBindingAdapter {
 
         adapter.submitList(members)
     }
+    
+    @BindingAdapter("receiptData")
+    @JvmStatic
+    fun bindReceipt(recyclerView: RecyclerView, ingredients: List<IngredientModel>?) {
+        val adapter = recyclerView.adapter as ReceiptListAdapter
+        adapter.submitList(ingredients?.toMutableList())
+    }
 }

@@ -31,6 +31,8 @@
         <activity android:name=".ui.MyPageActivity" />
         <activity android:name=".CameraXOCRActivity" />
         <activity android:name=".ReceiptOCRActivity" />
+        <activity android:name=".TutorialActivity" />
+
         <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>

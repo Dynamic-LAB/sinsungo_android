@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .commit()
     }
 
-    public fun changeBottomNavMenu(menuID: Int) {
+    fun changeBottomNavMenu(menuID: Int) {
         binding.bottomNavView.selectedItemId = menuID
     }
 
