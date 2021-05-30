@@ -1,11 +1,13 @@
 package com.dlab.sinsungo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.ActivityMainBinding
+import com.dlab.sinsungo.ui.MyPageActivity
 import com.dlab.sinsungo.ui.RecipeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.view = this
         binding.bottomNavView.setOnNavigationItemSelectedListener(this)
         changeBottomNavMenu(R.id.bottom_nav_menu_refrigerator)
     }
@@ -58,5 +60,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     fun changeBottomNavMenu(menuID: Int) {
         binding.bottomNavView.selectedItemId = menuID
+    }
+
+
+    fun startMyPage() {
+        val intent = Intent(this, MyPageActivity::class.java)
+        startActivity(intent)
     }
 }

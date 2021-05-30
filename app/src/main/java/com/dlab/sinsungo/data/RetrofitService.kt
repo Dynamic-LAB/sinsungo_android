@@ -1,6 +1,7 @@
 package com.dlab.sinsungo.data
 
 import com.dlab.sinsungo.data.model.Recipe
+import com.dlab.sinsungo.data.model.Refrigerator
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.data.model.User
 import com.google.gson.JsonObject
@@ -15,11 +16,34 @@ interface RetrofitService {
      * Response로 모델 객체를 받음
      * 코루틴 안에서 실행 가능하게 함수는 suspend로 정의
      */
+
+    // User
+    @POST("/user")
+    suspend fun getUser(
+        @Body user: User
+    ): Response<User>
+
     @POST("/user/auth/login")
     suspend fun login(
         @Body user: User
     ): Response<User>
 
+    @PUT("/user")
+    suspend fun updateUser(
+        @Body user: User
+    ): Response<User>
+
+    @PUT("/user/invite")
+    suspend fun inviteUser(
+        @Body body: HashMap<String, Any>
+    ): Response<User>
+
+    @HTTP(method = "DELETE", path = "/user", hasBody = true)
+    suspend fun deleteUser(
+        @Body user: User
+    ): Response<JsonObject>
+
+    // Recipe
     @GET("recipe/{id}")
     suspend fun getRecipe(
         @Path("id") id: Int,
@@ -34,6 +58,17 @@ interface RetrofitService {
         @Query("end") end: Int,
         @Query("query") query: String
     ): Response<ArrayList<Recipe>>
+
+    // Refrigerator
+    @GET("refrigerator/{id}")
+    suspend fun getRefrigerator(
+        @Path("id") id: Int
+    ): Response<Refrigerator>
+
+    @POST("/refrigerator")
+    suspend fun createRefrigerator(
+        @Body body: HashMap<String, Any>
+    ): Response<JsonObject>
 
     // Shopping
     @POST("/shoppinglist")
