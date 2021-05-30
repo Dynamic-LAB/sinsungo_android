@@ -154,8 +154,16 @@
     <string name="ocr_dialog_add">영수증 항목 추가</string>
 
     <!-- 튜토리얼 -->
-    <string name="tutorial_skip">건너뛰기</string>
+    <string name="tutorial_skip"><u>건너뛰기</u></string>
     <string name="tutorial_invite">초대코드 입력하기</string>
     <string name="tutorial_start">시작하기</string>
+    <string name="tutorial_title1">냉장고 재료 등록</string>
+    <string name="tutorial_title2">다같이 냉장고 관리</string>
+    <string name="tutorial_title3">다같이 식생활 관리</string>
+    <string name="tutorial_title_welcome">WELCOME!</string>
+    <string name="tutorial_content1">영수증 인식을 활용한 식재료 추가,\n내 손으로 직접 입력,\n신선고에서 냉장고 속 식재료를\n편하게 관리해보세요!</string>
+    <string name="tutorial_content2">냉장고 어디에 뭐가 있는지,\n유통기한은 얼마나 남았는지,\n멤버와 함께 신선고에서 확인하세요!</string>
+    <string name="tutorial_content3">냉장고 속 재료로 가능한 레시피를 보고,\n멤버와 함께 식단을 짜고,\n부족한 재료는 장바구니에 추가해보세요.\n멤버와 함께 신선고로 편리하게\n식생활을 관리해보세요!</string>
+    <string name="tutorial_content_welcome">우리집 냉장고와 식습관 관리,\n이제 신선고로 편리하게 해보세요!</string>
 
 </resources>

@@ -241,6 +241,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Bold_32_Black" parent="android:TextAppearance">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/app_font</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- TabLayout Style -->
     <style name="TabLayout.Refrigerator" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabIndicatorColor">@color/royal_blue</item>
