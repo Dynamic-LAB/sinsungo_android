@@ -24,11 +24,10 @@ class TutorialActivity : FragmentActivity() {
         }
 
         binding.btnInviteStart.setOnClickListener {
-            GlobalApplication.prefs.setBoolean("isTutorialFinished", false)
+
         }
 
         binding.btnNormalStart.setOnClickListener {
-            GlobalApplication.prefs.setBoolean("isTutorialFinished", false)
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -49,6 +48,11 @@ class TutorialActivity : FragmentActivity() {
                     }
                 }
             })
+            currentItem = if (intent.getBooleanExtra("isFromSplash", true)) {
+                3
+            } else {
+                0
+            }
         }
         binding.tutorialIndicator.setViewPager2(binding.pagerTutorial)
     }
