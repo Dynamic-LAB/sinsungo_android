@@ -35,6 +35,7 @@
     <string name="dial_hint_count">수량을 입력해주세요.</string>
     <string name="dial_hint_date">날짜를 입력해주세요.</string>
     <string name="dial_hint_memo">내용을 작성해주세요.</string>
+    <string name="dial_hint_diet_memo">간단한 메모를 작성해주세요. (예. 아침, 점심, 저녁)</string>
     <string name="dial_normal_essential">* 필수 입력사항</string>
     <string name="dial_exdate_mismatch_regex">* 형식에 맞게 입력하세요 (yyyy.MM.dd)</string>
     <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
@@ -88,9 +89,7 @@
     <string name="ref_format_over_exdate">%s에서 %d일 지났어요!</string>
 
     <!-- 식단 -->
-    <string name="diet_morning">아침 메뉴는</string>
-    <string name="diet_lunch">점심 메뉴는</string>
-    <string name="diet_dinner">저녁 메뉴는</string>
+    <string name="diet_main_ingredient">주재료: </string>
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
     <string name="diet_use_ingredient">사용재료</string>
     <string name="diet_custom_edit">직접 입력</string>

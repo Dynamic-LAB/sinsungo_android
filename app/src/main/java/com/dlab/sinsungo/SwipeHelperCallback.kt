@@ -14,6 +14,7 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
     private var previousPosition: Int? = null
     private var currentDx = 0f
     private var clamp = 0f
+    private var type = ""
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,
@@ -115,6 +116,10 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
         this.clamp = clamp
     }
 
+    fun setType(type: String){
+        this.type = type
+    }
+
     // 다른 View가 swipe 되거나 터치되면 고정 해제
     fun removePreviousClamp(recyclerView: RecyclerView) {
         if (currentPosition == previousPosition)
@@ -129,6 +134,10 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
 
 
     private fun getView(viewHolder: RecyclerView.ViewHolder): View {
+        when(type){
+            "diet" -> return (viewHolder as DietListAdapter.ViewHolder).binding.cvDietItem
+            "shopping" -> return (viewHolder as ShoppingListAdapter.ViewHolder).binding.cvShoppingItem
+        }
         return (viewHolder as ShoppingListAdapter.ViewHolder).binding.cvShoppingItem
     }
 }

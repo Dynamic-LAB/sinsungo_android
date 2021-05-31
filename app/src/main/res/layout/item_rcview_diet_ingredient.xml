@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="dataModel"
+            type="com.dlab.sinsungo.IngredientModel" />
+    </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_ingredient_diet_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@android:color/transparent">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:layout_gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/tv_dialog_bottom_item_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{dataModel.refCategory}"
                 android:textAppearance="@style/Text.Bold_10_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -27,9 +39,10 @@
                 android:id="@+id/tv_dialog_bottom_line"
                 android:layout_width="2dp"
                 android:layout_height="15dp"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="80dp"
                 android:background="@color/royal_blue"
-                app:layout_constraintStart_toEndOf="@+id/tv_dialog_bottom_item_category"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -37,40 +50,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:text="@{dataModel.name}"
                 android:textAppearance="@style/Text.Bold_10_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_dialog_bottom_line"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/btn_add"
+                android:id="@+id/btn_check_ingredient"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="@string/all_img_description"
-                android:src="@drawable/btn_circle_add"
-                app:layout_constraintEnd_toStartOf="@+id/tv_ingredient_count"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_ingredient_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:textAppearance="@style/Text.Bold_10_Black"
+                android:background="@drawable/select_diet_ingredient"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_remove"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/btn_remove"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="24dp"
-                android:contentDescription="@string/all_img_description"
-                android:src="@drawable/btn_circle_remove"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

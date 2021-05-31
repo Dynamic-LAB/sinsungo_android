@@ -11,13 +11,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
-import java.util.*
-import kotlin.math.abs
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.data.model.User
+import java.util.*
+import kotlin.math.abs
 
 object CustomBindingAdapter {
     @BindingConversion
@@ -122,11 +123,52 @@ object CustomBindingAdapter {
 
         adapter.submitList(members)
     }
-    
+
     @BindingAdapter("receiptData")
     @JvmStatic
     fun bindReceipt(recyclerView: RecyclerView, ingredients: List<IngredientModel>?) {
         val adapter = recyclerView.adapter as ReceiptListAdapter
         adapter.submitList(ingredients?.toMutableList())
+
+    @BindingAdapter("tvDietDate")
+    @JvmStatic
+    fun setDietDate(view: TextView, value: String) {
+        view.text = value
+    }
+
+    @BindingAdapter("tvDietMenus")
+    @JvmStatic
+    fun setDietMenus(view: TextView, value: List<String>) {
+        val diets = value.filterNotNull()
+        view.text = diets.joinToString(",")
+    }
+
+    @BindingAdapter("tvDietIngredient")
+    @JvmStatic
+    fun setDietIngredient(view: TextView, value: List<IngredientModel>) {
+        val valueString: List<String> = value.map { it.name }
+        view.text = valueString.joinToString(",")
+    }
+
+    @BindingAdapter("dietData")
+    @JvmStatic
+    fun bindDiet(recyclerView: RecyclerView, diet: List<Diet>?) {
+        val adapter = recyclerView.adapter as DietListAdapter
+        adapter.submitList(diet?.toMutableList())
+    }
+
+    @BindingAdapter("dietIngredientData", "useIngredientData")
+    @JvmStatic
+    fun bindIngredientDiet(recyclerView: RecyclerView, value: List<IngredientModel>?, useIngredients: List<IngredientModel>?) {
+        Log.d("bindIngredientDiet", "")
+        val adapter = recyclerView.adapter as DietIngredientListAdapter
+
+        val unionList = mutableListOf<IngredientModel>()
+
+        unionList.clear()
+        unionList.addAll(useIngredients!!)
+        unionList.addAll(value!!)
+
+        adapter.submitList(unionList.distinct())
     }
 }
