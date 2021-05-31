@@ -28,10 +28,6 @@ class RecipeDetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.view = this
         binding.viewModel = viewModel
-
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            binding.ivThumbnail.layoutParams.height = binding.ivThumbnail.measuredWidth
-        }
     }
 
     private fun setRecipeData() {

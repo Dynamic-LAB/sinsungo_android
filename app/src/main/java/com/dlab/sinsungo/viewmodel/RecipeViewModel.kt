@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.data.repository.RecipeRepository
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class RecipeViewModel : ViewModel() {
     val trigger = _trigger
 
     init {
-        getRecipe(5, 0, 20)
+        getRecipe(GlobalApplication.prefs.getInt("refId"), 0, 20)
     }
 
     fun getRecipe(id: Int, start: Int, end: Int, query: String = "") {

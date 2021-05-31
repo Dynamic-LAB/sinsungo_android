@@ -2,6 +2,7 @@ package com.dlab.sinsungo
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.dlab.sinsungo.data.model.User
 
 class MySharedPreference(context: Context) {
     private val PREFS_FILE_NAME = "prefs"
@@ -51,5 +52,9 @@ class MySharedPreference(context: Context) {
 
     fun setLong(key: String, value: Long) {
         prefs.edit().putLong(key, value).apply()
+    }
+
+    fun remove(key: String) {
+        prefs.edit().remove(key).apply()
     }
 }

@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{data.name}"
                 android:layout_marginStart="16dp"
-                android:textAppearance="@style/Text.Bold_14dp_Black"
+                android:textAppearance="@style/Text.Bold_14_Black"
                 app:layout_constraintStart_toEndOf="@id/btn_drop_item"
                 app:layout_constraintTop_toTopOf="parent" />
 
