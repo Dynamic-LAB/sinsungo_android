@@ -164,5 +164,6 @@
     <string name="tutorial_content2">냉장고 어디에 뭐가 있는지,\n유통기한은 얼마나 남았는지,\n멤버와 함께 신선고에서 확인하세요!</string>
     <string name="tutorial_content3">냉장고 속 재료로 가능한 레시피를 보고,\n멤버와 함께 식단을 짜고,\n부족한 재료는 장바구니에 추가해보세요.\n멤버와 함께 신선고로 편리하게\n식생활을 관리해보세요!</string>
     <string name="tutorial_content_welcome">우리집 냉장고와 식습관 관리,\n이제 신선고로 편리하게 해보세요!</string>
+    <string name="tutorial_input_invite">초대코드를 입력해주세요.</string>
 
 </resources>
