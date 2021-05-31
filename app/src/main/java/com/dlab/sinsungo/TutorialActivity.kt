@@ -3,18 +3,22 @@ package com.dlab.sinsungo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.dlab.sinsungo.databinding.ActivityTutorialBinding
+import com.dlab.sinsungo.viewmodel.TutorialViewModel
 
 class TutorialActivity : FragmentActivity() {
     private lateinit var binding: ActivityTutorialBinding
+    private val viewModel: TutorialViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTutorialBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
         setContentView(binding.root)
 
         initViewPager()
@@ -24,12 +28,15 @@ class TutorialActivity : FragmentActivity() {
         }
 
         binding.btnInviteStart.setOnClickListener {
-
+            val dialog = CustomInviteDialog()
+            dialog.show(supportFragmentManager, "custom_invite_dialog")
         }
 
         binding.btnNormalStart.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            viewModel.createRefrigerator {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
     }
 

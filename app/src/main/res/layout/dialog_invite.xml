@@ -6,11 +6,7 @@
     <data>
         <variable
             name="view"
-            type="com.dlab.sinsungo.CustomConfirmDialog" />
-
-        <variable
-            name="viewModel"
-            type="com.dlab.sinsungo.viewmodel.MyPageViewModel" />
+            type="com.dlab.sinsungo.CustomInviteDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,16 +14,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tv_memo"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_invite_key"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="@style/Text.Bold_14_Black"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_cancel" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_cancel"
@@ -40,19 +33,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_accept"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
+            app:layout_constraintTop_toBottomOf="@+id/et_invite_key" />
 
         <Button
             android:id="@+id/btn_accept"
             style="@style/Widget.MaterialComponents.Button.Dialog"
+            android:background="@color/royal_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_accept"
             android:onClick="@{() -> view.accept()}"
+            android:text="@string/btn_accept"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_cancel"
-            app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
+            app:layout_constraintTop_toBottomOf="@+id/et_invite_key"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
