@@ -85,6 +85,31 @@ class IngredientViewModel : ViewModel() {
         }
     }
 
+    // 장바구니에서 추가
+    fun requestPostIngredient(inputList: MutableList<IngredientModel>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                IngredientRepository.postIngredient(inputList).let { response ->
+                    if (response.isSuccessful) {
+                        Log.d("post ing response", response.toString())
+                        response.body()?.let {
+                            withContext(Dispatchers.Main) {
+                                _innerList.addAll(it)
+                                _ingredients.postValue(_innerList)
+                                Log.d("add ing item", it.toString())
+                            }
+                        }
+                    } else {
+                        Log.e("post ing not success", response.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("post ing ioexception", e.message.toString())
+                e.printStackTrace()
+            }
+        }
+    }
+
     // 수정
     fun requestPutIngredient() {
         viewModelScope.launch(Dispatchers.IO) {

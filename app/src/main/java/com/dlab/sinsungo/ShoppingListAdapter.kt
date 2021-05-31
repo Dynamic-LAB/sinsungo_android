@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.ItemRcviewShoppingListBinding
 
-class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit, val editClick: (Shopping) -> Unit) :
+class ShoppingListAdapter(
+    val deleteClick: (Shopping) -> Unit,
+    val editClick: (Shopping) -> Unit,
+    val checkClick: (Shopping) -> Unit
+) :
     ListAdapter<Shopping, ShoppingListAdapter.ViewHolder>(ShoppingDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Log.d("onCreateViewHolder", "호출")
@@ -38,11 +42,11 @@ class ShoppingListAdapter(val deleteClick: (Shopping) -> Unit, val editClick: (S
             binding.btnDeleteShopping.setOnClickListener {
                 deleteClick(getItem(adapterPosition))
             }
-            binding.btnEditShopping.setOnClickListener {
-                editClick(getItem(adapterPosition))
+            binding.btnCheckShopping.setOnClickListener {
+                checkClick(getItem(adapterPosition))
             }
             binding.cvShoppingItem.setOnClickListener {
-                true
+                editClick(getItem(adapterPosition))
             }
         }
     }

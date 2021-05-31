@@ -2,6 +2,7 @@ package com.dlab.sinsungo
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -16,17 +17,21 @@ import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
 import android.view.*
 import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.annotation.MenuRes
 import androidx.collection.LruCache
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.databinding.DialogShoppingBinding
+import com.dlab.sinsungo.databinding.DialogShoppingToRefBinding
 import com.dlab.sinsungo.databinding.FragmentShoppingBinding
 import com.dlab.sinsungo.viewmodel.ShoppingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,17 +40,41 @@ import com.leinardi.android.speeddial.SpeedDialView
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentShoppingBinding
     private lateinit var dialogView: DialogShoppingBinding
+    private lateinit var checkDialogView: DialogShoppingToRefBinding
     private lateinit var dialog: AlertDialog
 
     private lateinit var mShoppingListAdapter: ShoppingListAdapter
 
     private val viewModel: ShoppingViewModel by viewModels()
+    private val ingredientViewModel: IngredientViewModel by activityViewModels()
     private val REF_ID = 5
+
+    private val mCalendar = Calendar.getInstance()
+
+    private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        mCalendar.set(Calendar.YEAR, year)
+        mCalendar.set(Calendar.MONTH, month)
+        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        updateLabel()
+    }
+
+    private val mOnClickOpenDatePicker = View.OnClickListener { view: View ->
+        val datePicker = DatePickerDialog(
+            requireContext(),
+            mOnDateSetListener,
+            mCalendar.get(Calendar.YEAR),
+            mCalendar.get(Calendar.MONTH),
+            mCalendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.show()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShoppingBinding.inflate(inflater, container, false)
@@ -148,15 +177,74 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         setDialogColor(1, R.color.dim_grey)
         setDialogColor(2, R.color.dim_grey)
         setTitleSpanColor(
+            dialogView.tvDialogTitle,
             ResourcesCompat.getColor(
                 resources,
                 R.color.royal_blue,
                 context?.theme
-            )
+            ),
+            8, 10
         )
         setTextWatcher()
         initPopupMenus()
         dialog.setCanceledOnTouchOutside(false)
+    }
+
+    private fun initCheckDialog(shopping: Shopping) {
+        checkDialogView = DialogShoppingToRefBinding.inflate(layoutInflater)
+        dialog = AlertDialog.Builder(context)
+            .setView(checkDialogView.root)
+            .create()
+        dialog.window!!.setBackgroundDrawable(
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.bg_dialog_gray,
+                null
+            )
+        )
+        dialog.window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        setTitleSpanColor(
+            checkDialogView.tvDialogTitle,
+            ResourcesCompat.getColor(
+                resources,
+                R.color.royal_blue,
+                context?.theme
+            ),
+            7, 9
+        )
+        updateLabel()
+        refPopupMenus()
+        setCheckTextWatcher()
+        checkDialogView.clExdateInput.setOnClickListener(mOnClickOpenDatePicker)
+        checkDialogView.etIngredient.setText(shopping.shopName)
+        checkDialogView.etCount.setText(shopping.shopAmount.toString())
+        checkDialogView.tvCountType.text = (shopping.shopUnit)
+        dialog.setCanceledOnTouchOutside(false)
+    }
+
+    private fun checkDialogSetting(shopping: Shopping) {
+        checkDialogView.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        checkDialogView.btnAccept.setOnClickListener {
+            val newIngredient = IngredientModel(
+                REF_ID,
+                checkDialogView.etIngredient.text.toString(),
+                checkDialogView.etCount.text.toString().toInt(),
+                checkDialogView.tvExdateInput.text.toString(),
+                checkDialogView.tvRefCategory.text.toString(),
+                checkDialogView.tvCountType.text.toString(),
+                checkDialogView.tvExdateType.text.toString()
+            )
+            val inputIngredient = mutableListOf<IngredientModel>()
+            inputIngredient.add(newIngredient)
+            ingredientViewModel.requestPostIngredient(inputIngredient)
+            deleteShoppingItem(shopping)
+            dialog.dismiss()
+        }
     }
 
 
@@ -208,6 +296,54 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
     }
 
+    private fun refPopupMenus() {
+        checkDialogView.clIngredientCategory.setOnClickListener {
+            showRefCategories(checkDialogView.clIngredientCategory, R.menu.menu_ref_categories)
+        }
+        checkDialogView.clCountType.setOnClickListener {
+            showRefCountTypes(checkDialogView.clCountType, R.menu.menu_count_type)
+        }
+        checkDialogView.clExdateType.setOnClickListener {
+            showExdateTypes(checkDialogView.clExdateType, R.menu.menu_exdate_type)
+        }
+    }
+
+    private fun showRefCategories(view: View, @MenuRes menuRes: Int) {
+        val refCategoryPopup = PopupMenu(requireContext(), view)
+        refCategoryPopup.menuInflater.inflate(menuRes, refCategoryPopup.menu)
+
+        refCategoryPopup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            checkDialogView.tvRefCategory.text = menuItem.title.toString()
+            true
+        }
+
+        refCategoryPopup.show()
+    }
+
+    private fun showRefCountTypes(view: View, @MenuRes menuRes: Int) {
+        val countTypePopup = PopupMenu(requireContext(), view)
+        countTypePopup.menuInflater.inflate(menuRes, countTypePopup.menu)
+
+        countTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            checkDialogView.tvCountType.text = menuItem.title.toString()
+            true
+        }
+
+        countTypePopup.show()
+    }
+
+    private fun showExdateTypes(view: View, @MenuRes menuRes: Int) {
+        val exdateTypePopup = PopupMenu(requireContext(), view)
+        exdateTypePopup.menuInflater.inflate(menuRes, exdateTypePopup.menu)
+
+        exdateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            checkDialogView.tvExdateType.text = menuItem.title.toString()
+            true
+        }
+
+        exdateTypePopup.show()
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun initRcView() {
         val swipeHelperCallback = SwipeHelperCallback().apply {
@@ -219,7 +355,8 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
         binding.rcviewShopping.apply {
             mShoppingListAdapter = ShoppingListAdapter({ shopping -> deleteShoppingItem(shopping) },
-                { shopping -> editShoppingItem(shopping) })
+                { shopping -> editShoppingItem(shopping) },
+                { shopping -> checkShoppingItem(shopping) })
             layoutManager = LinearLayoutManager(this.context)
             addItemDecoration(ItemDecoration())
             adapter = mShoppingListAdapter
@@ -237,6 +374,12 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private fun editShoppingItem(shopping: Shopping) {
         initDialog()
         dialogSetting(shopping)
+        dialog.show()
+    }
+
+    private fun checkShoppingItem(shopping: Shopping) {
+        initCheckDialog(shopping)
+        checkDialogSetting(shopping)
         dialog.show()
     }
 
@@ -313,16 +456,90 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         })
     }
 
-    private fun setTitleSpanColor(color: Int) {
-        val title = dialogView.tvDialogTitle.text
+    private fun setCheckTextWatcher() {
+        checkDialogView.etIngredient.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isEmpty() || input.isBlank()) {
+                    checkDialogView.tvInputNoti1.visibility = View.VISIBLE
+                    checkDialogView.ivIngredientCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                    )
+                    checkDialogView.lineUnderIngredientInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+                    checkDialogView.lineUnderIngredientCategory.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+                } else {
+                    checkDialogView.tvInputNoti1.visibility = View.GONE
+                    checkDialogView.ivIngredientCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+                    )
+                    checkDialogView.lineUnderIngredientInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+                    checkDialogView.lineUnderIngredientCategory.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+                }
+            }
+        })
+
+        checkDialogView.etCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if (input.isBlank() || input.isEmpty()) {
+                    checkDialogView.tvInputNoti2.visibility = View.VISIBLE
+                    checkDialogView.ivCountCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                    )
+                    checkDialogView.lineUnderCountInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+                    checkDialogView.lineUnderCountType.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+                } else if (input == "0") {
+                    checkDialogView.tvInputNoti2.visibility = View.GONE
+                    checkDialogView.ivCountCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.dim_grey, context?.theme)
+                    )
+                    checkDialogView.lineUnderCountInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.dim_grey) }
+                    checkDialogView.lineUnderCountType.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.dim_grey) }
+                } else {
+                    checkDialogView.tvInputNoti2.visibility = View.GONE
+                    checkDialogView.ivCountCutlery.drawable.setTint(
+                        ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
+                    )
+                    checkDialogView.lineUnderCountInput.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+                    checkDialogView.lineUnderCountType.background =
+                        context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
+                }
+            }
+        })
+
+    }
+
+    private fun setTitleSpanColor(view: TextView, color: Int, start: Int, end: Int) {
+        val title = view.text
         val spannableString = SpannableString(title)
         spannableString.setSpan(
             ForegroundColorSpan(color),
-            8,
-            10,
+            start,
+            end,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        dialogView.tvDialogTitle.text = spannableString
+        view.text = spannableString
     }
 
     private fun setDialogColor(choice: Int, color: Int) {
@@ -348,6 +565,14 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                 dialogView.clMemoInput.background.setTint(newColor)
             }
         }
+    }
+
+    private fun updateLabel() {
+        val mDateFormat = "yyyy-MM-dd"
+        val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
+        val mDateString = mSimpleDateFormat.format(mCalendar.time)
+
+        checkDialogView.tvExdateInput.text = mDateString
     }
 
     private fun getScreenshotFromRecyclerView(view: RecyclerView): Bitmap? {
