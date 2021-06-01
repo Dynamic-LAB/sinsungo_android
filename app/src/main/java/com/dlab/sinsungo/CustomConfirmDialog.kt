@@ -32,18 +32,29 @@ class CustomConfirmDialog(private val type: String) : DialogFragment() {
     private lateinit var binding: DialogConfirmBinding
     private val viewModel: MyPageViewModel by activityViewModels()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private val currentUser = GlobalApplication.prefs.getCurrentUser().copy(pushToken = "")
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         init()
 
         when (type) {
-            "로그아웃" -> binding.tvMemo.text = "로그아웃 하시겠습니까?"
-            "회원 탈퇴" -> binding.tvMemo.text = "회원탈퇴 하시겠습니까?"
-            "멤버 추가하기" -> {
-                binding.tvMemo.text = viewModel.refrigerator.value?.inviteKey
-                binding.btnAccept.text = "복사"
+            "로그아웃" -> {
+                binding.tvDialogTitle.text = getString(R.string.my_logout)
+                binding.tvMemo.text = getString(R.string.my_dialog_logout)
             }
-            else -> binding.tvMemo.text = "멤버를 추방하시겠습니까?"
+            "회원 탈퇴" -> {
+                binding.tvDialogTitle.text = getString(R.string.my_withdraw)
+                binding.tvMemo.text = getString(R.string.my_dialog_withdraw)
+            }
+            "초대 코드" -> {
+                binding.tvDialogTitle.text = getString(R.string.my_add_member)
+                binding.tvMemo.text = viewModel.refrigerator.value?.inviteKey
+                binding.btnAccept.text = getString(R.string.my_dialog_copy)
+            }
+            else -> {
+                binding.tvDialogTitle.text = getString(R.string.my_out_member)
+                binding.tvMemo.text = getString(R.string.my_dialog_out)
+            }
         }
 
         val dialog = AlertDialog.Builder(requireContext())
@@ -71,13 +82,13 @@ class CustomConfirmDialog(private val type: String) : DialogFragment() {
         when (type) {
             "로그아웃" -> logout()
             "회원 탈퇴" -> widhdraw()
-            "멤버 추가하기" -> copyInviteKey()
+            "초대 코드" -> copyInviteKey()
             else -> viewModel.removeMember(type.toInt()) { dismiss() }
         }
     }
 
     private fun logout() {
-        when (GlobalApplication.prefs.getString("loginType")) {
+        when (currentUser.loginType) {
             "kakao" -> kakaoLogout()
             "naver" -> naverLogout()
             else -> googleLogout()
@@ -91,26 +102,26 @@ class CustomConfirmDialog(private val type: String) : DialogFragment() {
             } else {
                 Log.d("logout", "logout success")
             }
-            viewModel.updateUser(getCurrentUser()) { startLoginActivity() }
+            viewModel.updateUser(currentUser) { startLoginActivity() }
         }
     }
 
     private fun naverLogout() {
         OAuthLogin.getInstance().logout(requireContext())
-        viewModel.updateUser(getCurrentUser()) { startLoginActivity() }
+        viewModel.updateUser(currentUser) { startLoginActivity() }
     }
 
     private fun googleLogout() {
         mGoogleSignInClient.signOut().addOnCompleteListener {
             Log.d("logout", "logout success")
-            viewModel.updateUser(getCurrentUser()) { startLoginActivity() }
+            viewModel.updateUser(currentUser) { startLoginActivity() }
         }.addOnFailureListener {
             Log.d("logout", "logout fail")
         }
     }
 
     private fun widhdraw() {
-        when (GlobalApplication.prefs.getString("loginType")) {
+        when (currentUser.loginType) {
             "kakao" -> kakaoWithdraw()
             "naver" -> naverWithdraw()
             else -> googleWithdraw()
@@ -123,7 +134,7 @@ class CustomConfirmDialog(private val type: String) : DialogFragment() {
                 Log.d("withdraw", "withdraw fail $error")
             } else {
                 Log.d("withdraw", "withdraw success")
-                viewModel.deleteUser(getCurrentUser()) { startLoginActivity() }
+                viewModel.deleteUser(currentUser) { startLoginActivity() }
             }
         }
     }
@@ -141,7 +152,7 @@ class CustomConfirmDialog(private val type: String) : DialogFragment() {
 
                     Log.e("api_error", "errorCode: $errorCode, errorDesc: $errorDesc")
                 }
-                viewModel.deleteUser(getCurrentUser()) { startLoginActivity() }
+                viewModel.deleteUser(currentUser) { startLoginActivity() }
             }
         }
     }
@@ -149,34 +160,19 @@ class CustomConfirmDialog(private val type: String) : DialogFragment() {
     private fun googleWithdraw() {
         mGoogleSignInClient.revokeAccess().addOnCompleteListener {
             Log.d("withdraw", "withdraw success")
-            viewModel.deleteUser(getCurrentUser()) { startLoginActivity() }
+            viewModel.deleteUser(currentUser) { startLoginActivity() }
         }.addOnFailureListener {
             Log.d("withdraw", "withdraw fail")
         }
     }
 
     private fun startLoginActivity() {
-        GlobalApplication.prefs.remove("userId")
-        GlobalApplication.prefs.remove("loginType")
-        GlobalApplication.prefs.remove("name")
-        GlobalApplication.prefs.remove("pushToken")
-        GlobalApplication.prefs.remove("refId")
-        GlobalApplication.prefs.remove("pushSetting")
+        GlobalApplication.prefs.clear()
 
         val intent = Intent(context, LoginActivity::class.java)
         intent.flags =
             (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
-    }
-
-    private fun getCurrentUser(): User {
-        val userId = GlobalApplication.prefs.getString("userId")!!
-        val loginType = GlobalApplication.prefs.getString("loginType")!!
-        val name = GlobalApplication.prefs.getString("name")!!
-        val pushToken = ""
-        val refId = GlobalApplication.prefs.getInt("refId")
-        val pushSetting = GlobalApplication.prefs.getInt("pushSetting")
-        return User(userId, loginType, name, pushToken, refId, pushSetting)
     }
 
     private fun copyInviteKey() {

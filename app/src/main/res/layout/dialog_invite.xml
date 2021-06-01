@@ -36,7 +36,6 @@
             android:inputType="text"
             android:singleLine="true"
             android:selectAllOnFocus="true"
-            android:maxLength="20"
             android:textAppearance="@style/Text.Regular_16_Black"
             app:layout_constraintTop_toBottomOf="@id/tv_dialog_title"
             app:layout_constraintStart_toStartOf="parent"

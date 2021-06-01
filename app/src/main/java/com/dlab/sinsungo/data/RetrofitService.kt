@@ -1,10 +1,6 @@
 package com.dlab.sinsungo.data
 
-import com.dlab.sinsungo.data.model.Diet
-import com.dlab.sinsungo.data.model.Recipe
-import com.dlab.sinsungo.data.model.Refrigerator
-import com.dlab.sinsungo.data.model.Shopping
-import com.dlab.sinsungo.data.model.User
+import com.dlab.sinsungo.data.model.*
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.*
@@ -115,4 +111,7 @@ interface RetrofitService {
         @Path("id") dietId: Int
     ): Response<JsonObject>
 
+    // Notice
+    @GET("/notice")
+    suspend fun getNotice(): Response<List<Notice>>
 }

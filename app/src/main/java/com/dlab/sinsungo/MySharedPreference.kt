@@ -54,7 +54,18 @@ class MySharedPreference(context: Context) {
         prefs.edit().putLong(key, value).apply()
     }
 
-    fun remove(key: String) {
-        prefs.edit().remove(key).apply()
+    fun clear() {
+        prefs.edit().clear().apply()
+    }
+
+    fun getCurrentUser(): User {
+        return User(
+            prefs.getString("userId", DEFAULT_STRING_VALUE)!!,
+            prefs.getString("loginType", DEFAULT_STRING_VALUE)!!,
+            prefs.getString("name", DEFAULT_STRING_VALUE)!!,
+            prefs.getString("pushToken", DEFAULT_STRING_VALUE),
+            prefs.getInt("refId", DEFAULT_INT_VALUE),
+            prefs.getInt("pushSetting", DEFAULT_INT_VALUE)
+        )
     }
 }

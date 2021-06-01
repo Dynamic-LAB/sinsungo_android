@@ -13,10 +13,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dlab.sinsungo.data.model.Diet
-import com.dlab.sinsungo.data.model.Recipe
-import com.dlab.sinsungo.data.model.Shopping
-import com.dlab.sinsungo.data.model.User
+import com.dlab.sinsungo.data.model.*
 import java.util.*
 import kotlin.math.abs
 
@@ -171,5 +168,13 @@ object CustomBindingAdapter {
         unionList.addAll(value!!)
 
         adapter.submitList(unionList.distinct())
+    }
+
+    @BindingAdapter("notices")
+    @JvmStatic
+    fun bindNotice(recyclerView: RecyclerView, notices: List<Notice>?) {
+        val adapter = recyclerView.adapter as NoticeAdapter
+
+        adapter.submitList(notices)
     }
 }

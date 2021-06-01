@@ -50,7 +50,7 @@ class MyPageViewModel : ViewModel() {
         }
     }
 
-    fun updateUser(user: User, position: Int? = null, trigger: () -> Unit) {
+    fun updateUser(user: User, position: Int? = null, trigger: (() -> Unit)? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 UserRepository.update(user).let { it ->
@@ -66,7 +66,10 @@ class MyPageViewModel : ViewModel() {
                                         _refrigerator.postValue(newRefrigerator)
                                     }
                                 }
-                                trigger()
+
+                                if (trigger != null) {
+                                    trigger()
+                                }
                             }
                         }
                     } else {
