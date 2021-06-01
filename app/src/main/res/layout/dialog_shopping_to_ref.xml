@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog"
+        android:backgroundTint="@color/white_smoke"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="24dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dial_ref_title_add"
+            android:textAppearance="@style/Text.Bold_24_Black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_dialog_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_inner_dialog"
+            android:backgroundTint="@color/white"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_dialog_title">
+
+            <TextView
+                android:id="@+id/tv_ingredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_material"
+                android:textAppearance="@style/Text.Bold_14_Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_input_noti1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dial_normal_essential"
+                android:textAppearance="@style/Text.Bold_08_Red"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_ingredient"
+                app:layout_constraintStart_toEndOf="@id/tv_ingredient" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_ingredient_input"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/cl_ingredient_category"
+                app:layout_constraintEnd_toStartOf="@id/cl_ingredient_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_ingredient_category">
+
+                <ImageView
+                    android:id="@+id/iv_ingredient_cutlery"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_cutlery"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dim_grey" />
+
+                <EditText
+                    android:id="@+id/et_ingredient"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/dial_hint_ingredient"
+                    android:selectAllOnFocus="true"
+                    android:inputType="text"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_ingredient_cutlery"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_ingredient_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_ingredient_input"
+                app:layout_constraintStart_toStartOf="@id/cl_ingredient_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_input" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_ingredient_category"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_ingredient">
+
+                <TextView
+                    android:id="@+id/tv_ref_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/ref_category_cold"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_open_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_open_category"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/btn_expand"
+                    android:tint="@color/dim_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_ingredient_category"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_ingredient_category"
+                app:layout_constraintStart_toStartOf="@id/cl_ingredient_category"
+                app:layout_constraintTop_toBottomOf="@id/cl_ingredient_category" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dial_count"
+                android:textAppearance="@style/Text.Bold_14_Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_under_ingredient_input" />
+
+            <TextView
+                android:id="@+id/tv_input_noti2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dial_normal_essential"
+                android:textAppearance="@style/Text.Bold_08_Red"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_count"
+                app:layout_constraintStart_toEndOf="@id/tv_count" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_count_input"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/cl_count_type"
+                app:layout_constraintEnd_toStartOf="@id/cl_count_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_count_type">
+
+                <ImageView
+                    android:id="@+id/iv_count_cutlery"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_cutlery"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dim_grey" />
+
+                <EditText
+                    android:id="@+id/et_count"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/dial_hint_count"
+                    android:selectAllOnFocus="true"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_count_cutlery"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_count_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_count_input"
+                app:layout_constraintStart_toStartOf="@id/cl_count_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_count_input" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_count_type"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_count">
+
+                <TextView
+                    android:id="@+id/tv_count_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_open_countType"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_open_countType"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/btn_expand"
+                    android:tint="@color/dim_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_count_type"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/dim_grey"
+                app:layout_constraintEnd_toEndOf="@id/cl_count_type"
+                app:layout_constraintStart_toStartOf="@id/cl_count_type"
+                app:layout_constraintTop_toBottomOf="@id/cl_count_type" />
+
+            <TextView
+                android:id="@+id/tv_exdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/dial_date"
+                android:textAppearance="@style/Text.Bold_14_Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_under_count_input" />
+
+            <TextView
+                android:id="@+id/tv_input_noti3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dial_normal_essential"
+                android:textAppearance="@style/Text.Bold_08_Red"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exdate"
+                app:layout_constraintStart_toEndOf="@id/tv_exdate" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_exdate_input"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/cl_exdate_type"
+                app:layout_constraintEnd_toStartOf="@id/cl_exdate_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_exdate_type">
+
+                <ImageView
+                    android:id="@+id/iv_exdate_calendar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_calender"
+                    app:tint="@color/royal_blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_exdate_input"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/dial_hint_date"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_exdate_calendar"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_exdate_input"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/royal_blue"
+                app:layout_constraintEnd_toEndOf="@id/cl_exdate_input"
+                app:layout_constraintStart_toStartOf="@id/cl_exdate_input"
+                app:layout_constraintTop_toBottomOf="@id/cl_exdate_input" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_exdate_type"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_exdate">
+
+                <TextView
+                    android:id="@+id/tv_exdate_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/all_store_date"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_open_exdateType"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_open_exdateType"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/btn_expand"
+                    android:tint="@color/dim_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line_under_exdate_type"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/royal_blue"
+                app:layout_constraintEnd_toEndOf="@id/cl_exdate_type"
+                app:layout_constraintStart_toStartOf="@id/cl_exdate_type"
+                app:layout_constraintTop_toBottomOf="@id/cl_exdate_type" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_dialog_body">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/btn_cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_accept"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_accept"
+                style="@style/Widget.MaterialComponents.Button.Dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_accept"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
