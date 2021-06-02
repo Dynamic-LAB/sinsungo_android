@@ -1,6 +1,5 @@
 package com.dlab.sinsungo.viewmodel
 
-import android.graphics.DiscretePathEffect
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,8 +31,8 @@ class DietViewModel : ViewModel() {
     val unUseIngredients: MutableLiveData<List<IngredientModel>> = _unUseIngredients
 
     init {
-        getDiet(5)
-        requestGetIngredients(5)
+        getDiet(61)
+        requestGetIngredients(61)
     }
 
     fun search(keyWord: String) {
@@ -89,7 +88,9 @@ class DietViewModel : ViewModel() {
                         if (it.isSuccessful) {
                             it.body()?.let { res ->
                                 withContext(Dispatchers.Main) {
+                                    Log.d("setData", res.toString())
                                     _dietList.add(res)
+                                    Log.d("setData", _dietList.toString())
                                     _diets.postValue(_dietList)
                                 }
                             }
@@ -113,6 +114,7 @@ class DietViewModel : ViewModel() {
                         it.body()?.let { res ->
                             withContext(Dispatchers.Main) {
                                 _dietList.addAll(res)
+                                Log.d("res", res.toString())
                                 _diets.postValue(_dietList)
                             }
                         }

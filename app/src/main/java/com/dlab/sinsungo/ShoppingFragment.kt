@@ -65,6 +65,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     }
 
     private val mOnClickOpenDatePicker = View.OnClickListener {
+   
         val datePicker = DatePickerDialog(
             requireContext(),
             mOnDateSetListener,
