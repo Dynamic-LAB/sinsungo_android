@@ -54,7 +54,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private val viewModel: ShoppingViewModel by viewModels()
     private val ingredientViewModel: IngredientViewModel by activityViewModels()
-    private val refId = 5
+    private val refId = 61
 
     private val mCalendar = Calendar.getInstance()
 
@@ -65,7 +65,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         updateLabel()
     }
 
-    private val mOnClickOpenDatePicker = View.OnClickListener { view: View ->
+    private val mOnClickOpenDatePicker = View.OnClickListener { _: View ->
         val datePicker = DatePickerDialog(
             requireContext(),
             mOnDateSetListener,
