@@ -23,8 +23,10 @@ class IngredientViewModel : ViewModel() {
     val inputIngredient: MutableLiveData<IngredientModel> = _inputIngredient
     val isModify: MutableLiveData<Boolean> = _isModify
 
+    private val refID = GlobalApplication.prefs.getInt("refId")
+
     init {
-        requestGetIngredients(5) // 나중에 냉장고 id 받아줘야함
+        requestGetIngredients(refID) // 나중에 냉장고 id 받아줘야함
         _inputIngredient.value = IngredientModel(null, "", 0, "", "냉장", "g", "유통기한")
     }
 
@@ -58,7 +60,7 @@ class IngredientViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val inputList = mutableListOf<IngredientModel>()
             val data = _inputIngredient.value
-            data?.id = 5
+            data?.id = refID
             Log.d("input ing", data.toString())
             inputList.add(data!!)
             try {
@@ -117,7 +119,7 @@ class IngredientViewModel : ViewModel() {
             val position = _position.value
             Log.d("modify input ing", data.toString())
             try {
-                IngredientRepository.putIngredient(6, data!!).let { response ->
+                IngredientRepository.putIngredient(refID, data!!).let { response ->
                     if (response.isSuccessful) {
                         Log.d("put ing response", response.toString())
                         response.body()?.let {

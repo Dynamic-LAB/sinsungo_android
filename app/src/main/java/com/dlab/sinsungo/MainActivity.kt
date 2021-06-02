@@ -23,20 +23,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.view = this
         binding.bottomNavView.setOnNavigationItemSelectedListener(this)
         changeBottomNavMenu(R.id.bottom_nav_menu_refrigerator)
-
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                Log.d("FCM", "Fetching FCM registration token failed", task.exception)
-//                return@OnCompleteListener
-//            }
-//
-//            // Get new FCM registration token
-//            val token = task.result
-//
-//            // Log and toast
-//            Log.d("FCM", token!!)
-//            Toast.makeText(this, token, Toast.LENGTH_SHORT).show()
-//        })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
