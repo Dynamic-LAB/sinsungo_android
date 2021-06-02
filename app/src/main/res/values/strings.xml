@@ -104,13 +104,6 @@
     <string name="reci_add_diet">식단에 추가하기</string>
     <string name="reci_watch_recipe">레시피보기</string>
 
-    <!-- 알림 -->
-    <string name="noti_expiration_date">유통기한이 %d일 남은 %s가(이) 있습니다!</string>
-    <string name="noti_expiration_date_several">유통기한이 %d일 남은 재료들 있습니다!</string>
-    <string name="noti_use_ingredient">%s님이 냉장고의 재료를 사용하였습니다.</string>
-    <string name="noti_write_diet">식단을 작성해주세요!</string>
-    <string name="noti_update_diet">%s님이 식단을 업데이트 했습니다!</string>
-
     <!-- 장바구니 -->
     <string name="shop_morning">아침 식단의 재료</string>
     <string name="shop_lunch">점심 식단의 재료</string>
@@ -170,5 +163,8 @@
     <string name="tutorial_content3">냉장고 속 재료로 가능한 레시피를 보고,\n멤버와 함께 식단을 짜고,\n부족한 재료는 장바구니에 추가해보세요.\n멤버와 함께 신선고로 편리하게\n식생활을 관리해보세요!</string>
     <string name="tutorial_content_welcome">우리집 냉장고와 식습관 관리,\n이제 신선고로 편리하게 해보세요!</string>
     <string name="tutorial_input_invite">초대코드를 입력해주세요.</string>
+
+    <!-- 알림 -->
+    <string name="notification_empty_message">알림이 없습니다.</string>
 
 </resources>

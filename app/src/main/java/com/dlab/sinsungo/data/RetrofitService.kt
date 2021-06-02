@@ -1,5 +1,6 @@
 package com.dlab.sinsungo.data
 
+import android.app.Notification
 import com.dlab.sinsungo.data.model.*
 import com.google.gson.JsonObject
 import retrofit2.Response
@@ -114,4 +115,10 @@ interface RetrofitService {
     // Notice
     @GET("/notice")
     suspend fun getNotice(): Response<List<Notice>>
+
+    // Notification
+    @GET("/notification/{id}")
+    suspend fun getNotification(
+        @Path("id") refId: Int
+    ): Response<List<NotificationModel>>
 }

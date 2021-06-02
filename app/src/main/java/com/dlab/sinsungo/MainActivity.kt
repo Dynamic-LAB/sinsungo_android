@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.ActivityMainBinding
 import com.dlab.sinsungo.ui.MyPageActivity
+import com.dlab.sinsungo.ui.NotificationFragment
 import com.dlab.sinsungo.ui.RecipeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 changeFragment(fragment)
             }
             R.id.bottom_nav_menu_notification -> {
-                // changeFragment()
+                val fragment = NotificationFragment()
+                changeFragment(fragment)
             }
             R.id.bottom_nav_menu_shopping_basket -> {
                 val fragment = ShoppingFragment()
