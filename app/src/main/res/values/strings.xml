@@ -120,6 +120,7 @@
     <string name="shop_empty_message">장보기 목록이 비어있어요!</string>
     <string name="shop_share">공유하기</string>
     <string name="shop_add">장바구니 목록 추가하기</string>
+    <string name="shop_modify">장바구니 목록 수정하기</string>
 
     <!-- 마이페이지 -->
     <string name="my_add_member">초대 코드</string>

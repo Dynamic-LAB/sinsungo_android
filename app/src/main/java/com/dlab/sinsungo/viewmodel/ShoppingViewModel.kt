@@ -17,7 +17,7 @@ class ShoppingViewModel : ViewModel() {
     val shoppings: MutableLiveData<List<Shopping>> = _shoppings
 
     init {
-        getShopping(5)
+        getShopping(61)
     }
 
     fun setShopping(newShopping: Shopping?) {
@@ -28,8 +28,6 @@ class ShoppingViewModel : ViewModel() {
                         if (it.isSuccessful) {
                             it.body()?.let { res ->
                                 withContext(Dispatchers.Main) {
-                                    Log.d("set res result", res.toString())
-                                    Log.d("set data", newShopping.toString())
                                     _shoppingList.add(res)
                                     _shoppings.postValue(_shoppingList)
                                 }
@@ -79,7 +77,6 @@ class ShoppingViewModel : ViewModel() {
                                 _shoppingList.removeAt(pos)
                                 _shoppingList.add(pos, res)
                                 _shoppings.postValue(_shoppingList)
-                                Log.d("edit data", res.toString())
                             }
                         }
                     } else {
@@ -99,7 +96,7 @@ class ShoppingViewModel : ViewModel() {
             try {
                 ShoppingRepository.delShopping(shopID).let {
                     if (it.isSuccessful) {
-                        it.body()?.let { res ->
+                        it.body()?.let { _ ->
                             withContext(Dispatchers.Main) {
                                 _shoppingList.remove(shopping)
                                 _shoppings.postValue(_shoppingList)
