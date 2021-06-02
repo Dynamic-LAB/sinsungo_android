@@ -22,7 +22,8 @@
         <activity android:name=".ui.HelpActivity" />
         <activity android:name=".ui.NoticeActivity" />
         <activity
-            android:name=".MainActivity">
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,6 +33,7 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.RecipeDetailActivity" />
         <activity android:name=".ui.MyPageActivity" />
+        <activity android:name=".MainActivity"/>
         <activity android:name=".CameraXOCRActivity" />
         <activity android:name=".ReceiptOCRActivity" />
         <activity android:name=".TutorialActivity" /> <!-- 카카오 인증 Redirect URI 설정 -->
