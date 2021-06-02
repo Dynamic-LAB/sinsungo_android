@@ -73,7 +73,7 @@
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:layout_marginTop="24dp"
-            android:src="@drawable/image_empty_shopping"
+            android:src="@drawable/img_empty_receipt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/underline_title" />
@@ -126,6 +126,39 @@
             app:receiptData="@{viewmodel.resultIngredients}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.resultIngredients.size() == 0}"
+            app:layout_constraintBottom_toBottomOf="@id/rcview_ocr_result"
+            app:layout_constraintEnd_toEndOf="@id/rcview_ocr_result"
+            app:layout_constraintStart_toStartOf="@id/rcview_ocr_result"
+            app:layout_constraintTop_toTopOf="@id/rcview_ocr_result">
+
+            <ImageView
+                android:id="@+id/iv_empty_ocr_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_empty_ocr_result"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_empty_ocr_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="영수증 인식 결과가 없습니다."
+                android:textAppearance="@style/Text.Regular_16_Black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty_ocr_result" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,6 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:visibility="@{viewmodel.resultIngredients.size() != 0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +212,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="@string/ocr_result_add"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_save"
                 app:layout_constraintStart_toStartOf="parent"
