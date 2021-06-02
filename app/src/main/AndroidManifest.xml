@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sinsungo"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.NoticeDetailActivity"></activity>
+        <activity android:name=".ui.NoticeDetailActivity" />
         <activity android:name=".ui.LawActivity" />
         <activity android:name=".ui.ContactActivity" />
         <activity android:name=".ui.HelpActivity" />

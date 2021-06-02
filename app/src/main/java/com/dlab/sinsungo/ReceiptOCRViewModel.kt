@@ -19,6 +19,8 @@ class ReceiptOCRViewModel : ViewModel() {
     val resultIngredients: MutableLiveData<List<IngredientModel>> = _resultIngredients
     val postResult: MutableLiveData<Boolean> = _postResult
 
+    private val refID = GlobalApplication.prefs.getInt("refId")
+
     init {
         requestGetIngredientDict()
     }
@@ -73,7 +75,7 @@ class ReceiptOCRViewModel : ViewModel() {
     }
 
     fun addIngredientToResult(name: String) {
-        _resultList.add(IngredientModel(5, name, 0, "", "냉장", "g", "유통기한"))
+        _resultList.add(IngredientModel(refID, name, 0, "", "냉장", "g", "유통기한"))
         _resultIngredients.value = _resultList
     }
 
@@ -82,7 +84,7 @@ class ReceiptOCRViewModel : ViewModel() {
             _resultList.clear()
             _dictList.forEach {
                 if (ocrResult.contains(it.name)) {
-                    _resultList.add(IngredientModel(5, it.name, 0, "", "냉장", "g", "유통기한"))
+                    _resultList.add(IngredientModel(refID, it.name, 0, "", "냉장", "g", "유통기한"))
                 }
             }
             withContext(Dispatchers.Main) {
