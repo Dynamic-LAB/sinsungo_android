@@ -80,6 +80,7 @@ class LoginViewModel : ViewModel() {
                         UserRepository.update(GlobalApplication.prefs.getCurrentUser().copy(pushToken = pushToken))
                             .let {
                                 if (it.isSuccessful) {
+                                    GlobalApplication.prefs.setString("pushToken", pushToken)
                                     onFinish()
                                 } else {
                                     Log.e("update token error", it.message())

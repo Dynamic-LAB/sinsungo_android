@@ -163,6 +163,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/reci_add_diet"
+                android:onClick="@{() -> view.addDiet(viewModel.recipe.name)}"
                 android:textAppearance="@style/Text.Bold_14_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_recipe"

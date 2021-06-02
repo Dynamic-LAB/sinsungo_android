@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.R
+import com.dlab.sinsungo.RecipeToDietDialog
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.databinding.ActivityRecipeDetailBinding
 import com.dlab.sinsungo.viewmodel.RecipeDetailViewModel
@@ -37,5 +38,9 @@ class RecipeDetailActivity : AppCompatActivity() {
     fun viewRecipe(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
+    }
+
+    fun addDiet(name: String) {
+        RecipeToDietDialog(name).show(supportFragmentManager, null)
     }
 }

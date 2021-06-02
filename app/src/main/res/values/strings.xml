@@ -103,6 +103,11 @@
     <string name="reci_not_in_refrigerator">냉장고에 없는 재료</string>
     <string name="reci_add_diet">식단에 추가하기</string>
     <string name="reci_watch_recipe">레시피보기</string>
+    <string name="reci_empty_message">검색 조건과 일치하는 레시피가 없습니다.</string>
+
+    <!-- 레시피 다이얼로그 -->
+    <string name="reci_dialog_new_diet">새 식단 추가</string>
+    <string name="reci_dialog_old_diet">기존 식단에 추가</string>
 
     <!-- 장바구니 -->
     <string name="shop_morning">아침 식단의 재료</string>

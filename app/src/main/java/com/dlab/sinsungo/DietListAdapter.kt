@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.databinding.ItemRcviewDietBinding
 
-class DietListAdapter(val deleteClick: (Diet) -> Unit, val editClick: (Diet) -> Unit) :
+class DietListAdapter(
+    val deleteClick: ((Diet) -> Unit)? = null,
+    val editClick: ((Diet) -> Unit)? = null,
+    val itemClick: ((Diet) -> Unit)? = null
+) :
     ListAdapter<Diet, DietListAdapter.ViewHolder>(DietDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -33,13 +37,13 @@ class DietListAdapter(val deleteClick: (Diet) -> Unit, val editClick: (Diet) -> 
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
             binding.btnDeleteDiet.setOnClickListener {
-                deleteClick(getItem(adapterPosition))
+                deleteClick?.invoke(getItem(adapterPosition))
             }
             binding.btnEditDiet.setOnClickListener {
-                editClick(getItem(adapterPosition))
+                editClick?.invoke(getItem(adapterPosition))
             }
             binding.cvDietItem.setOnClickListener {
-                false
+                itemClick?.invoke(getItem(adapterPosition))
             }
         }
 

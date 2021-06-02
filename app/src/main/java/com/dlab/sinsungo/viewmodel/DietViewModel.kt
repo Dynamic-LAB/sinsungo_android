@@ -79,7 +79,7 @@ class DietViewModel : ViewModel() {
         }
     }
 
-    fun setDiet(newDiet: Diet?) {
+    fun setDiet(newDiet: Diet?, dismiss: (() -> Unit)?) {
         Log.d("request diet data", newDiet.toString())
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -92,6 +92,7 @@ class DietViewModel : ViewModel() {
                                     _dietList.add(res)
                                     Log.d("setData", _dietList.toString())
                                     _diets.postValue(_dietList)
+                                    dismiss?.invoke()
                                 }
                             }
                         } else {
@@ -129,7 +130,7 @@ class DietViewModel : ViewModel() {
         }
     }
 
-    fun editDiet(refId: Int, diet: Diet, newDiet: Diet) {
+    fun editDiet(refId: Int, diet: Diet, newDiet: Diet, dismiss: (() -> Unit)?) {
         Log.d("보낸 data", diet.toString() + newDiet.toString())
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -142,6 +143,7 @@ class DietViewModel : ViewModel() {
                                 _dietList.add(pos, res)
                                 _diets.postValue(_dietList)
                                 Log.d("edit data", res.toString())
+                                dismiss?.invoke()
                             }
                         }
                     } else {
