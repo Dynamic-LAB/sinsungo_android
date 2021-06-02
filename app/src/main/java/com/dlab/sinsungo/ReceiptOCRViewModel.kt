@@ -94,12 +94,25 @@ class ReceiptOCRViewModel : ViewModel() {
         }
     }
 
-    fun deleteOCRIngredient(position: Int) {
-        _resultList.removeAt(position)
+    fun deleteOCRIngredient(item: IngredientModel) {
+        _resultList.remove(item)
         _resultIngredients.value = _resultList
     }
 
     fun setPostResult(value: Boolean) {
         _postResult.value = value
+    }
+
+    fun setDataIngredient(key: String, value: String, ingredientModel: IngredientModel) {
+        val idx = _resultList.indexOf(ingredientModel)
+        when (key) {
+            "count" -> ingredientModel.count = value.toInt()
+            "exDate" -> ingredientModel.exdate = value
+            "refCategory" -> ingredientModel.refCategory = value
+            "countType" -> ingredientModel.countType = value
+            "exDateType" -> ingredientModel.exDateType = value
+        }
+        _resultList[idx] = ingredientModel
+        _resultIngredients.value = _resultList
     }
 }
