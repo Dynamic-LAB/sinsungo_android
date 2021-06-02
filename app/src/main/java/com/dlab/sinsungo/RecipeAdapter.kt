@@ -46,7 +46,7 @@ class RecipeAdapter(val todoItemClick: (Recipe) -> Unit) :
     inner class RecipeViewHolder(private val binding: ItemRcviewRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
             binding.recipe = recipe
-            binding.inRef = recipe.inRefIngredients.joinToString(", ")
+            binding.inRef = recipe.inRefIngredients.distinct().joinToString(", ")
             binding.notInRef = recipe.notInRefIngredients.joinToString(", ")
             binding.executePendingBindings()
 

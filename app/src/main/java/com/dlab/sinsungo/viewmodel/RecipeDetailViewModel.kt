@@ -15,7 +15,7 @@ class RecipeDetailViewModel : ViewModel() {
     }
 
     fun inRefIngredients(): String {
-        return _recipe.value!!.inRefIngredients.joinToString(", ")
+        return _recipe.value!!.inRefIngredients.distinct().joinToString(", ")
     }
 
     fun notInRefIngredients(): String {
