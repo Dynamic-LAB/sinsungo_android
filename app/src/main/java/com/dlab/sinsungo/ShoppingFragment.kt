@@ -18,7 +18,6 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.PopupMenu
 import android.widget.TextView
-import androidx.annotation.MenuRes
 import androidx.collection.LruCache
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -65,7 +64,8 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         updateLabel()
     }
 
-    private val mOnClickOpenDatePicker = View.OnClickListener { _: View ->
+    private val mOnClickOpenDatePicker = View.OnClickListener {
+   
         val datePicker = DatePickerDialog(
             requireContext(),
             mOnDateSetListener,
@@ -120,31 +120,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_share_shopping -> {
-                try {
-                    val cachePath = File(this.context?.cacheDir, "images")
-                    cachePath.mkdirs() // don't forget to make the directory
-                    val stream =
-                        FileOutputStream("$cachePath/image.png") // overwrites this image every time
-                    getScreenshotFromRecyclerView(binding.rcviewShopping)?.compress(
-                        Bitmap.CompressFormat.PNG,
-                        100,
-                        stream
-                    )
-                    stream.close()
-                    val newFile = File(cachePath, "image.png")
-                    val contentUri: Uri? = this.context?.let {
-                        FileProvider.getUriForFile(
-                            it,
-                            "com.dlab.sinsungo.fileprovider", newFile
-                        )
-                    }
-                    val sharingIntent = Intent(Intent.ACTION_SEND)
-                    sharingIntent.type = "image/png"
-                    sharingIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                    startActivity(Intent.createChooser(sharingIntent, "Share image"))
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+                shareScreenshot()
                 binding.sdvShopping.close()
             }
             R.id.fab_add_shopping -> {
@@ -176,15 +152,6 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         setDialogColor(0, R.color.dim_grey)
         setDialogColor(1, R.color.dim_grey)
         setDialogColor(2, R.color.dim_grey)
-        setTitleSpanColor(
-            dialogView.tvDialogTitle,
-            ResourcesCompat.getColor(
-                resources,
-                R.color.royal_blue,
-                context?.theme
-            ),
-            8, 10
-        )
         setTextWatcher()
         initPopupMenus()
         dialog.setCanceledOnTouchOutside(false)
@@ -247,10 +214,10 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
     }
 
-
     private fun dialogSetting(shopping: Shopping?) {
         var id = refId
         if (shopping != null) {
+            dialogView.tvDialogTitle.text = getString(R.string.shop_modify)
             id = shopping.id
             dialogView.etIngredient.setText(shopping.shopName)
             dialogView.etCount.setText(shopping.shopAmount.toString())
@@ -259,6 +226,15 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                 dialogView.etMemo.setText(shopping.shopMemo)
             }
         }
+        setTitleSpanColor(
+            dialogView.tvDialogTitle,
+            ResourcesCompat.getColor(
+                resources,
+                R.color.royal_blue,
+                context?.theme
+            ),
+            8, 10
+        )
         dialogView.btnCancel.setOnClickListener {
             dialog.dismiss()
         }
@@ -298,19 +274,19 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun refPopupMenus() {
         checkDialogView.clIngredientCategory.setOnClickListener {
-            showRefCategories(checkDialogView.clIngredientCategory, R.menu.menu_ref_categories)
+            showRefCategories(checkDialogView.clIngredientCategory)
         }
         checkDialogView.clCountType.setOnClickListener {
-            showRefCountTypes(checkDialogView.clCountType, R.menu.menu_count_type)
+            showRefCountTypes(checkDialogView.clCountType)
         }
         checkDialogView.clExdateType.setOnClickListener {
-            showExdateTypes(checkDialogView.clExdateType, R.menu.menu_exdate_type)
+            showExDateTypes(checkDialogView.clExdateType)
         }
     }
 
-    private fun showRefCategories(view: View, @MenuRes menuRes: Int) {
+    private fun showRefCategories(view: View) {
         val refCategoryPopup = PopupMenu(requireContext(), view)
-        refCategoryPopup.menuInflater.inflate(menuRes, refCategoryPopup.menu)
+        refCategoryPopup.menuInflater.inflate(R.menu.menu_ref_categories, refCategoryPopup.menu)
 
         refCategoryPopup.setOnMenuItemClickListener { menuItem: MenuItem ->
             checkDialogView.tvRefCategory.text = menuItem.title.toString()
@@ -320,9 +296,9 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         refCategoryPopup.show()
     }
 
-    private fun showRefCountTypes(view: View, @MenuRes menuRes: Int) {
+    private fun showRefCountTypes(view: View) {
         val countTypePopup = PopupMenu(requireContext(), view)
-        countTypePopup.menuInflater.inflate(menuRes, countTypePopup.menu)
+        countTypePopup.menuInflater.inflate(R.menu.menu_count_type, countTypePopup.menu)
 
         countTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
             checkDialogView.tvCountType.text = menuItem.title.toString()
@@ -332,16 +308,15 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         countTypePopup.show()
     }
 
-    private fun showExdateTypes(view: View, @MenuRes menuRes: Int) {
-        val exdateTypePopup = PopupMenu(requireContext(), view)
-        exdateTypePopup.menuInflater.inflate(menuRes, exdateTypePopup.menu)
+    private fun showExDateTypes(view: View) {
+        val exDateTypePopup = PopupMenu(requireContext(), view)
+        exDateTypePopup.menuInflater.inflate(R.menu.menu_exdate_type, exDateTypePopup.menu)
 
-        exdateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
+        exDateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
             checkDialogView.tvExdateType.text = menuItem.title.toString()
             true
         }
-
-        exdateTypePopup.show()
+        exDateTypePopup.show()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -385,13 +360,13 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun initPopupMenus() {
         dialogView.btnOpenCountType.setOnClickListener {
-            showCountTypes(dialogView.clCountType, R.menu.menu_count_type)
+            showCountTypes(dialogView.clCountType)
         }
     }
 
-    private fun showCountTypes(view: View, @MenuRes menuRes: Int) {
+    private fun showCountTypes(view: View) {
         val countTypePopup = PopupMenu(context, view)
-        countTypePopup.menuInflater.inflate(menuRes, countTypePopup.menu)
+        countTypePopup.menuInflater.inflate(R.menu.menu_count_type, countTypePopup.menu)
         countTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
             dialogView.tvCountType.text = menuItem.title
             true
@@ -573,6 +548,34 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
         checkDialogView.tvExdateInput.text = mDateString
+    }
+
+    private fun shareScreenshot() {
+        try {
+            val cachePath = File(this.context?.cacheDir, "images")
+            cachePath.mkdirs() // don't forget to make the directory
+            val stream =
+                FileOutputStream("$cachePath/image.png") // overwrites this image every time
+            getScreenshotFromRecyclerView(binding.rcviewShopping)?.compress(
+                Bitmap.CompressFormat.PNG,
+                100,
+                stream
+            )
+            stream.close()
+            val newFile = File(cachePath, "image.png")
+            val contentUri: Uri? = this.context?.let {
+                FileProvider.getUriForFile(
+                    it,
+                    "com.dlab.sinsungo.fileprovider", newFile
+                )
+            }
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "image/png"
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+            startActivity(Intent.createChooser(sharingIntent, "Share image"))
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     private fun getScreenshotFromRecyclerView(view: RecyclerView): Bitmap? {
