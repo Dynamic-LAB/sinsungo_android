@@ -153,11 +153,12 @@
     <string name="ocr_do">인식하기</string>
     <string name="ocr_camera_hint">영수증의 상품항목이 잘 보이게 수직 방향으로 촬영해주세요.</string>
     <string name="ocr_close">닫기</string>
-    <string name="ocr_progress_message">인식중입니다. 잠시 기다려 주세요..</string>
+    <string name="ocr_progress_message">인식 중 입니다! 잠시 기다려 주세요...</string>
     <string name="ocr_request_permission">영수증 인식을 위해 카메라 권한이 필요합니다.</string>
     <string name="ocr_denied_permission">카메라 권한을 거부하셨습니다. [설정] -> [권한]에서 허용 가능합니다.</string>
     <string name="ocr_result_add">항목 추가</string>
     <string name="ocr_dialog_add">영수증 항목 추가</string>
+    <string name="ocr_result_empty_message">영수증 인식 결과가 없습니다.</string>
 
     <!-- 튜토리얼 -->
     <string name="tutorial_skip"><u>건너뛰기</u></string>
