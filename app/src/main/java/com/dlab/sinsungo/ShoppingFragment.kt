@@ -50,6 +50,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var dialog: AlertDialog
 
     private lateinit var mShoppingListAdapter: ShoppingListAdapter
+    private lateinit var swipeHelperCallback: SwipeHelperCallback
 
     private val viewModel: ShoppingViewModel by viewModels()
     private val ingredientViewModel: IngredientViewModel by activityViewModels()
@@ -65,7 +66,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     }
 
     private val mOnClickOpenDatePicker = View.OnClickListener {
-   
+
         val datePicker = DatePickerDialog(
             requireContext(),
             mOnDateSetListener,
@@ -321,7 +322,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initRcView() {
-        val swipeHelperCallback = SwipeHelperCallback().apply {
+        swipeHelperCallback = SwipeHelperCallback().apply {
             setClamp(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130f, context?.resources?.displayMetrics))
             setType("shopping")
         }
@@ -344,17 +345,20 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun deleteShoppingItem(shopping: Shopping) {
         viewModel.deleteShopping(shopping)
+        swipeHelperCallback.resetSwipe(binding.rcviewShopping)
     }
 
     private fun editShoppingItem(shopping: Shopping) {
         initDialog()
         dialogSetting(shopping)
+        swipeHelperCallback.resetSwipe(binding.rcviewShopping)
         dialog.show()
     }
 
     private fun checkShoppingItem(shopping: Shopping) {
         initCheckDialog(shopping)
         checkDialogSetting(shopping)
+        swipeHelperCallback.resetSwipe(binding.rcviewShopping)
         dialog.show()
     }
 
