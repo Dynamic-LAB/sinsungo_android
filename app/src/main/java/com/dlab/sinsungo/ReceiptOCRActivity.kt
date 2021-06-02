@@ -52,6 +52,9 @@ class ReceiptOCRActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
+        val EMAIL = getString(R.string.firebase_cf_auth_email)
+        val PASS_WORD = getString(R.string.firebase_cf_auth_password)
+
         functions = FirebaseFunctions.getInstance()
         auth = Firebase.auth
 
