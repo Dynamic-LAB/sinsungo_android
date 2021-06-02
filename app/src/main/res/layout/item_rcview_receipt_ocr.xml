@@ -30,16 +30,16 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/btn_drop_item"
                 android:tint="@color/bittersweet"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_ingredient_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{data.name}"
                 android:layout_marginStart="16dp"
+                android:text="@{data.name}"
                 android:textAppearance="@style/Text.Bold_14_Black"
                 app:layout_constraintStart_toEndOf="@id/btn_drop_item"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,8 +48,8 @@
                 android:id="@+id/cl_ingredient_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toEndOf="@id/btn_drop_item"
                 app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name">
 
@@ -175,7 +175,7 @@
                     android:id="@+id/tv_exdate_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{data.exdateType}"
+                    android:text="@{data.exDateType}"
                     android:textAppearance="@style/Text.Bold_12_Black"
                     app:layout_constraintBottom_toBottomOf="@id/btn_open_exdateType"
                     app:layout_constraintStart_toStartOf="parent"

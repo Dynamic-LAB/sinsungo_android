@@ -59,8 +59,8 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
             when (menuItem.title.toString()) {
                 "재료명 순" -> data = data.sortedBy { it.name }
                 "신선도 순" -> {
-                    val exDateList = data.filter { it.exdateType == "유통기한" }
-                    val notExDateList = data.filter { it.exdateType != "유통기한" }
+                    val exDateList = data.filter { it.exDateType == "유통기한" }
+                    val notExDateList = data.filter { it.exDateType != "유통기한" }
                     data = exDateList.sortedBy { it.exdate } + notExDateList.sortedBy { it.exdate }
                 }
                 "최근 추가 순" -> data = data.sortedBy { it.id }
@@ -72,11 +72,11 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
         popup.show()
     }
 
-    fun deleteIngredient(ingredientModel: IngredientModel) {
+    private fun deleteIngredient(ingredientModel: IngredientModel) {
         viewModel.requestDeleteIngredient(ingredientModel)
     }
 
-    fun updateIngredientDialogShow(ingredientModel: IngredientModel) {
+    private fun updateIngredientDialogShow(ingredientModel: IngredientModel) {
         val dialog = IngredientSelfInputDialog()
         viewModel.setModify(true)
         viewModel.setInputIngredient(ingredientModel)

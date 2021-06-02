@@ -198,10 +198,10 @@ class IngredientViewModel : ViewModel() {
     fun setInputIngredientValue(key: String, value: String) {
         val data = _inputIngredient.value
         when (key) {
-            "exdate" -> data?.exdate = value
+            "exDate" -> data?.exdate = value
             "refCategory" -> data?.refCategory = value
             "countType" -> data?.countType = value
-            "exdateType" -> data?.exdateType = value
+            "exDateType" -> data?.exDateType = value
         }
         _inputIngredient.value = data!!
     }
@@ -210,22 +210,4 @@ class IngredientViewModel : ViewModel() {
         _innerList.addAll(list.toMutableList())
         _ingredients.value = _innerList
     }
-
-    /*fun sortList(key: String) {
-        viewModelScope.launch(Dispatchers.Main) {
-            var data = _ingredients.value
-
-            when (key) {
-                "재료명 순" -> data = data!!.sortedBy { it.name }
-                "신선도 순" -> {
-                    val exDateList = data!!.filter { it.exdateType == "유통기한" }
-                    val notExDateList = data.filter { it.exdateType != "유통기한" }
-                    data = exDateList.sortedBy { it.exdate } + notExDateList.sortedBy { it.exdate }
-                }
-                "최근 추가 순" -> data = data!!.sortedBy { it.id }
-            }
-
-            _ingredients.postValue(data!!)
-        }
-    }*/
 }

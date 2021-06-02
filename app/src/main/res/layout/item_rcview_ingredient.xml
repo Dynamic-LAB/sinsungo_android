@@ -56,7 +56,7 @@
                 android:max="100"
                 app:drawableBad="@{@drawable/bg_progress_bad}"
                 app:drawableGood="@{@drawable/bg_progress_good}"
-                app:exdateType="@{data.exdateType}"
+                app:exdateType="@{data.exDateType}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name"
@@ -67,18 +67,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:tvRemain="@{remain}"
-                app:tvExdateType="@{data.exdateType}"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
+                app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain"
+                app:tvExdateType="@{data.exDateType}"
+                app:tvRemain="@{remain}" />
 
             <TextView
                 android:id="@+id/tv_ingredient_exdate_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
-                android:text="@{data.exdateType}"
+                android:text="@{data.exDateType}"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintBottom_toBottomOf="@id/tv_ingredient_exdate"
                 app:layout_constraintEnd_toStartOf="@id/tv_ingredient_exdate"
@@ -90,9 +90,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/Text.Regular_10_Black"
-                app:text="@{data.exdate}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain" />
+                app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain"
+                app:text="@{data.exdate}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

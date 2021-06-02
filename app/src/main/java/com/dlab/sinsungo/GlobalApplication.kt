@@ -9,8 +9,9 @@ class GlobalApplication : Application() {
     }
 
     override fun onCreate() {
-        prefs = MySharedPreference(applicationContext)
         super.onCreate()
+        prefs = MySharedPreference(applicationContext)
+
         // 다른 초기화 코드들
 
         // Kakao SDK 초기화
