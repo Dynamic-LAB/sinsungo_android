@@ -41,7 +41,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private var chipList = mutableListOf<String?>()
 
-    private var refId = 5
+    private var refId = 61
     private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
     private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -56,6 +56,14 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
         binding = DialogDietBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.useIngredients.observe(viewLifecycleOwner) {
+            binding.listSize = it.size + viewModel.unUseIngredients.value?.size!!
+            Log.d("listSize", binding.listSize.toString())
+        }
+        viewModel.unUseIngredients.observe(viewLifecycleOwner) {
+            binding.listSize = it.size + viewModel.useIngredients.value?.size!!
+            Log.d("listSize", binding.listSize.toString())
+        }
 
         dialog?.setOnShowListener {
             val bottomSheet = it as BottomSheetDialog
@@ -89,7 +97,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
 
     private fun editSetting(diet: Diet) {
         binding.tvTitleAdd.text = resources.getString(R.string.dial_modify)
-        viewModel.setUseIngredients(diet.dietIngredients)
+        diet.dietIngredients?.let { viewModel.setUseIngredients(it) }
         setCalender(diet.dietDate)
         binding.etMemo.setText(diet.dietMemo)
         val menus = diet.dietMenus.filterNotNull()
@@ -155,7 +163,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
                     chipList,
                     mIngredientListAdapter.ingredientList.distinct()
                 )
-                viewModel.editDiet(5, oldDiet, newDiet)
+                viewModel.editDiet(refId, oldDiet, newDiet)
                 this.dismiss()
             }
 

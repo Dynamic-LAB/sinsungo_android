@@ -30,6 +30,7 @@ class DietListAdapter(val deleteClick: (Diet) -> Unit, val editClick: (Diet) -> 
 
         fun bind(diet: Diet) {
             binding.dataModel = diet
+
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
             binding.btnDeleteDiet.setOnClickListener {
                 deleteClick(getItem(adapterPosition))

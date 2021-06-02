@@ -90,6 +90,7 @@
     <string name="ref_format_over_exdate">%s에서 %d일 지났어요!</string>
 
     <!-- 식단 -->
+    <string name="diet_no_ingredient">사용하는 재료가 없습니다.</string>
     <string name="diet_main_ingredient">주재료: </string>
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
     <string name="diet_use_ingredient">사용재료</string>
@@ -111,7 +112,6 @@
     <string name="noti_update_diet">%s님이 식단을 업데이트 했습니다!</string>
 
     <!-- 장바구니 -->
-    <string name="shop_advice_add">이 재료도 <b>추가</b>하시는건 어때요?</string>
     <string name="shop_morning">아침 식단의 재료</string>
     <string name="shop_lunch">점심 식단의 재료</string>
     <string name="shop_dinner">저녁 식단의 재료</string>

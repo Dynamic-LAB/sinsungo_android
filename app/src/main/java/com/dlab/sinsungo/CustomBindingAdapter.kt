@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import androidx.recyclerview.widget.RecyclerView
@@ -143,9 +144,28 @@ object CustomBindingAdapter {
 
     @BindingAdapter("tvDietIngredient")
     @JvmStatic
-    fun setDietIngredient(view: TextView, value: List<IngredientModel>) {
-        val valueString: List<String> = value.map { it.name }
-        view.text = valueString.joinToString(",")
+    fun setDietIngredient(view: TextView, value: List<IngredientModel>?) {
+        if (value == null || value[0].id == null) {
+            view.text = view.resources.getString(R.string.diet_no_ingredient)
+            view.setTextColor(
+                ResourcesCompat.getColor(
+                    view.resources,
+                    R.color.free_speech_red,
+                    view.resources.newTheme()
+                )
+            )
+        } else {
+            val valueString: List<String> = value.map { it.name }
+            view.text = valueString.joinToString(",")
+        }
+    }
+
+    @BindingAdapter("tvDietName")
+    @JvmStatic
+    fun setDietIngredientGone(view: TextView, value: List<IngredientModel>?) {
+        if (value == null || value[0].id == null) {
+            view.visibility = View.GONE
+        }
     }
 
     @BindingAdapter("dietData")

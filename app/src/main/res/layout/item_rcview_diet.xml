@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -114,14 +113,15 @@
                     android:text="@string/diet_main_ingredient"
                     android:textAppearance="@style/Text.Regular_10_Green"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_diet_menu" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_diet_menu"
+                    app:tvDietName="@{dataModel.dietIngredients}" />
 
                 <TextView
                     android:id="@+id/tv_diet_ingredient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
                     android:textAppearance="@style/Text.Regular_10_Black"
                     app:layout_constraintStart_toEndOf="@+id/tv_main_diet"
                     app:layout_constraintTop_toBottomOf="@+id/tv_diet_menu"
