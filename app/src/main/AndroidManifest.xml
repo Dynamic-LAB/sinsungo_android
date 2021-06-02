@@ -36,7 +36,9 @@
         <activity android:name=".ui.MyPageActivity" />
         <activity android:name=".CameraXOCRActivity" />
         <activity android:name=".ReceiptOCRActivity" />
-        <activity android:name=".TutorialActivity" /> <!-- 카카오 인증 Redirect URI 설정 -->
+        <activity android:name=".TutorialActivity" />
+
+        <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -49,7 +51,9 @@
                     android:host="oauth"
                     android:scheme="kakaoee3f134157c1c12681be4c972668fcea" />
             </intent-filter>
-        </activity> <!-- 사진 공유 -->
+        </activity>
+
+        <!-- 사진 공유 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.dlab.sinsungo.fileprovider"
@@ -58,7 +62,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
-        </provider> <!-- FCM -->
+        </provider>
+
+        <!-- FCM -->
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
@@ -73,6 +79,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/royal_blue" />
+
     </application>
 
 </manifest>
