@@ -79,6 +79,7 @@ class ReceiptOCRViewModel : ViewModel() {
 
     fun extractIngredientInOCR(ocrResult: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _resultList.clear()
             _dictList.forEach {
                 if (ocrResult.contains(it.name)) {
                     _resultList.add(IngredientModel(5, it.name, 0, "", "냉장", "g", "유통기한"))
