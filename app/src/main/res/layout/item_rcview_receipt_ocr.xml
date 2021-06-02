@@ -103,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_count"
+                    android:text="@{Integer.toString(data.count)}"
                     android:inputType="number"
                     android:maxLength="10"
                     android:selectAllOnFocus="true"
