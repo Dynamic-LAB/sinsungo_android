@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dlab.sinsungo">
-
-    <!-- 인터넷 사용 권한 설정-->
+    <!-- 인터넷 사용 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 -->
-
-    <uses-feature android:name="android.hardware.camera" /> <!-- 카메라 기능 사용 -->
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_kor"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
-        android:theme="@style/Theme.Sinsungo">
-        <activity android:name=".SplashActivity"
+        android:theme="@style/Theme.Sinsungo"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.NoticeDetailActivity"></activity>
+        <activity android:name=".ui.LawActivity" />
+        <activity android:name=".ui.ContactActivity" />
+        <activity android:name=".ui.HelpActivity" />
+        <activity android:name=".ui.NoticeActivity" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/Theme.Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.LoginActivity"/>
+        <activity android:name=".ui.LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.RecipeDetailActivity" />
         <activity android:name=".ui.MyPageActivity" />
         <activity android:name=".CameraXOCRActivity" />
         <activity android:name=".ReceiptOCRActivity" />
-        <activity android:name=".TutorialActivity" />
-
-        <!-- 카카오 인증 Redirect URI 설정 -->
+        <activity android:name=".TutorialActivity" /> <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakaoee3f134157c1c12681be4c972668fcea" />
             </intent-filter>
-        </activity>
-        <!-- 사진 공유 -->
+        </activity> <!-- 사진 공유 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.dlab.sinsungo.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
-        </provider>
-
-        <!-- FCM -->
+        </provider> <!-- FCM -->
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
@@ -64,13 +66,13 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/img_logo_fridge" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/royal_blue" />
-
     </application>
 
 </manifest>

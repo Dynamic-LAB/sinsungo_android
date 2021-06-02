@@ -1,10 +1,12 @@
 package com.dlab.sinsungo.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.CustomConfirmDialog
+import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.MemberAdapter
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.databinding.ActivityMyPageBinding
@@ -28,6 +30,15 @@ class MyPageActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.view = this
         binding.viewModel = viewModel
+        binding.btnSetNoti.isChecked = GlobalApplication.prefs.getInt("pushSetting") == 1
+
+        binding.btnSetNoti.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.updateUser(GlobalApplication.prefs.getCurrentUser().copy(pushSetting = 1))
+            } else {
+                viewModel.updateUser(GlobalApplication.prefs.getCurrentUser().copy(pushSetting = 0))
+            }
+        }
     }
 
     private fun setRecyclerView() {
@@ -44,5 +55,21 @@ class MyPageActivity : AppCompatActivity() {
     fun showDialog(type: String) {
         val dialog = CustomConfirmDialog(type)
         dialog.show(supportFragmentManager, "custom_confirm_dialog")
+    }
+
+    fun startNoticeActivity() {
+        startActivity(Intent(this, NoticeActivity::class.java))
+    }
+
+    fun startHelpActivity() {
+        startActivity(Intent(this, HelpActivity::class.java))
+    }
+
+    fun startContactActivity() {
+        startActivity(Intent(this, ContactActivity::class.java))
+    }
+
+    fun startLawActivity() {
+        startActivity(Intent(this, LawActivity::class.java))
     }
 }

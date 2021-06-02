@@ -43,14 +43,7 @@ class TutorialViewModel : ViewModel() {
     }
 
     fun inviteUser(inviteKey: String, startMainActivity: () -> Unit) {
-        val user = User(
-            GlobalApplication.prefs.getString("userId")!!,
-            GlobalApplication.prefs.getString("loginType")!!,
-            GlobalApplication.prefs.getString("name")!!,
-            GlobalApplication.prefs.getString("pushToken"),
-            GlobalApplication.prefs.getInt("refId"),
-            GlobalApplication.prefs.getInt("pushSetting")
-        )
+        val user = GlobalApplication.prefs.getCurrentUser()
         val body = HashMap<String, Any>()
         body["inviteKey"] = inviteKey
         body["user"] = user
