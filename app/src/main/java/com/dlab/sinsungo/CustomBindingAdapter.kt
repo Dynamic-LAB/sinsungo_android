@@ -155,19 +155,22 @@ object CustomBindingAdapter {
         adapter.submitList(diet?.toMutableList())
     }
 
-    @BindingAdapter("dietIngredientData", "useIngredientData")
+    @BindingAdapter("unUseIngredients", "useIngredients")
     @JvmStatic
-    fun bindIngredientDiet(recyclerView: RecyclerView, value: List<IngredientModel>?, useIngredients: List<IngredientModel>?) {
+    fun bindIngredientDiet(
+        recyclerView: RecyclerView,
+        unUseIngredients: List<IngredientModel>?,
+        useIngredients: List<IngredientModel>?
+    ) {
         Log.d("bindIngredientDiet", "")
         val adapter = recyclerView.adapter as DietIngredientListAdapter
 
-        val unionList = mutableListOf<IngredientModel>()
+        val ingredients = mutableListOf<IngredientModel>()
 
-        unionList.clear()
-        unionList.addAll(useIngredients!!)
-        unionList.addAll(value!!)
+        useIngredients?.let { ingredients.addAll(it) }
+        unUseIngredients?.let { ingredients.addAll(it) }
 
-        adapter.submitList(unionList.distinct())
+        adapter.submitList(ingredients)
     }
 
     @BindingAdapter("notices")
