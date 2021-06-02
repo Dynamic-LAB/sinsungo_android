@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dlab.sinsungo.data.model.Diet
-import com.dlab.sinsungo.databinding.DialogDietBinding
 import com.dlab.sinsungo.databinding.FragmentDietBinding
 import com.dlab.sinsungo.viewmodel.DietViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,13 +20,11 @@ import com.leinardi.android.speeddial.SpeedDialView
 
 class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     private lateinit var binding: FragmentDietBinding
-    private lateinit var dialogView: DialogDietBinding
     private lateinit var dialog: CustomBottomSheetDiet
     private lateinit var mDietListAdapter: DietListAdapter
 
 
     private val viewModel: DietViewModel by viewModels()
-    private val REF_ID = 5
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -111,7 +108,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun editDietItem(diet: Diet) {
         dialog = CustomBottomSheetDiet(diet)
-        dialog.show(childFragmentManager, "Custom_bottom_sheet_diet")
+        dialog.show(childFragmentManager, null)
     }
 
 }

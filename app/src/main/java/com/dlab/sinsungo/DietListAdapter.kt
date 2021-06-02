@@ -1,6 +1,5 @@
 package com.dlab.sinsungo
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -13,7 +12,6 @@ import com.dlab.sinsungo.databinding.ItemRcviewDietBinding
 class DietListAdapter(val deleteClick: (Diet) -> Unit, val editClick: (Diet) -> Unit) :
     ListAdapter<Diet, DietListAdapter.ViewHolder>(DietDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.d("onCreateViewHolder", "호출")
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ItemRcviewDietBinding>(layoutInflater, viewType, parent, false)
         binding.cvDietItem.setBackgroundResource(R.drawable.bg_dialog_white)
@@ -40,7 +38,7 @@ class DietListAdapter(val deleteClick: (Diet) -> Unit, val editClick: (Diet) -> 
                 editClick(getItem(adapterPosition))
             }
             binding.cvDietItem.setOnClickListener {
-                true
+                false
             }
         }
 

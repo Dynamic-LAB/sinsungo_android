@@ -1,5 +1,6 @@
 package com.dlab.sinsungo.viewmodel
 
+import android.graphics.DiscretePathEffect
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,15 +16,20 @@ import java.io.IOException
 
 class DietViewModel : ViewModel() {
     private val _dietList = mutableListOf<Diet>()
-    private val _ingredientList = mutableListOf<IngredientModel>()
+    private val _diets = MutableLiveData<List<Diet>>()
+
     private val _allIngredientList = mutableListOf<IngredientModel>()
     private val _useIngredientList = mutableListOf<IngredientModel>()
-    private var _diets = MutableLiveData<List<Diet>>()
-    private var _ingredients = MutableLiveData<List<IngredientModel>>()
+    private val _unUseIngredientList = mutableListOf<IngredientModel>()
+
+    private var _allIngredients = MutableLiveData<List<IngredientModel>>()
     private var _useIngredients = MutableLiveData<List<IngredientModel>>()
+    private var _unUseIngredients = MutableLiveData<List<IngredientModel>>()
+
     val diets: MutableLiveData<List<Diet>> = _diets
-    val ingredients: MutableLiveData<List<IngredientModel>> = _ingredients
-    val useIngredients = _useIngredients
+    val allIngredients: MutableLiveData<List<IngredientModel>> = _allIngredients
+    val useIngredients: MutableLiveData<List<IngredientModel>> = _useIngredients
+    val unUseIngredients: MutableLiveData<List<IngredientModel>> = _unUseIngredients
 
     init {
         getDiet(5)
@@ -33,11 +39,15 @@ class DietViewModel : ViewModel() {
     fun search(keyWord: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val searchResult = _ingredientList.distinct().filter { it.name.contains(keyWord) }
-                Log.d("searchResult", searchResult.toString())
-                _ingredients.postValue(searchResult)
-                Log.d("ingredients", _ingredients.toString())
-                Log.d("_allIngredientList", _allIngredientList.toString())
+                if (keyWord == "") {
+                    _useIngredients.postValue(_useIngredientList)
+                    _unUseIngredients.postValue(_unUseIngredientList)
+                } else {
+                    val useSearchResult = _useIngredientList.filter { it.name.contains(keyWord) }
+                    val unUseSearchResult = _unUseIngredientList.filter { it.name.contains(keyWord) }
+                    _useIngredients.postValue(useSearchResult)
+                    _unUseIngredients.postValue(unUseSearchResult)
+                }
             } catch (e: IOException) {
                 Log.e("get ing ioexception", e.message.toString())
                 e.printStackTrace()
@@ -54,9 +64,9 @@ class DietViewModel : ViewModel() {
                         Log.d("get ing response", response.toString())
                         response.body()?.let {
                             withContext(Dispatchers.Main) {
-                                _ingredientList.clear()
-                                _ingredientList.addAll(it)
-                                _ingredients.postValue(_ingredientList)
+                                _allIngredientList.clear()
+                                _allIngredientList.addAll(it)
+                                _allIngredients.postValue(_allIngredientList)
                             }
                         }
                     } else {
@@ -95,7 +105,7 @@ class DietViewModel : ViewModel() {
         }
     }
 
-    fun getDiet(refID: Int) {
+    private fun getDiet(refID: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 DietRepository.getDiet(refID).let {
@@ -167,12 +177,41 @@ class DietViewModel : ViewModel() {
     }
 
     fun setUseIngredients(useIngredients: List<IngredientModel>) {
+        _useIngredientList.clear()
         _useIngredientList.addAll(useIngredients)
+        _unUseIngredientList.clear()
+        _unUseIngredientList.addAll(_allIngredientList)
+        _unUseIngredientList.removeAll(useIngredients)
         _useIngredients.value = _useIngredientList
+        _unUseIngredients.value = _unUseIngredientList
     }
 
     fun clearUseIngredients() {
         _useIngredientList.clear()
+        _unUseIngredientList.clear()
         _useIngredients.value = _useIngredientList
+        _unUseIngredients.value = _unUseIngredientList
+    }
+
+    fun setCreate() {
+        _useIngredientList.clear()
+        _unUseIngredientList.clear()
+        _unUseIngredientList.addAll(_allIngredientList)
+        _useIngredients.value = _useIngredientList
+        _unUseIngredients.value = _unUseIngredientList
+    }
+
+    fun toUseIngredient(ingredient: IngredientModel) {
+        _unUseIngredientList.remove(ingredient)
+        _useIngredientList.add(ingredient)
+        _useIngredients.value = _useIngredientList
+        _unUseIngredients.value = _unUseIngredientList
+    }
+
+    fun toUnUseIngredient(ingredient: IngredientModel) {
+        _useIngredientList.remove(ingredient)
+        _unUseIngredientList.add(ingredient)
+        _useIngredients.value = _useIngredientList
+        _unUseIngredients.value = _unUseIngredientList
     }
 }

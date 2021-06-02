@@ -28,6 +28,7 @@
     <string name="dial_ref_title_modify">냉장고 재료 수정</string>
     <string name="dial_shop_title">장바구니 목록 추가</string>
     <string name="dial_add">추가</string>
+    <string name="dial_modify">수정</string>
     <string name="dial_ingredient">재료</string>
     <string name="dial_count">수량</string>
     <string name="dial_memo">메모</string>
@@ -140,11 +141,6 @@
     <!-- 로그인 타입 -->
     <string name="login_type_kakao">kakao</string>
     <string name="login_type_google">google</string>
-
-    <!-- 색상 -->
-    <string name="color_royal_blue">#FF3C82D9</string>
-    <string name="color_free_speech_red">#FFCF0000</string>
-    <string name="color_dim_grey">#FF707070</string>
 
     <!-- 영수증 OCR -->
     <string name="ocr_title">영수증 인식</string>

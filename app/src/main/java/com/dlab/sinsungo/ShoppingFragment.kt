@@ -54,11 +54,11 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private val viewModel: ShoppingViewModel by viewModels()
     private val ingredientViewModel: IngredientViewModel by activityViewModels()
-    private val REF_ID = 5
+    private val refId = 5
 
     private val mCalendar = Calendar.getInstance()
 
-    private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+    private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         mCalendar.set(Calendar.YEAR, year)
         mCalendar.set(Calendar.MONTH, month)
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -231,7 +231,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
         checkDialogView.btnAccept.setOnClickListener {
             val newIngredient = IngredientModel(
-                REF_ID,
+                refId,
                 checkDialogView.etIngredient.text.toString(),
                 checkDialogView.etCount.text.toString().toInt(),
                 checkDialogView.tvExdateInput.text.toString(),
@@ -249,7 +249,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
 
     private fun dialogSetting(shopping: Shopping?) {
-        var id = REF_ID
+        var id = refId
         if (shopping != null) {
             id = shopping.id
             dialogView.etIngredient.setText(shopping.shopName)
@@ -287,7 +287,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                         id
                     )
                 if (shopping != null) {
-                    viewModel.editShopping(REF_ID, shopping, newShopping)
+                    viewModel.editShopping(refId, shopping, newShopping)
                 } else {
                     viewModel.setShopping(newShopping)
                 }

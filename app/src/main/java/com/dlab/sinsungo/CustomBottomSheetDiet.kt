@@ -1,6 +1,5 @@
 package com.dlab.sinsungo
 
-import android.R.color
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
@@ -49,9 +48,8 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
         mCalendar.set(Calendar.YEAR, year)
         mCalendar.set(Calendar.MONTH, month)
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        updateLabel(Color.parseColor(resources.getString(R.string.color_royal_blue)))
+        updateCalenderLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -67,7 +65,9 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
         }
 
         dialogInit()
-        updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+
+        updateCalenderLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+
         binding.etIngredientSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -88,35 +88,44 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
     }
 
     private fun editSetting(diet: Diet) {
+        binding.tvTitleAdd.text = resources.getString(R.string.dial_modify)
         viewModel.setUseIngredients(diet.dietIngredients)
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
-        val dateValue = dateFormat.parse(diet.dietDate)
-        mCalendar.time = dateValue!!
-        updateLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+        setCalender(diet.dietDate)
         binding.etMemo.setText(diet.dietMemo)
         val menus = diet.dietMenus.filterNotNull()
         for (element in menus) {
             element.let { binding.flexMenu.addNewChip(it) }
         }
-        if (menus.size == 10) {
-            binding.etMenuName.height = 0
-            binding.etMenuName.text = null
-            binding.etMenuName.hint = null
-            binding.etMenuName.setBackgroundColor(resources.getColor(color.transparent))
-            binding.etMenuName.clearFocus()
-            binding.etMenuName.isClickable = false
-        }
     }
+
+    private fun setCalender(date: String) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
+        val dateValue = dateFormat.parse(date)
+        mCalendar.time = dateValue!!
+        updateCalenderLabel(ResourcesCompat.getColor(resources, R.color.royal_blue, resources.newTheme()))
+    }
+
+    private fun getCalender(pattern: String): String = SimpleDateFormat(pattern, Locale.KOREA).format(mCalendar.time)
 
     private fun dialogInit() {
         binding.rcDietIngredient.apply {
             mIngredientListAdapter = if (oldDiet == null) {
-                DietIngredientListAdapter(null)
+                viewModel.setCreate()
+                DietIngredientListAdapter(
+                    { ingredient -> toUseIngredient(ingredient) },
+                    { ingredient -> toUnUseIngredient(ingredient) },
+                    null
+                )
             } else {
                 editSetting(oldDiet)
-                DietIngredientListAdapter(viewModel.useIngredients.value)
+                DietIngredientListAdapter(
+                    { ingredient -> toUseIngredient(ingredient) },
+                    { ingredient -> toUnUseIngredient(ingredient) },
+                    viewModel.useIngredients.value
+                )
             }
-            layoutManager = LinearLayoutManager(this.context)
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
             adapter = mIngredientListAdapter
         }
 
@@ -127,14 +136,12 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
             for (i in 1..(10 - chipList.size)) {
                 chipList.add(null)
             }
-            val mDateFormat = "yyyy-MM-dd"
-            val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
-            val mDateString = mSimpleDateFormat.format(mCalendar.time)
+
             if (oldDiet == null) {
                 val newDiet = Diet(
                     refId,
                     binding.etMemo.text.toString(),
-                    mDateString,
+                    getCalender("yyyy-MM-dd"),
                     chipList,
                     mIngredientListAdapter.ingredientList
                 )
@@ -144,7 +151,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
                 val newDiet = Diet(
                     oldDiet.id,
                     binding.etMemo.text.toString(),
-                    mDateString,
+                    getCalender("yyyy-MM-dd"),
                     chipList,
                     mIngredientListAdapter.ingredientList.distinct()
                 )
@@ -167,38 +174,16 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
             if (action == EditorInfo.IME_ACTION_DONE) {
                 val et = v as EditText
                 val name = et.text.toString()
-                when {
-                    name == "" -> {
-                        Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
-                    }
-                    chipList.size == 9 -> {
-                        binding.flexMenu.addNewChip(name)
-                        binding.etMenuName.height = 0
-                        et.text = null
-                        et.hint = null
-                        et.setBackgroundColor(resources.getColor(color.transparent))
-                        et.clearFocus()
-                        et.isClickable = false
-                    }
-                    name in chipList -> {
-                        Toast.makeText(context, "이미 존재하는 메뉴입니다!", Toast.LENGTH_SHORT).show()
-                    }
-                    else -> {
-                        binding.flexMenu.addNewChip(name)
-                        et.text = null
-                    }
-                }
+                binding.flexMenu.addNewChip(name)
+                et.text = null
             }
             false
         }
     }
 
     @SuppressLint("ResourceAsColor")
-    private fun updateLabel(color: Int) {
-        val mDateFormat = "yyyy년 MM월 dd일"
-        val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
-        val mDateString = mSimpleDateFormat.format(mCalendar.time)
-        val spannableString = SpannableString(mDateString)
+    private fun updateCalenderLabel(color: Int) {
+        val spannableString = SpannableString(getCalender("yyyy년 MM월 dd일"))
         spannableString.setSpan(
             ForegroundColorSpan(color),
             0,
@@ -220,28 +205,65 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
         binding.tvBottomTitleDate.text = spannableString
     }
 
+    private fun checkChipCount() = if (chipList.size == 10) {
+        binding.etMenuName.clearFocus()
+        binding.etMenuName.setBackgroundColor(Color.TRANSPARENT)
+        binding.etMenuName.height = 0
+        binding.etMenuName.text = null
+        binding.etMenuName.hint = null
+        binding.etMenuName.isEnabled = false
+    } else {
+        binding.etMenuName.height = 100
+        binding.etMenuName.hint = getString(R.string.dial_hint_edit_menu)
+        binding.etMenuName.setBackgroundResource(androidx.appcompat.R.drawable.abc_edit_text_material)
+        binding.etMenuName.isEnabled = true
+    }
+
+    private fun checkChipName(name: String): Boolean {
+        return when (name) {
+            "" -> {
+                Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
+                false
+            }
+            in chipList -> {
+                Toast.makeText(context, "이미 존재하는 메뉴입니다!", Toast.LENGTH_SHORT).show()
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
 
     private fun FlexboxLayout.addNewChip(content: String) {
         val chip = LayoutInflater.from(context).inflate(R.layout.chip, null) as Chip
-
-        chip.text = content
         val layoutParams = ViewGroup.MarginLayoutParams(
             ViewGroup.MarginLayoutParams.WRAP_CONTENT,
             ViewGroup.MarginLayoutParams.WRAP_CONTENT
         )
         layoutParams.rightMargin = context.dpToPx(4)
-        chip.setOnCloseIconClickListener {
-            if (chipList.size <= 10) {
-                binding.etMenuName.height = 16
-                binding.etMenuName.hint = getString(R.string.dial_hint_edit_menu)
-                binding.etMenuName.setBackgroundResource(androidx.appcompat.R.drawable.abc_edit_text_material)
-                binding.etMenuName.isClickable = true
+        if (chipList.size == 10) {
+            Toast.makeText(context, "메뉴는 10개까지 입력이 가능합니다! ", Toast.LENGTH_SHORT).show()
+        } else if (checkChipName(content)) {
+            chip.text = content
+            chip.setOnCloseIconClickListener {
+                removeView(chip as View)
+                chipList.remove(chip.text)
+                checkChipCount()
             }
-            removeView(chip as View)
-            chipList.remove(chip.text)
+            addView(chip, childCount - 1, layoutParams)
+            chipList.add(content)
+            checkChipCount()
         }
-        addView(chip, childCount - 1, layoutParams)
-        chipList.add(content)
+
+    }
+
+    private fun toUseIngredient(ingredient: IngredientModel) {
+        viewModel.toUseIngredient(ingredient)
+    }
+
+    private fun toUnUseIngredient(ingredient: IngredientModel) {
+        viewModel.toUnUseIngredient(ingredient)
     }
 
     fun hideKeyboard() {

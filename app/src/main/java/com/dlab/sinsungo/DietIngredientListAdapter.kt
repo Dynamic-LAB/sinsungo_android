@@ -9,17 +9,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.databinding.ItemRcviewDietIngredientBinding
 
-class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>?) :
+class DietIngredientListAdapter(
+    val toUse: (IngredientModel) -> Unit,
+    val toUnUse: (IngredientModel) -> Unit,
+    private val useIngredient: List<IngredientModel>?
+) :
     ListAdapter<IngredientModel, DietIngredientListAdapter.ViewHolder>(DietIngredientDiffUtil) {
 
     val ingredientList = mutableListOf<IngredientModel>()
 
-    init {
-        setHasStableIds(true)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ItemRcviewDietIngredientBinding>(layoutInflater, viewType, parent, false)
         val holder = ViewHolder(binding)
@@ -42,16 +41,17 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
     }
 
     inner class ViewHolder(val binding: ItemRcviewDietIngredientBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(ingredientModel: IngredientModel, isActivated: Boolean) {
             binding.dataModel = ingredientModel
             binding.btnCheckIngredient.isActivated = isActivated
-            Log.d("bind", "")
+            Log.d("bind", ingredientModel.toString())
             binding.btnCheckIngredient.setOnClickListener {
                 binding.btnCheckIngredient.isActivated = !binding.btnCheckIngredient.isActivated
                 if (binding.btnCheckIngredient.isActivated) {
+                    toUse(ingredientModel)
                     ingredientList.add(ingredientModel)
                 } else {
+                    toUnUse(ingredientModel)
                     ingredientList.remove(ingredientModel)
                 }
             }
@@ -60,10 +60,8 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
             } else {
                 ingredientList.remove(ingredientModel)
             }
-            //Log.d("ingredientList", ingredientList.toString())
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
         }
-
     }
 
     companion object DietIngredientDiffUtil : DiffUtil.ItemCallback<IngredientModel>() {
@@ -73,7 +71,7 @@ class DietIngredientListAdapter(private val useIngredient: List<IngredientModel>
         }
 
         override fun areContentsTheSame(oldItem: IngredientModel, newItem: IngredientModel): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
     }
 }
