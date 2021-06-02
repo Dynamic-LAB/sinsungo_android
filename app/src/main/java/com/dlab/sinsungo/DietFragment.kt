@@ -25,6 +25,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
 
     private val viewModel: DietViewModel by viewModels()
+    private lateinit var swipeHelperCallback: SwipeHelperCallback
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -72,6 +73,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
                 dialog = CustomBottomSheetDiet(null)
                 dialog.show(childFragmentManager, null)
                 binding.sdvDiet.close()
+                swipeHelperCallback.resetSwipe(binding.rcviewDiet)
             }
             R.id.fab_add_diet -> {
                 binding.sdvDiet.close()
@@ -83,7 +85,7 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initRcView() {
-        val swipeHelperCallback = SwipeHelperCallback().apply {
+        swipeHelperCallback = SwipeHelperCallback().apply {
             setClamp(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 130f, context?.resources?.displayMetrics))
             setType("diet")
         }
@@ -104,11 +106,13 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private fun deleteDietItem(diet: Diet) {
         viewModel.deleteDiet(diet)
+        swipeHelperCallback.resetSwipe(binding.rcviewDiet)
     }
 
     private fun editDietItem(diet: Diet) {
         dialog = CustomBottomSheetDiet(diet)
         dialog.show(childFragmentManager, null)
+        swipeHelperCallback.resetSwipe(binding.rcviewDiet)
     }
 
 }

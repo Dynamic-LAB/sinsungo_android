@@ -132,6 +132,15 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
         }
     }
 
+    fun resetSwipe(recyclerView: RecyclerView){
+        previousPosition?.let {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(it) ?: return
+            getView(viewHolder).translationX = 0f
+            setTag(viewHolder, false)
+            previousPosition = null
+        }
+    }
+
 
     private fun getView(viewHolder: RecyclerView.ViewHolder): View {
         when(type){
