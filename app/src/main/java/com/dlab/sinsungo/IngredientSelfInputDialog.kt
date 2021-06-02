@@ -28,14 +28,14 @@ class IngredientSelfInputDialog : DialogFragment() {
 
     private val mCalendar = Calendar.getInstance()
 
-    private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+    private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         mCalendar.set(Calendar.YEAR, year)
         mCalendar.set(Calendar.MONTH, month)
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
         updateLabel()
     }
 
-    private val mOnClickOpenDatePicker = View.OnClickListener { view: View ->
+    private val mOnClickOpenDatePicker = View.OnClickListener {
         val datePicker = DatePickerDialog(
             requireContext(),
             mOnDateSetListener,
@@ -63,21 +63,6 @@ class IngredientSelfInputDialog : DialogFragment() {
             binding.lineUnderExdateInput.background =
                 context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
         }
-//        if (binding.tvExdateInput.text.isEmpty() || binding.tvExdateInput.text.isBlank()) {
-//            binding.tvInputNoti3.visibility = View.VISIBLE
-//            binding.ivExdateCalendar.drawable.setTint(
-//                ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
-//            )
-//            binding.lineUnderExdateInput.background =
-//                context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
-//        } else {
-//            binding.tvInputNoti3.visibility = View.GONE
-//            binding.ivExdateCalendar.drawable.setTint(
-//                ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme)
-//            )
-//            binding.lineUnderExdateInput.background =
-//                context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
-//        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -113,7 +98,7 @@ class IngredientSelfInputDialog : DialogFragment() {
         val mSimpleDateFormat = SimpleDateFormat(mDateFormat, Locale.KOREA)
         val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
-        viewModel.setInputIngredientValue("exdate", mDateString)
+        viewModel.setInputIngredientValue("exDate", mDateString)
     }
 
     private fun setTextWatcher() {
@@ -198,7 +183,7 @@ class IngredientSelfInputDialog : DialogFragment() {
             showCountTypes(binding.clCountType, R.menu.menu_count_type)
         }
         binding.clExdateType.setOnClickListener {
-            showExdateTypes(binding.clExdateType, R.menu.menu_exdate_type)
+            showExDateTypes(binding.clExdateType, R.menu.menu_exdate_type)
         }
     }
 
@@ -226,15 +211,15 @@ class IngredientSelfInputDialog : DialogFragment() {
         countTypePopup.show()
     }
 
-    private fun showExdateTypes(view: View, @MenuRes menuRes: Int) {
-        val exdateTypePopup = PopupMenu(requireContext(), view)
-        exdateTypePopup.menuInflater.inflate(menuRes, exdateTypePopup.menu)
+    private fun showExDateTypes(view: View, @MenuRes menuRes: Int) {
+        val exDateTypePopup = PopupMenu(requireContext(), view)
+        exDateTypePopup.menuInflater.inflate(menuRes, exDateTypePopup.menu)
 
-        exdateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            viewModel.setInputIngredientValue("exdateType", menuItem.title.toString())
+        exDateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
+            viewModel.setInputIngredientValue("exDateType", menuItem.title.toString())
             true
         }
 
-        exdateTypePopup.show()
+        exDateTypePopup.show()
     }
 }

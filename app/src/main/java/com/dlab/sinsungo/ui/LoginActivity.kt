@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
                 val uid = account.id!!
                 val nickname = account.displayName!!
 
-                viewModel.isRegister(uid, "google", nickname, pushToken)
+                viewModel.isRegister(uid, "google", nickname, "")
             } catch (e: ApiException) {
                 Log.e("api_error", "Google sign in failed", e)
                 e.printStackTrace()
@@ -51,18 +51,17 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d("FCM", "Fetching FCM registration token failed", task.exception)
-                pushToken = ""
-                init()
-                return@OnCompleteListener
-            }
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.d("FCM", "Fetching FCM registration token failed", task.exception)
+//                return@OnCompleteListener
+//            }
+//
+//            // Get new FCM registration token
+//            pushToken = task.result!!
+//        })
 
-            // Get new FCM registration token
-            pushToken = task.result!!
-            init()
-        })
+        init()
     }
 
     // 초기화 함수
@@ -82,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
             getString(R.string.app_name_kor)
         )
 
-        val naverLoginHandler = NaverLoginHandler(this, viewModel, pushToken)
+        val naverLoginHandler = NaverLoginHandler(this, viewModel)
 
         binding.btnLoginNaver.setOAuthLoginHandler(naverLoginHandler)
     }
@@ -99,14 +98,16 @@ class LoginActivity : AppCompatActivity() {
         }
         // 유저의 냉장고 여부에 따라 액티비티 이동
         viewModel.newUser.observe(this) {
-            val intent: Intent by lazy {
-                when (it.refId) {
-                    null -> Intent(this, TutorialActivity::class.java).putExtra("isFromSplash", false)
-                    else -> Intent(this, MainActivity::class.java)
+            viewModel.updatePushToken {
+                val intent: Intent by lazy {
+                    when (it.refId) {
+                        null -> Intent(this, TutorialActivity::class.java).putExtra("isFromSplash", false)
+                        else -> Intent(this, MainActivity::class.java)
+                    }
                 }
+                startActivity(intent)
+                finish()
             }
-            startActivity(intent)
-            finish()
         }
     }
 
@@ -120,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
                     user?.let {
                         val nickname = user.kakaoAccount?.profile?.nickname!!
                         val uid = user.id.toString()
-                        viewModel.isRegister(uid, "kakao", nickname, pushToken)
+                        viewModel.isRegister(uid, "kakao", nickname, "")
                     }
                     userError?.let {
                         Log.e("user_error", userError.message.toString())
@@ -140,7 +141,6 @@ class LoginActivity : AppCompatActivity() {
     private class NaverLoginHandler(
         private val context: Context,
         private val viewModel: LoginViewModel,
-        private val pushToken: String
     ) :
         OAuthLoginHandler() {
         override fun run(success: Boolean) {
@@ -158,7 +158,7 @@ class LoginActivity : AppCompatActivity() {
                                 response.getString("id"),
                                 "naver",
                                 response.getString("name"),
-                                pushToken
+                                ""
                             )
                         } else {
                             val errorCode: String = OAuthLogin.getInstance().getLastErrorCode(context).code

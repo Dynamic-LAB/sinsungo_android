@@ -1,5 +1,7 @@
 package com.dlab.sinsungo
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -40,10 +42,10 @@ class ReceiptOCRActivity : AppCompatActivity() {
 
     private lateinit var functions: FirebaseFunctions
     private lateinit var auth: FirebaseAuth
-    private val EMAIL = getString(R.string.firebase_cf_auth_email)
-    private val PASS_WORD = getString(R.string.firebase_cf_auth_password)
 
     private lateinit var mReceiptListAdapter: ReceiptListAdapter
+
+    private var shortAnimationDuration: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,9 @@ class ReceiptOCRActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         setContentView(binding.root)
+
+        val EMAIL = getString(R.string.firebase_cf_auth_email)
+        val PASS_WORD = getString(R.string.firebase_cf_auth_password)
 
         functions = FirebaseFunctions.getInstance()
         auth = Firebase.auth
@@ -69,6 +74,8 @@ class ReceiptOCRActivity : AppCompatActivity() {
             }
         }
 
+        shortAnimationDuration = resources.getInteger(android.R.integer.config_longAnimTime)
+
         initRcView()
 
         binding.btnBack.setOnClickListener { finish() }
@@ -83,7 +90,7 @@ class ReceiptOCRActivity : AppCompatActivity() {
         }
 
         binding.btnOcr.setOnClickListener {
-            binding.clProgress.visibility = View.VISIBLE
+            fadeIn()
             requestOCR()
         }
 
@@ -129,15 +136,44 @@ class ReceiptOCRActivity : AppCompatActivity() {
 
     private fun initRcView() {
         binding.rcviewOcrResult.apply {
-            mReceiptListAdapter = ReceiptListAdapter { position -> deleteOCRIngredient(position) }
+            mReceiptListAdapter = ReceiptListAdapter(
+                { item -> deleteOCRIngredient(item) },
+                { key, value, item -> setDataIngredient(key, value, item) }
+            )
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = mReceiptListAdapter
         }
     }
 
-    private fun deleteOCRIngredient(position: Int) {
-        viewModel.deleteOCRIngredient(position)
+    private fun fadeIn() {
+        binding.clProgress.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+
+            animate().alpha(1f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(null)
+        }
+    }
+
+    private fun fadeOut() {
+        binding.clProgress.animate()
+            .alpha(0f)
+            .setDuration(shortAnimationDuration.toLong())
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    binding.clProgress.visibility = View.GONE
+                }
+            })
+    }
+
+    private fun deleteOCRIngredient(item: IngredientModel) {
+        viewModel.deleteOCRIngredient(item)
+    }
+
+    private fun setDataIngredient(key: String, value: String, item: IngredientModel) {
+        viewModel.setDataIngredient(key, value, item)
     }
 
     private fun getBitmap(uri: Uri): Bitmap {
@@ -209,7 +245,6 @@ class ReceiptOCRActivity : AppCompatActivity() {
                     val ocrResult: String = annotation["text"].asString
                     Log.d("ocr result", ocrResult)
                     viewModel.extractIngredientInOCR(ocrResult)
-                    binding.btnAdd.visibility = View.VISIBLE
                 } else {
                     Log.d("ocr", "실패")
                     val e = task.exception
@@ -217,7 +252,7 @@ class ReceiptOCRActivity : AppCompatActivity() {
                         Log.d("error", e.code.toString())
                     }
                 }
-                binding.clProgress.visibility = View.GONE
+                fadeOut()
             }
     }
 

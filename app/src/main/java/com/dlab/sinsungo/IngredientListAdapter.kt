@@ -1,6 +1,5 @@
 package com.dlab.sinsungo
 
-import android.util.Log
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View

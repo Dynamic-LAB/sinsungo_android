@@ -17,7 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ReceiptListAdapter(
-    val delete: (Int) -> Unit
+    val delete: (IngredientModel) -> Unit,
+    val update: (String, String, IngredientModel) -> Unit
 ) : ListAdapter<IngredientModel, ReceiptListAdapter.ReceiptViewHolder>(ReceiptDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceiptListAdapter.ReceiptViewHolder {
         val binding = ItemRcviewReceiptOcrBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -56,22 +57,11 @@ class ReceiptListAdapter(
             val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
             binding.tvExdateInput.text = mDateString
+            update("exDate", mDateString, getItem(adapterPosition))
         }
 
         fun bind(ingredientModel: IngredientModel) {
             binding.data = ingredientModel
-
-            binding.etCount.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                    getItem(adapterPosition).count = s.toString().toInt()
-                }
-            })
 
             binding.btnOpenCategory.setOnClickListener {
                 showRefCategories(binding.tvRefCategory, R.menu.menu_ref_categories)
@@ -88,8 +78,28 @@ class ReceiptListAdapter(
             binding.tvExdateInput.setOnClickListener(mOnClickOpenDatePicker)
 
             binding.btnDropItem.setOnClickListener {
-                delete(adapterPosition)
+                deleteItem()
             }
+
+            binding.etCount.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    if (s.toString().toIntOrNull() == null) {
+                        update("count", "0", getItem(adapterPosition))
+                    } else {
+                        update("count", s.toString(), getItem(adapterPosition))
+                    }
+                }
+            })
+        }
+
+        private fun deleteItem() {
+            delete(getItem(adapterPosition))
         }
 
         private fun showRefCategories(view: View, @MenuRes menuRes: Int) {
@@ -98,7 +108,8 @@ class ReceiptListAdapter(
 
             refCategoryPopup.setOnMenuItemClickListener { menuItem: MenuItem ->
                 binding.tvRefCategory.text = menuItem.title.toString()
-                getItem(adapterPosition).refCategory = menuItem.title.toString()
+                update("refCategory", menuItem.title.toString(), getItem(adapterPosition))
+                // getItem(adapterPosition).refCategory = menuItem.title.toString()
                 true
             }
 
@@ -111,7 +122,8 @@ class ReceiptListAdapter(
 
             countTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
                 binding.tvCountType.text = menuItem.title.toString()
-                getItem(adapterPosition).countType = menuItem.title.toString()
+                update("countType", menuItem.title.toString(), getItem(adapterPosition))
+                // getItem(adapterPosition).countType = menuItem.title.toString()
                 true
             }
 
@@ -124,7 +136,8 @@ class ReceiptListAdapter(
 
             exdateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
                 binding.tvExdateType.text = menuItem.title.toString()
-                getItem(adapterPosition).exdateType = menuItem.title.toString()
+                update("exDateType", menuItem.title.toString(), getItem(adapterPosition))
+                // getItem(adapterPosition).exDateType = menuItem.title.toString()
                 true
             }
 

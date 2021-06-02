@@ -51,14 +51,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcview_ingredient"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            app:ingredientData="@{viewmodel.ingredients}"
             app:category="@{category}"
+            app:ingredientData="@{viewmodel.ingredients}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:foregroundGravity="center"
-                android:src="@drawable/image_empty_refrigerator"
+                android:src="@drawable/img_empty_refrigerator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -88,9 +87,9 @@
                 android:id="@+id/tv_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="48dp"
                 android:text="@string/ref_empty_message"
-                android:textAppearance="@style/Text.Regular_16_Black"
+                android:textAppearance="@style/Text.Bold_20_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="view"
             type="com.dlab.sinsungo.MainActivity" />
@@ -49,7 +50,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:id="@+id/title_underbar"
+            android:id="@+id/title_underline"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/dim_grey"
@@ -64,7 +65,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_underbar" />
+            app:layout_constraintTop_toBottomOf="@id/title_underline" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"
@@ -77,4 +78,5 @@
             app:menu="@menu/menu_bottom_nav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

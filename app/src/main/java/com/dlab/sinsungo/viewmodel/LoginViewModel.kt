@@ -9,6 +9,8 @@ import com.dlab.sinsungo.Event
 import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.data.model.User
 import com.dlab.sinsungo.data.repository.UserRepository
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -60,5 +62,35 @@ class LoginViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun updatePushToken(onFinish: () -> Unit) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("FCM", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val pushToken = task.result!!
+
+            if (pushToken != newUser.value!!.pushToken) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    try {
+                        UserRepository.update(GlobalApplication.prefs.getCurrentUser().copy(pushToken = pushToken))
+                            .let {
+                                if (it.isSuccessful) {
+                                    onFinish()
+                                } else {
+                                    Log.e("update token error", it.message())
+                                }
+                            }
+                    } catch (e: IOException) {
+                        Log.e("io_error", e.message!!)
+                        e.printStackTrace()
+                    }
+                }
+            }
+        })
     }
 }
