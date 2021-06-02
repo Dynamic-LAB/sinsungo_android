@@ -3,8 +3,6 @@ package com.dlab.sinsungo
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.io.Serializable
-import java.util.*
 
 @Parcelize
 data class IngredientModel(
@@ -27,5 +25,5 @@ data class IngredientModel(
     var countType: String,
 
     @SerializedName("expiration_type")
-    var exdateType: String
+    var exDateType: String
 ) : Parcelable

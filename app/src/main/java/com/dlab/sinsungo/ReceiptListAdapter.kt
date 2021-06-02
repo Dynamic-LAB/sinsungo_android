@@ -124,7 +124,7 @@ class ReceiptListAdapter(
 
             exdateTypePopup.setOnMenuItemClickListener { menuItem: MenuItem ->
                 binding.tvExdateType.text = menuItem.title.toString()
-                getItem(adapterPosition).exdateType = menuItem.title.toString()
+                getItem(adapterPosition).exDateType = menuItem.title.toString()
                 true
             }
 

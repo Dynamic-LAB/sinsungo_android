@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -17,7 +16,6 @@ import com.dlab.sinsungo.databinding.ActivityCameraOcrBinding
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import java.io.File
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService

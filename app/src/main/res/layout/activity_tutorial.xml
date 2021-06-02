@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,15 +11,15 @@
             android:id="@+id/tutorial_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:dotsColor="@color/royal_blue50"
-            app:selectedDotColor="@color/royal_blue"
-            app:progressMode="true"
-            app:dotsSize="8dp"
-            android:elevation="2dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="2dp"
+            app:dotsColor="@color/royal_blue50"
+            app:dotsSize="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:progressMode="true"
+            app:selectedDotColor="@color/royal_blue" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager_tutorial"
@@ -32,14 +32,14 @@
 
         <TextView
             android:id="@+id/tv_skip"
-            android:padding="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tutorial_skip"
-            android:textAppearance="@style/Text.Bold_20_Blue"
-            android:elevation="2dp"
             android:layout_marginStart="24dp"
             android:layout_marginBottom="24dp"
+            android:elevation="2dp"
+            android:padding="16dp"
+            android:text="@string/tutorial_skip"
+            android:textAppearance="@style/Text.Bold_20_Blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -49,9 +49,9 @@
             android:layout_height="wrap_content"
             android:elevation="2dp"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_invite_start"

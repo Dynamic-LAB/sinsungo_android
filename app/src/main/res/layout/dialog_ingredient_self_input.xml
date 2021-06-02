@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.dlab.sinsungo.Converter" />
+
         <variable
             name="viewmodel"
             type="com.dlab.sinsungo.IngredientViewModel" />
@@ -22,11 +24,11 @@
             android:id="@+id/tv_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:span_text="@{viewmodel.isModify == true ? @string/dial_ref_title_modify : @string/dial_ref_title_add}"
-            app:span_color="@{@color/royal_blue}"
             android:textAppearance="@style/Text.Bold_24_Black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:span_color="@{@color/royal_blue}"
+            app:span_text="@{viewmodel.isModify == true ? @string/dial_ref_title_modify : @string/dial_ref_title_add}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_dialog_body"
@@ -90,11 +92,11 @@
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_ingredient"
-                    android:selectAllOnFocus="true"
-                    android:text="@={viewmodel.inputIngredient.name}"
                     android:inputType="text"
                     android:maxLength="20"
+                    android:selectAllOnFocus="true"
                     android:singleLine="true"
+                    android:text="@={viewmodel.inputIngredient.name}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -206,12 +208,12 @@
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
-                    android:text="@={Converter.intToString(viewmodel.inputIngredient.count)}"
                     android:hint="@string/dial_hint_count"
-                    android:selectAllOnFocus="true"
                     android:inputType="number"
                     android:maxLength="10"
+                    android:selectAllOnFocus="true"
                     android:singleLine="true"
+                    android:text="@={Converter.intToString(viewmodel.inputIngredient.count)}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -313,10 +315,10 @@
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/ic_calender"
-                    app:tint="@color/dim_grey"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dim_grey" />
 
                 <TextView
                     android:id="@+id/tv_exdate_input"
@@ -324,11 +326,11 @@
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="8dp"
                     android:background="@android:color/transparent"
+                    android:gravity="center"
                     android:hint="@string/dial_hint_date"
-                    android:text="@={viewmodel.inputIngredient.exdate}"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:gravity="center"
+                    android:text="@={viewmodel.inputIngredient.exdate}"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -360,7 +362,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="@={viewmodel.inputIngredient.exdateType}"
+                    android:text="@={viewmodel.inputIngredient.exDateType}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -407,8 +409,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="@string/btn_cancel"
                 android:onClick="@{() -> viewmodel.dismissOnClick()}"
+                android:text="@string/btn_cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_accept"
                 app:layout_constraintStart_toStartOf="parent"
@@ -419,8 +421,8 @@
                 style="@style/Widget.MaterialComponents.Button.Dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_accept"
                 android:onClick="@{() -> viewmodel.inputOnClick()}"
+                android:text="@string/btn_accept"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
