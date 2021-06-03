@@ -99,8 +99,13 @@ class ReceiptOCRActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            Log.d("save ing list", mReceiptListAdapter.currentList.toString())
-            viewModel.requestPostIngredient()
+            viewModel.requestPostIngredient { ingredientName ->
+                AlertDialog.Builder(this)
+                    .setMessage("${ingredientName}에 입력하지 않은 값이 있습니다.")
+                    .setPositiveButton("확인") { dialog, _ -> dialog.dismiss() }
+                    .create()
+                    .show()
+            }
         }
 
         binding.btnAdd.setOnClickListener {
@@ -245,8 +250,6 @@ class ReceiptOCRActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d("ocr", "성공")
                     val annotation = task.result!!.asJsonArray[0].asJsonObject["fullTextAnnotation"].asJsonObject
-//                    System.out.format("%nComplete annotation:")
-//                    System.out.format("%n%s", annotation["text"].asString)
                     val ocrResult: String = annotation["text"].asString
                     Log.d("ocr result", ocrResult)
                     viewModel.extractIngredientInOCR(ocrResult)
@@ -266,9 +269,6 @@ class ReceiptOCRActivity : AppCompatActivity() {
             .getHttpsCallable("annotateImage")
             .call(requestJson)
             .continueWith { task ->
-                // This continuation runs on either success or failure, but if the task
-                // has failed then result will throw an Exception which will be
-                // propagated down.
                 val result = task.result?.data
                 JsonParser.parseString(Gson().toJson(result))
             }

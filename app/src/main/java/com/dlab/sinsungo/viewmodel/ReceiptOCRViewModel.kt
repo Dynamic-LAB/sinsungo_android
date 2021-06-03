@@ -53,28 +53,48 @@ class ReceiptOCRViewModel : ViewModel() {
         }
     }
 
-    fun requestPostIngredient() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                IngredientRepository.postIngredient(_resultList).let { response ->
-                    if (response.isSuccessful) {
-                        Log.d("post ocr ing response", response.toString())
-                        response.body()?.let {
-                            withContext(Dispatchers.Main) {
-                                Log.d("post ocr result", it.toString())
-                                _resultList = it.toMutableList()
-                                _resultIngredients.postValue(_resultList)
-                                _postResult.postValue(true)
-                            }
-                        }
-                    } else {
-                        Log.e("post ocr ing fail", response.message())
-                    }
-                }
-            } catch (e: IOException) {
-                Log.e("post ing ioexception", e.message.toString())
-                e.printStackTrace()
+    fun requestPostIngredient(inputValidate: (String) -> Unit) {
+        var inputFlag = false
+
+        for (it in _resultList) {
+            if (it.count <= 0) {
+                inputFlag = true
             }
+            if (it.exDate.isEmpty() || it.exDate.isBlank()) {
+                inputFlag = true
+            }
+
+            if (inputFlag) {
+                inputValidate(it.name)
+                break
+            }
+        }
+
+        if (!inputFlag) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    IngredientRepository.postIngredient(_resultList).let { response ->
+                        if (response.isSuccessful) {
+                            Log.d("post ocr ing response", response.toString())
+                            response.body()?.let {
+                                withContext(Dispatchers.Main) {
+                                    Log.d("post ocr result", it.toString())
+                                    _resultList = it.toMutableList()
+                                    _resultIngredients.postValue(_resultList)
+                                    _postResult.postValue(true)
+                                }
+                            }
+                        } else {
+                            Log.e("post ocr ing fail", response.message())
+                        }
+                    }
+                } catch (e: IOException) {
+                    Log.e("post ing ioexception", e.message.toString())
+                    e.printStackTrace()
+                }
+            }
+        } else {
+            return
         }
     }
 
@@ -111,7 +131,7 @@ class ReceiptOCRViewModel : ViewModel() {
         val idx = _resultList.indexOf(ingredientModel)
         when (key) {
             "count" -> ingredientModel.count = value.toInt()
-            "exDate" -> ingredientModel.exdate = value
+            "exDate" -> ingredientModel.exDate = value
             "refCategory" -> ingredientModel.refCategory = value
             "countType" -> ingredientModel.countType = value
             "exDateType" -> ingredientModel.exDateType = value
