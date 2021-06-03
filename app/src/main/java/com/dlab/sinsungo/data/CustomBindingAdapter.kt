@@ -1,9 +1,11 @@
 package com.dlab.sinsungo.data
 
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -209,5 +211,26 @@ object CustomBindingAdapter {
         val adapter = recycerView.adapter as NotificationListAdapter
 
         adapter.submitList(notifications)
+    }
+
+    @BindingAdapter("notification_span_text", "notification_span_color")
+    @JvmStatic
+    fun setNotificationMessage(textView: TextView, value: String, color: Int) {
+        val spannableString = SpannableString(value)
+        spannableString.apply {
+            setSpan(
+                ForegroundColorSpan(color),
+                6,
+                7,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            setSpan(
+                StyleSpan(Typeface.BOLD),
+                6,
+                7,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        textView.text = spannableString
     }
 }
