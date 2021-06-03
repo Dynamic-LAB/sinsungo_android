@@ -149,31 +149,36 @@ class CustomBottomSheetDiet(
             this.dismiss()
         }
         binding.btnSave.setOnClickListener {
-            for (i in 1..(10 - chipList.size)) {
-                chipList.add(null)
+            if (chipList.isEmpty()) {
+                Toast.makeText(context, "메뉴는 필수로 추가하셔야됩니다!", Toast.LENGTH_SHORT).show()
+            } else {
+                for (i in 1..(10 - chipList.size)) {
+                    chipList.add(null)
+                }
+
+                if (oldDiet == null) {
+                    val newDiet = Diet(
+                        refId,
+                        binding.etMemo.text.toString(),
+                        getCalender("yyyy-MM-dd"),
+                        chipList,
+                        mIngredientListAdapter.ingredientList
+                    )
+                    viewModel.setDiet(newDiet, dismiss)
+                    this.dismiss()
+                } else {
+                    val newDiet = Diet(
+                        oldDiet.id,
+                        binding.etMemo.text.toString(),
+                        getCalender("yyyy-MM-dd"),
+                        chipList,
+                        mIngredientListAdapter.ingredientList.distinct()
+                    )
+                    viewModel.editDiet(refId, oldDiet, newDiet, dismiss)
+                    this.dismiss()
+                }
             }
 
-            if (oldDiet == null) {
-                val newDiet = Diet(
-                    refId,
-                    binding.etMemo.text.toString(),
-                    getCalender("yyyy-MM-dd"),
-                    chipList,
-                    mIngredientListAdapter.ingredientList
-                )
-                viewModel.setDiet(newDiet, dismiss)
-                this.dismiss()
-            } else {
-                val newDiet = Diet(
-                    oldDiet.id,
-                    binding.etMemo.text.toString(),
-                    getCalender("yyyy-MM-dd"),
-                    chipList,
-                    mIngredientListAdapter.ingredientList.distinct()
-                )
-                viewModel.editDiet(refId, oldDiet, newDiet, dismiss)
-                this.dismiss()
-            }
 
         }
         binding.constDate.setOnClickListener {
@@ -238,12 +243,12 @@ class CustomBottomSheetDiet(
     }
 
     private fun checkChipName(name: String): Boolean {
-        return when (name) {
-            "" -> {
+        return when {
+            name.isBlank() -> {
                 Toast.makeText(context, "내용을 입력해주세요!", Toast.LENGTH_SHORT).show()
                 false
             }
-            in chipList -> {
+            name in chipList -> {
                 Toast.makeText(context, "이미 존재하는 메뉴입니다!", Toast.LENGTH_SHORT).show()
                 false
             }
