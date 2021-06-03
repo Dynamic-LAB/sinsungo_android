@@ -35,7 +35,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragment() {
+class CustomBottomSheetDiet(
+    private val oldDiet: Diet?,
+    private val recipeName: String? = null,
+    private val dismiss: (() -> Unit)? = null
+) : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDietBinding
     private val mCalendar = Calendar.getInstance()
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
@@ -153,7 +157,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
                     chipList,
                     mIngredientListAdapter.ingredientList
                 )
-                viewModel.setDiet(newDiet)
+                viewModel.setDiet(newDiet, dismiss)
                 this.dismiss()
             } else {
                 val newDiet = Diet(
@@ -163,7 +167,7 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
                     chipList,
                     mIngredientListAdapter.ingredientList.distinct()
                 )
-                viewModel.editDiet(refId, oldDiet, newDiet)
+                viewModel.editDiet(refId, oldDiet, newDiet, dismiss)
                 this.dismiss()
             }
 
@@ -187,6 +191,8 @@ class CustomBottomSheetDiet(private val oldDiet: Diet?) : BottomSheetDialogFragm
             }
             false
         }
+
+        recipeName?.let { binding.flexMenu.addNewChip(it) }
     }
 
     @SuppressLint("ResourceAsColor")

@@ -77,7 +77,7 @@ object CustomBindingAdapter {
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun loadImage(imageView: ImageView, url: String) {
-        Glide.with(imageView.context).load(url).error(R.drawable.img_empty_refrigerator).thumbnail(0.1f)
+        Glide.with(imageView.context).load(url).error(R.drawable.img_empty_thumbnail).thumbnail(0.1f)
             .into(imageView)
     }
 
