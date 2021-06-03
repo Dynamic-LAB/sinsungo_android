@@ -10,6 +10,10 @@
         <variable
             name="viewmodel"
             type="com.dlab.sinsungo.viewmodel.IngredientViewModel" />
+
+        <variable
+            name="view"
+            type="com.dlab.sinsungo.ui.dialogs.IngredientSelfInputDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -421,7 +425,7 @@
                 style="@style/Widget.MaterialComponents.Button.Dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewmodel.inputOnClick()}"
+                android:onClick="@{() -> view.btnSaveOnClick()}"
                 android:text="@string/btn_accept"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

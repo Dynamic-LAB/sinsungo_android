@@ -69,6 +69,7 @@ class IngredientSelfInputDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogIngredientSelfInputBinding.inflate(layoutInflater)
+        binding.view = this
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         val dialog = AlertDialog.Builder(requireContext())
@@ -101,6 +102,35 @@ class IngredientSelfInputDialog : DialogFragment() {
         val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
         viewModel.setInputIngredientValue("exDate", mDateString)
+    }
+
+    fun btnSaveOnClick() {
+        viewModel.inputOnClick(
+            {
+                binding.tvInputNoti2.visibility = View.VISIBLE
+                binding.ivCountCutlery.drawable.setTint(
+                    ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                )
+                binding.lineUnderCountInput.background =
+                    context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+            },
+            {
+                binding.tvInputNoti1.visibility = View.VISIBLE
+                binding.ivIngredientCutlery.drawable.setTint(
+                    ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                )
+                binding.lineUnderIngredientInput.background =
+                    context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+            },
+            {
+                binding.tvInputNoti3.visibility = View.VISIBLE
+                binding.ivExdateCalendar.drawable.setTint(
+                    ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
+                )
+                binding.lineUnderExdateInput.background =
+                    context?.let { ContextCompat.getDrawable(it, R.color.free_speech_red) }
+            }
+        )
     }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")

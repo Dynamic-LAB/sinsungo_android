@@ -72,7 +72,7 @@ class IngredientViewModel : ViewModel() {
                         Log.d("post ing response", response.toString())
                         response.body()?.let {
                             withContext(Dispatchers.Main) {
-                                _innerList.addAll(it)
+                                _innerList.addAll(0, it)
                                 _ingredients.postValue(_innerList)
                                 Log.d("add ing item", it.toString())
                                 _inputIngredient.postValue(IngredientModel(null, "", 0, "", "냉장", "g", "유통기한"))
@@ -173,10 +173,33 @@ class IngredientViewModel : ViewModel() {
     }
 
     // 다이얼로그 확인 버튼
-    fun inputOnClick() {
-        when (_isModify.value) {
-            true -> requestPutIngredient() // 수정
-            false -> requestPostIngredient() // 추가
+    fun inputOnClick(
+        isCountZero: () -> Unit,
+        isNameBlank: () -> Unit,
+        isDateBlank: () -> Unit,
+    ) {
+        var inputFlag = false
+
+        if (_inputIngredient.value?.name!!.isBlank() || _inputIngredient.value?.name!!.isEmpty()) {
+            isNameBlank()
+            inputFlag = true
+        }
+        if (_inputIngredient.value?.count!! <= 0) {
+            isCountZero()
+            inputFlag = true
+        }
+        if (_inputIngredient.value?.exdate!!.isBlank() || _inputIngredient.value?.exdate!!.isEmpty()) {
+            isDateBlank()
+            inputFlag = true
+        }
+
+        if (!inputFlag) {
+            when (_isModify.value) {
+                true -> requestPutIngredient() // 수정
+                false -> requestPostIngredient() // 추가
+            }
+        } else {
+            return
         }
     }
 
