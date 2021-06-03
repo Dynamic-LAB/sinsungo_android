@@ -39,21 +39,14 @@ class DietViewModel : ViewModel() {
     }
 
     fun search(keyWord: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                if (keyWord == "") {
-                    _useIngredients.postValue(_useIngredientList)
-                    _unUseIngredients.postValue(_unUseIngredientList)
-                } else {
-                    val useSearchResult = _useIngredientList.filter { it.name.contains(keyWord) }
-                    val unUseSearchResult = _unUseIngredientList.filter { it.name.contains(keyWord) }
-                    _useIngredients.postValue(useSearchResult)
-                    _unUseIngredients.postValue(unUseSearchResult)
-                }
-            } catch (e: IOException) {
-                Log.e("get ing ioexception", e.message.toString())
-                e.printStackTrace()
-            }
+        if (keyWord == "") {
+            _useIngredients.value = _useIngredientList
+            _unUseIngredients.value = _unUseIngredientList
+        } else {
+            val useSearchResult = _useIngredientList.filter { it.name.contains(keyWord) }
+            val unUseSearchResult = _unUseIngredientList.filter { it.name.contains(keyWord) }
+            _useIngredients.value = useSearchResult
+            _unUseIngredients.value = unUseSearchResult
         }
     }
 

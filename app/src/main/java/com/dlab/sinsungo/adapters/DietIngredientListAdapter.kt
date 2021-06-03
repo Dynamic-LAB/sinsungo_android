@@ -53,7 +53,7 @@ class DietIngredientListAdapter(
                     toUse(ingredientModel)
                     ingredientList.add(ingredientModel)
                 } else {
-                    toUnUse(ingredientModel)
+                    toUnUse(getItem(adapterPosition))
                     ingredientList.remove(ingredientModel)
                 }
             }

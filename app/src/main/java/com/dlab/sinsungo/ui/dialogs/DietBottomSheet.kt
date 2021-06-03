@@ -130,7 +130,7 @@ class CustomBottomSheetDiet(
                 DietIngredientListAdapter(
                     { ingredient -> toUseIngredient(ingredient) },
                     { ingredient -> toUnUseIngredient(ingredient) },
-                    null
+                    viewModel.useIngredients.value
                 )
             } else {
                 editSetting(oldDiet)
