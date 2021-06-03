@@ -172,4 +172,15 @@
     <!-- 알림 -->
     <string name="notification_empty_message">알림이 없습니다.</string>
 
+    <!-- contentDescriptions -->
+    <string name="description_kakao_login_btn">카카오 로그인 버튼</string>
+    <string name="description_google_login_btn">구글 로그인 버튼</string>
+    <string name="description_login_logo">신선고 로그인 로고</string>
+    <string name="description_loading_logo">신선고 로딩 로고</string>
+    <string name="description_recipe_thumbnail">레시피 썸네일</string>
+    <string name="description_back_btn">뒤로가기 버튼</string>
+    <string name="description_master_badge">마스터 배지</string>
+    <string name="description_member_out_btn">멤버 추방 버튼</string>
+    <string name="description_member_profile">멤버 픠로필 아이콘</string>
+
 </resources>

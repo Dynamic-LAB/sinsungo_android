@@ -31,18 +31,20 @@
                 android:id="@+id/iv_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/description_member_profile"
                 android:src="@drawable/img_member" />
 
             <ImageButton
                 android:id="@+id/ib_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:scaleType="fitXY"
-                android:visibility="gone"
+                android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
-                android:src="@drawable/btn_remove_circle_red" />
+                android:contentDescription="@string/description_member_out_btn"
+                android:scaleType="fitXY"
+                android:src="@drawable/btn_remove_circle_red"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -51,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{member.name}"
             android:singleLine="true"
+            android:text="@{member.name}"
             android:textAppearance="@style/Text.Bold_12_Black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

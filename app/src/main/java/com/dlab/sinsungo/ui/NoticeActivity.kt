@@ -1,21 +1,16 @@
 package com.dlab.sinsungo.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dlab.sinsungo.MemberAdapter
 import com.dlab.sinsungo.NoticeAdapter
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.data.model.Notice
-import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.databinding.ActivityNoticeBinding
 import com.dlab.sinsungo.viewmodel.NoticeViewModel
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 
 class NoticeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoticeBinding
@@ -38,7 +33,7 @@ class NoticeActivity : AppCompatActivity() {
 
     private fun setRecyclerView() {
         binding.rvNotice.apply {
-            adapter = NoticeAdapter { notice -> moveToDetail(notice)}
+            adapter = NoticeAdapter { notice -> moveToDetail(notice) }
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }

@@ -2,9 +2,9 @@ package com.dlab.sinsungo.ui
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.RecipeToDietDialog

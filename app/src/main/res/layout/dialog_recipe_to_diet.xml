@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="view"
             type="com.dlab.sinsungo.RecipeToDietDialog" />
@@ -20,28 +21,28 @@
             android:id="@+id/btn_new_diet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_grey"
+            android:onClick="@{() -> view.newDiet()}"
             android:text="@string/reci_dialog_new_diet"
             android:textAppearance="@style/Text.Bold_14_Black"
             android:textColor="@color/black"
-            android:backgroundTint="@color/light_grey"
-            android:onClick="@{() -> view.newDiet()}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_old_diet"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_old_diet"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_old_diet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/reci_dialog_old_diet"
-            android:textAppearance="@style/Text.Bold_14_White"
             android:backgroundTint="@color/almond_frost"
             android:onClick="@{() -> view.oldDiet()}"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/reci_dialog_old_diet"
+            android:textAppearance="@style/Text.Bold_14_White"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_new_diet"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_new_diet" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

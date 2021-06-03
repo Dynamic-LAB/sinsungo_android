@@ -5,6 +5,7 @@
     tools:context=".ui.HelpActivity">
 
     <data>
+
         <variable
             name="view"
             type="com.dlab.sinsungo.ui.HelpActivity" />
@@ -18,8 +19,8 @@
         <include
             android:id="@+id/layout_title"
             layout="@layout/layout_title_with_back_btn"
-            app:title="@{@string/my_help}"
-            app:activity="@{view}"/>
+            app:activity="@{view}"
+            app:title="@{@string/my_help}" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"

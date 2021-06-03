@@ -19,14 +19,15 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            app:layout_constraintVertical_bias="0.6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/description_login_logo"
             android:src="@drawable/img_login_logo"
             app:layout_constraintBottom_toTopOf="@id/cl_btns"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/description_kakao_login_btn"
                 android:onClick="@{()->viewModel.onClickLogin(@string/login_type_kakao)}"
                 android:src="@drawable/btn_login_kakao"
                 app:layout_constraintBottom_toTopOf="@+id/btn_login_naver"
@@ -68,6 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/description_google_login_btn"
                 android:onClick="@{()->viewModel.onClickLogin(@string/login_type_google)}"
                 android:src="@drawable/btn_login_google"
                 app:layout_constraintBottom_toBottomOf="parent"
