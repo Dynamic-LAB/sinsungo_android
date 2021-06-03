@@ -10,6 +10,10 @@
         <variable
             name="viewmodel"
             type="com.dlab.sinsungo.viewmodel.IngredientViewModel" />
+
+        <variable
+            name="view"
+            type="com.dlab.sinsungo.ui.dialogs.IngredientSelfInputDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -330,7 +334,7 @@
                     android:hint="@string/dial_hint_date"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:text="@={viewmodel.inputIngredient.exdate}"
+                    android:text="@={viewmodel.inputIngredient.exDate}"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -421,7 +425,7 @@
                 style="@style/Widget.MaterialComponents.Button.Dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewmodel.inputOnClick()}"
+                android:onClick="@{() -> view.btnSaveOnClick()}"
                 android:text="@string/btn_accept"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

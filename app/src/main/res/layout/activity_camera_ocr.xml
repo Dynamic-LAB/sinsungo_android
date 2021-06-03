@@ -40,13 +40,14 @@
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
             android:src="@drawable/btn_back"
-            app:layout_constraintBottom_toBottomOf="@id/btn_take_camera"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_take_camera"
             app:tint="@color/white" />
 
         <Button

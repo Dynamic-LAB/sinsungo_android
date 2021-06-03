@@ -38,7 +38,7 @@ class IngredientListAdapter(
         @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         private fun calculateRemainDate(ingredientModel: IngredientModel): Long {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
-            val dDay = dateFormat.parse(ingredientModel.exdate).time
+            val dDay = dateFormat.parse(ingredientModel.exDate).time
             val today = Calendar.getInstance(Locale.KOREAN).apply {
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)

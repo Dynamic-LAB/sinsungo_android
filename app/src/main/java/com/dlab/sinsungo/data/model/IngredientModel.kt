@@ -16,7 +16,7 @@ data class IngredientModel(
     var count: Int,
 
     @SerializedName("expiration_date")
-    var exdate: String,
+    var exDate: String,
 
     @SerializedName("category")
     var refCategory: String,
