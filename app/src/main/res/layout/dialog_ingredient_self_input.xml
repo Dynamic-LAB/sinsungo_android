@@ -334,7 +334,7 @@
                     android:hint="@string/dial_hint_date"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:text="@={viewmodel.inputIngredient.exdate}"
+                    android:text="@={viewmodel.inputIngredient.exDate}"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

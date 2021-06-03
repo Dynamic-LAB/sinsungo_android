@@ -205,8 +205,8 @@ object CustomBindingAdapter {
 
     @BindingAdapter("notifications")
     @JvmStatic
-    fun bindNotification(recycerView: RecyclerView, notifications: List<NotificationModel>?) {
-        val adapter = recycerView.adapter as NotificationListAdapter
+    fun bindNotification(recyclerView: RecyclerView, notifications: List<NotificationModel>?) {
+        val adapter = recyclerView.adapter as NotificationListAdapter
 
         adapter.submitList(notifications)
     }

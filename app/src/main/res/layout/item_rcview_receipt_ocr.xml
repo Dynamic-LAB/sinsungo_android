@@ -40,9 +40,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@{data.name}"
-                android:textAppearance="@style/Text.Bold_14_Black"
+                android:textAppearance="@style/Text.Bold_16_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exdate_input"
                 app:layout_constraintStart_toEndOf="@id/btn_drop_item"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_exdate_input" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_ingredient_category"
@@ -50,25 +51,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_drop_item"
-                app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name">
+                app:layout_constraintTop_toBottomOf="@id/tv_exdate_input">
 
                 <TextView
                     android:id="@+id/tv_ref_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{data.refCategory}"
-                    android:textAppearance="@style/Text.Bold_12_Black"
+                    android:textAppearance="@style/Text.Bold_10_Black"
                     app:layout_constraintBottom_toBottomOf="@id/btn_open_category"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/btn_open_category" />
 
                 <ImageButton
                     android:id="@+id/btn_open_category"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@android:color/transparent"
+                    android:padding="4dp"
                     android:src="@drawable/btn_expand"
                     android:tint="@color/dim_grey"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -83,36 +86,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dial_count"
-                android:textAppearance="@style/Text.Bold_12_Black"
+                android:textAppearance="@style/Text.Bold_14_Black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exdate_input"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_exdate_input" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/cl_ingredient_category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_count">
+                app:layout_constraintTop_toTopOf="@id/cl_ingredient_category">
 
                 <EditText
                     android:id="@+id/et_count"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/dial_hint_count"
-                    android:text="@{Integer.toString(data.count)}"
                     android:inputType="number"
                     android:maxLength="10"
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
+                    android:text="@{Integer.toString(data.count)}"
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_12_Black"
-                    app:layout_constraintBottom_toBottomOf="@id/cl_count_type"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/cl_count_type" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_count_type"
@@ -136,10 +140,11 @@
 
                     <ImageButton
                         android:id="@+id/btn_open_countType"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:background="@android:color/transparent"
+                        android:padding="4dp"
                         android:src="@drawable/btn_expand"
                         android:tint="@color/dim_grey"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -157,8 +162,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/dial_hint_date"
                 android:maxLength="10"
+                android:padding="8dp"
                 android:singleLine="true"
-                android:text="@={data.exdate}"
+                android:text="@={data.exDate}"
                 android:textAlignment="center"
                 android:textAppearance="@style/Text.Bold_12_Black"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -168,26 +174,27 @@
                 android:id="@+id/cl_exdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/cl_count"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_exdate_input">
+                app:layout_constraintTop_toTopOf="@id/cl_count">
 
                 <TextView
                     android:id="@+id/tv_exdate_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{data.exDateType}"
-                    android:textAppearance="@style/Text.Bold_12_Black"
+                    android:textAppearance="@style/Text.Bold_10_Black"
                     app:layout_constraintBottom_toBottomOf="@id/btn_open_exdateType"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/btn_open_exdateType" />
 
                 <ImageButton
                     android:id="@+id/btn_open_exdateType"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:background="@android:color/transparent"
+                    android:padding="4dp"
                     android:src="@drawable/btn_expand"
                     android:tint="@color/dim_grey"
                     app:layout_constraintBottom_toBottomOf="parent"

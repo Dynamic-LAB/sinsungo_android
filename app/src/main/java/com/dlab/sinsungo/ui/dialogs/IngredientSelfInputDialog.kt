@@ -50,7 +50,7 @@ class IngredientSelfInputDialog : DialogFragment() {
     }
 
     private val mDatePickerDismissListener = DialogInterface.OnDismissListener {
-        if (viewModel.inputIngredient.value!!.exdate.isEmpty() || viewModel.inputIngredient.value!!.exdate.isBlank()) {
+        if (viewModel.inputIngredient.value!!.exDate.isEmpty() || viewModel.inputIngredient.value!!.exDate.isBlank()) {
             binding.tvInputNoti3.visibility = View.VISIBLE
             binding.ivExdateCalendar.drawable.setTint(
                 ResourcesCompat.getColor(resources, R.color.free_speech_red, context?.theme)
@@ -203,7 +203,7 @@ class IngredientSelfInputDialog : DialogFragment() {
             binding.lineUnderExdateInput.background =
                 context?.let { ContextCompat.getDrawable(it, R.color.royal_blue) }
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
-            val dateValue = dateFormat.parse(viewModel.inputIngredient.value!!.exdate)
+            val dateValue = dateFormat.parse(viewModel.inputIngredient.value!!.exDate)
             mCalendar.time = dateValue
         }
     }

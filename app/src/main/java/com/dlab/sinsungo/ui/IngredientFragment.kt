@@ -66,7 +66,7 @@ class IngredientFragment(private val refCategory: String) : Fragment() {
                 "신선도 순" -> {
                     val exDateList = data.filter { it.exDateType == "유통기한" }
                     val notExDateList = data.filter { it.exDateType != "유통기한" }
-                    data = exDateList.sortedBy { it.exdate } + notExDateList.sortedBy { it.exdate }
+                    data = exDateList.sortedBy { it.exDate } + notExDateList.sortedBy { it.exDate }
                 }
                 "최근 추가 순" -> data = data.sortedByDescending { it.id }
             }

@@ -92,7 +92,7 @@
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pb_ingredient_exdate_remain"
-                app:text="@{data.exdate}" />
+                app:text="@{data.exDate}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

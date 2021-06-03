@@ -188,7 +188,7 @@ class IngredientViewModel : ViewModel() {
             isCountZero()
             inputFlag = true
         }
-        if (_inputIngredient.value?.exdate!!.isBlank() || _inputIngredient.value?.exdate!!.isEmpty()) {
+        if (_inputIngredient.value?.exDate!!.isBlank() || _inputIngredient.value?.exDate!!.isEmpty()) {
             isDateBlank()
             inputFlag = true
         }
@@ -226,7 +226,7 @@ class IngredientViewModel : ViewModel() {
     fun setInputIngredientValue(key: String, value: String) {
         val data = _inputIngredient.value
         when (key) {
-            "exDate" -> data?.exdate = value
+            "exDate" -> data?.exDate = value
             "refCategory" -> data?.refCategory = value
             "countType" -> data?.countType = value
             "exDateType" -> data?.exDateType = value
