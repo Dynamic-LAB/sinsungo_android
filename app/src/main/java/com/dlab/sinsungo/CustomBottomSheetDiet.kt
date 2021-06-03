@@ -45,7 +45,7 @@ class CustomBottomSheetDiet(
     private val viewModel: DietViewModel by viewModels(ownerProducer = { requireParentFragment() })
     private var chipList = mutableListOf<String?>()
 
-    private var refId = 61
+    private var refId = GlobalApplication.prefs.getInt("refId")
     private lateinit var mIngredientListAdapter: DietIngredientListAdapter
 
     private val mOnDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->

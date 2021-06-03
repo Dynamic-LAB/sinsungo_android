@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.IngredientModel
 import com.dlab.sinsungo.IngredientRepository
 import com.dlab.sinsungo.data.model.Diet
@@ -30,9 +31,11 @@ class DietViewModel : ViewModel() {
     val useIngredients: MutableLiveData<List<IngredientModel>> = _useIngredients
     val unUseIngredients: MutableLiveData<List<IngredientModel>> = _unUseIngredients
 
+    private var refId = GlobalApplication.prefs.getInt("refId")
+
     init {
-        getDiet(61)
-        requestGetIngredients(61)
+        getDiet(refId)
+        requestGetIngredients(refId)
     }
 
     fun search(keyWord: String) {
