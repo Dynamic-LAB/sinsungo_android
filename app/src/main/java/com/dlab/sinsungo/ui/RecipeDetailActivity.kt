@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.R
-import com.dlab.sinsungo.RecipeToDietDialog
+import com.dlab.sinsungo.ui.dialogs.RecipeToDietDialog
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.databinding.ActivityRecipeDetailBinding
 import com.dlab.sinsungo.viewmodel.RecipeDetailViewModel

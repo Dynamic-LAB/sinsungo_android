@@ -79,9 +79,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:background="@color/royal_blue"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_diet_date"
-                    app:layout_constraintStart_toEndOf="@+id/tv_diet_date"
-                    app:layout_constraintTop_toTopOf="@+id/tv_diet_date" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_diet_date"
+                    app:layout_constraintStart_toEndOf="@id/tv_diet_date"
+                    app:layout_constraintTop_toTopOf="@id/tv_diet_date" />
 
                 <TextView
                     android:id="@+id/tv_diet_memo"
@@ -90,10 +90,9 @@
                     android:layout_marginStart="8dp"
                     android:text="@{dataModel.dietMemo}"
                     android:textAppearance="@style/Text.Regular_10_Black"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_diet_date"
-                    app:layout_constraintStart_toEndOf="@+id/view"
-                    app:layout_constraintTop_toTopOf="@+id/tv_diet_date"
-                    app:layout_constraintVertical_bias="0.6" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_diet_date"
+                    app:layout_constraintStart_toEndOf="@id/view"
+                    app:layout_constraintTop_toTopOf="@id/tv_diet_date" />
 
                 <TextView
                     android:id="@+id/tv_diet_menu"
@@ -102,7 +101,7 @@
                     android:layout_marginTop="16dp"
                     android:textAppearance="@style/Text.Bold_20_Black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_diet_date"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diet_date"
                     app:tvDietMenus="@{dataModel.dietMenus}" />
 
                 <TextView
@@ -113,7 +112,7 @@
                     android:text="@string/diet_main_ingredient"
                     android:textAppearance="@style/Text.Regular_10_Green"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_diet_menu"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diet_menu"
                     app:tvDietName="@{dataModel.dietIngredients}" />
 
                 <TextView
@@ -123,8 +122,8 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="16dp"
                     android:textAppearance="@style/Text.Regular_10_Black"
-                    app:layout_constraintStart_toEndOf="@+id/tv_main_diet"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_diet_menu"
+                    app:layout_constraintStart_toEndOf="@id/tv_main_diet"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diet_menu"
                     app:tvDietIngredient="@{dataModel.dietIngredients}" />
 
 

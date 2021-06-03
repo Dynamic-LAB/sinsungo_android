@@ -6,7 +6,7 @@
 
         <variable
             name="dataModel"
-            type="com.dlab.sinsungo.IngredientModel" />
+            type="com.dlab.sinsungo.data.model.IngredientModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -53,7 +53,7 @@
                 android:text="@{dataModel.name}"
                 android:textAppearance="@style/Text.Bold_10_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_dialog_bottom_line"
+                app:layout_constraintStart_toEndOf="@id/tv_dialog_bottom_line"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -65,8 +65,7 @@
                 android:background="@drawable/select_diet_ingredient"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

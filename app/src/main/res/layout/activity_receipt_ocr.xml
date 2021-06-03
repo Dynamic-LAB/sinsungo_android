@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.dlab.sinsungo.ReceiptOCRViewModel" />
+            type="com.dlab.sinsungo.viewmodel.ReceiptOCRViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,7 +76,7 @@
             android:src="@drawable/img_empty_receipt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/underline_title" />
+            app:layout_constraintTop_toBottomOf="@id/underline_title" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_ocr_buttons"

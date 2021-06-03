@@ -32,7 +32,7 @@
             android:inputType="text"
             android:textAppearance="@style/Text.Bold_12_grey"
             android:theme="@style/Theme.SearchEditText"
-            app:layout_constraintBottom_toTopOf="@+id/rv_recipe"
+            app:layout_constraintBottom_toTopOf="@id/rv_recipe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_search"
+            app:layout_constraintTop_toBottomOf="@id/et_search"
             app:recipeData="@{viewModel.recipes}"
             app:scrollTop="@{viewModel.scrollTop}" />
 
@@ -79,7 +79,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_empty" />
+                app:layout_constraintTop_toBottomOf="@id/iv_empty" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

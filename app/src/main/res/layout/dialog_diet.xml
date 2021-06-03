@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="listSize"
-            type="int"/>
+            type="int" />
+
         <variable
             name="viewModel"
             type="com.dlab.sinsungo.viewmodel.DietViewModel" />
@@ -42,7 +44,7 @@
                 android:layout_marginStart="5dp"
                 android:text="@string/dial_add"
                 android:textAppearance="@style/Text.Bold_24_Blue"
-                app:layout_constraintStart_toEndOf="@+id/tv_title_diet"
+                app:layout_constraintStart_toEndOf="@id/tv_title_diet"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -52,10 +54,9 @@
                 android:contentDescription="@string/all_img_description"
                 android:padding="8dp"
                 android:src="@drawable/btn_save"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_title_add"
-                app:layout_constraintEnd_toStartOf="@+id/btn_cancel"
-                app:layout_constraintTop_toTopOf="@+id/tv_title_add"
-                app:layout_constraintVertical_bias="0.615" />
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_add"
+                app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+                app:layout_constraintTop_toTopOf="@id/tv_title_add" />
 
             <ImageView
                 android:id="@+id/btn_cancel"
@@ -64,10 +65,10 @@
                 android:contentDescription="@string/all_img_description"
                 android:padding="8dp"
                 android:src="@drawable/btn_close"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_save"
+                app:layout_constraintBottom_toBottomOf="@id/btn_save"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btn_save"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="@id/btn_save" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -101,7 +102,6 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="18dp" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,7 +113,6 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_dialog_white"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintHorizontal_bias="0.727"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/const_date">
 
@@ -124,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/dial_memo"
-                app:layout_constraintStart_toStartOf="@+id/guideline10"
+                app:layout_constraintStart_toStartOf="@id/guideline10"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -142,10 +141,9 @@
                 android:singleLine="true"
                 android:textAppearance="@style/Text.Bold_12_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline11"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline10"
-                app:layout_constraintTop_toBottomOf="@+id/tv_dialog_memo_title" />
+                app:layout_constraintEnd_toStartOf="@id/guideline11"
+                app:layout_constraintStart_toStartOf="@id/guideline10"
+                app:layout_constraintTop_toBottomOf="@id/tv_dialog_memo_title" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -194,7 +192,6 @@
                 app:flexWrap="wrap"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/tv_dialog_menu_title">
 
@@ -229,17 +226,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:paddingTop="8dp"
-            android:background="@drawable/bg_dialog_white_2">
+            android:layout_weight="1"
+            android:background="@drawable/bg_dialog_white_2"
+            android:paddingTop="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_describe_image"
@@ -250,15 +245,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
                 <ImageView
                     android:id="@+id/iv_empty"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:scaleType="centerInside"
                     android:contentDescription="@string/all_img_description"
                     android:foregroundGravity="center"
+                    android:scaleType="centerInside"
                     android:src="@drawable/img_no_search_data"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -273,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/dial_ingredient"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintStart_toStartOf="@id/guideline6"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -282,9 +277,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/border_bottom"
-                app:layout_constraintEnd_toStartOf="@+id/guideline7"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toBottomOf="@+id/tv_dialog_ingredient_title">
+                app:layout_constraintEnd_toStartOf="@id/guideline7"
+                app:layout_constraintStart_toStartOf="@id/guideline6"
+                app:layout_constraintTop_toBottomOf="@id/tv_dialog_ingredient_title">
 
                 <ImageView
                     android:id="@+id/iv_search"
@@ -308,7 +303,7 @@
                     android:textAppearance="@style/Text.Bold_12_grey"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_search"
+                    app:layout_constraintStart_toEndOf="@id/iv_search"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -317,12 +312,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="90dp"
-                android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
-                app:layout_constraintEnd_toStartOf="@+id/guideline7"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                android:nestedScrollingEnabled="false"
+                android:paddingBottom="90dp"
+                app:layout_constraintEnd_toStartOf="@id/guideline7"
+                app:layout_constraintStart_toStartOf="@id/guideline6"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout"
                 app:unUseIngredients="@{viewModel.unUseIngredients}"
                 app:useIngredients="@{viewModel.useIngredients}"
                 tools:listitem="@layout/item_rcview_diet_ingredient" />
@@ -343,6 +338,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </LinearLayout>
+
 </layout>

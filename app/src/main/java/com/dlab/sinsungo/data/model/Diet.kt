@@ -1,6 +1,5 @@
 package com.dlab.sinsungo.data.model
 
-import com.dlab.sinsungo.IngredientModel
 import com.google.gson.annotations.SerializedName
 
 data class Diet(

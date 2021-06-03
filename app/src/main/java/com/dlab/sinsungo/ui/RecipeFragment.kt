@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.GlobalApplication
-import com.dlab.sinsungo.RecipeAdapter
+import com.dlab.sinsungo.adapters.RecipeAdapter
 import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.databinding.FragmentRecipeBinding
 import com.dlab.sinsungo.viewmodel.RecipeViewModel

@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.dlab.sinsungo.CustomConfirmDialog
+import com.dlab.sinsungo.ui.dialogs.MyPageConfirmDialog
 import com.dlab.sinsungo.GlobalApplication
-import com.dlab.sinsungo.MemberAdapter
+import com.dlab.sinsungo.adapters.MemberAdapter
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.databinding.ActivityMyPageBinding
 import com.dlab.sinsungo.viewmodel.MyPageViewModel
@@ -55,7 +55,7 @@ class MyPageActivity : AppCompatActivity() {
     }
 
     fun showDialog(type: String) {
-        val dialog = CustomConfirmDialog(type)
+        val dialog = MyPageConfirmDialog(type)
         dialog.show(supportFragmentManager, "custom_confirm_dialog")
     }
 

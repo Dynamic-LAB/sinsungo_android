@@ -6,7 +6,7 @@
 
         <variable
             name="view"
-            type="com.dlab.sinsungo.CustomConfirmDialog" />
+            type="com.dlab.sinsungo.ui.dialogs.MyPageConfirmDialog" />
 
         <variable
             name="viewModel"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:textAppearance="@style/Text.Bold_14_Black"
-            app:layout_constraintBottom_toTopOf="@+id/cl_dialog_buttons"
+            app:layout_constraintBottom_toTopOf="@id/cl_dialog_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_dialog_title"

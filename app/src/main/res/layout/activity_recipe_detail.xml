@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toTopOf="@id/sv_recipe"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
-            app:layout_constraintTop_toBottomOf="@+id/layout_title"
+            app:layout_constraintTop_toBottomOf="@id/layout_title"
             app:layout_constraintVertical_weight="0.75"/>
 
         <androidx.core.widget.NestedScrollView
@@ -48,10 +48,10 @@
             android:scrollbarDefaultDelayBeforeFade="50"
             android:scrollbarThumbVertical="@color/almond_frost"
             android:scrollbars="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/cl_btn_container"
-            app:layout_constraintEnd_toEndOf="@+id/gl_end"
-            app:layout_constraintStart_toStartOf="@+id/gl_start"
-            app:layout_constraintTop_toBottomOf="@+id/iv_thumbnail"
+            app:layout_constraintBottom_toTopOf="@id/cl_btn_container"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintVertical_weight="1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,7 +69,7 @@
                     android:gravity="center"
                     android:text="@{viewModel.recipe.name}"
                     android:textAppearance="@style/Text.Bold_20_Black"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_recipe_description"
+                    app:layout_constraintBottom_toTopOf="@id/tv_recipe_description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -83,10 +83,10 @@
                     android:paddingEnd="4dp"
                     android:text="@{viewModel.recipe.description}"
                     android:textAppearance="@style/Text.Bold_10_Black"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_in_ref_title"
+                    app:layout_constraintBottom_toTopOf="@id/tv_in_ref_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recipe_name"
                     app:lineHeight="20dp" />
 
                 <TextView
@@ -96,10 +96,10 @@
                     android:layout_marginBottom="7dp"
                     android:text="@string/reci_in_refrigerator"
                     android:textAppearance="@style/Text.Bold_16_Blue"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_in_ref_ingredient"
+                    app:layout_constraintBottom_toTopOf="@id/tv_in_ref_ingredient"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_recipe_description" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_recipe_description" />
 
                 <TextView
                     android:id="@+id/tv_in_ref_ingredient"
@@ -110,10 +110,10 @@
                     android:paddingEnd="0dp"
                     android:text="@{viewModel.inRefIngredients()}"
                     android:textAppearance="@style/Text.Bold_14_Black"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_not_in_ref_title"
+                    app:layout_constraintBottom_toTopOf="@id/tv_not_in_ref_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_in_ref_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_in_ref_title"
                     app:lineHeight="24dp" />
 
                 <TextView
@@ -123,10 +123,10 @@
                     android:layout_marginBottom="7dp"
                     android:text="@string/reci_not_in_refrigerator"
                     android:textAppearance="@style/Text.Bold_16_Red"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_not_in_ref_ingredient"
+                    app:layout_constraintBottom_toTopOf="@id/tv_not_in_ref_ingredient"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_in_ref_ingredient" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_in_ref_ingredient" />
 
                 <TextView
                     android:id="@+id/tv_not_in_ref_ingredient"
@@ -140,7 +140,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_not_in_ref_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_not_in_ref_title"
                     app:lineHeight="24dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -166,7 +166,7 @@
                 android:onClick="@{() -> view.addDiet(viewModel.recipe.name)}"
                 android:textAppearance="@style/Text.Bold_14_Black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_recipe"
+                app:layout_constraintEnd_toStartOf="@id/btn_recipe"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,7 +182,7 @@
                 android:textAppearance="@style/Text.Bold_14_White"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btn_diet"
+                app:layout_constraintStart_toEndOf="@id/btn_diet"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/exdate_type_normal"
-        android:title="@string/dial_exdate" />
-    <item
-        android:id="@+id/exdate_type_make_date"
-        android:title="@string/dial_make_date" />
-    <item
-        android:id="@+id/exdate_type_storage_date"
-        android:title="@string/dial_storage_date" />
+    <item android:title="@string/dial_exdate" />
+    <item android:title="@string/dial_make_date" />
+    <item android:title="@string/dial_storage_date" />
 </menu>

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{notice.title}"
                 android:textAppearance="@style/Text.Bold_16_Black"
-                app:layout_constraintBottom_toTopOf="@+id/tv_date"
+                app:layout_constraintBottom_toTopOf="@id/tv_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +44,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

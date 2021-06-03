@@ -54,10 +54,14 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // social login
     implementation "com.kakao.sdk:v2-user:2.4.1" // 카카오 로그인 모듈
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6' // 네이버 로그인
     implementation 'com.google.android.gms:play-services-auth:19.0.0' // 구글 로그인
-    implementation 'com.google.android:flexbox:2.0.1' // flex box
+
+    // flex box
+    implementation 'com.google.android:flexbox:2.0.1'
 
     // recycler view multi selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"

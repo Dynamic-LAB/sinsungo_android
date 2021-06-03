@@ -42,7 +42,7 @@
                 android:scaleType="fitXY"
                 app:imageUrl="@{recipe.thumbnail}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cl_tv_container"
+                app:layout_constraintEnd_toStartOf="@id/cl_tv_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,10 +50,10 @@
                 android:id="@+id/cl_tv_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail"
+                app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
-                app:layout_constraintTop_toTopOf="@+id/iv_thumbnail"
+                app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+                app:layout_constraintTop_toTopOf="@id/iv_thumbnail"
                 app:layout_constraintVertical_weight="1">
 
                 <TextView
@@ -65,7 +65,7 @@
                     android:maxLines="1"
                     android:text="@{recipe.name}"
                     android:textAppearance="@style/Text.Bold_16_Black"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_in_ref_title"
+                    app:layout_constraintBottom_toTopOf="@id/tv_in_ref_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -79,10 +79,10 @@
                     android:paddingEnd="0dp"
                     android:text="@string/reci_in_refrigerator"
                     android:textAppearance="@style/Text.Bold_12_Blue"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_in_ref_ingredient"
+                    app:layout_constraintBottom_toTopOf="@id/tv_in_ref_ingredient"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_recipe_name" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_recipe_name" />
 
                 <TextView
                     android:id="@+id/tv_in_ref_ingredient"
@@ -95,10 +95,10 @@
                     android:paddingEnd="0dp"
                     android:text="@{inRef}"
                     android:textAppearance="@style/Text.Bold_12_Black"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_not_in_ref_title"
+                    app:layout_constraintBottom_toTopOf="@id/tv_not_in_ref_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_in_ref_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_in_ref_title" />
 
                 <TextView
                     android:id="@+id/tv_not_in_ref_title"
@@ -109,10 +109,10 @@
                     android:paddingEnd="0dp"
                     android:text="@string/reci_not_in_refrigerator"
                     android:textAppearance="@style/Text.Bold_12_red"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_not_in_ref_ingredient"
+                    app:layout_constraintBottom_toTopOf="@id/tv_not_in_ref_ingredient"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_in_ref_ingredient" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_in_ref_ingredient" />
 
                 <TextView
                     android:id="@+id/tv_not_in_ref_ingredient"
@@ -127,7 +127,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_not_in_ref_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_not_in_ref_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

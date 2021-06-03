@@ -6,7 +6,7 @@
 
         <variable
             name="view"
-            type="com.dlab.sinsungo.CustomInviteDialog" />
+            type="com.dlab.sinsungo.ui.dialogs.MemberInviteDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,9 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dlab.sinsungo.databinding.ActivityMainBinding
-import com.dlab.sinsungo.ui.MyPageActivity
-import com.dlab.sinsungo.ui.NotificationFragment
-import com.dlab.sinsungo.ui.RecipeFragment
+import com.dlab.sinsungo.ui.*
+import com.dlab.sinsungo.viewmodel.IngredientViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {

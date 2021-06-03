@@ -6,7 +6,7 @@
 
         <variable
             name="view"
-            type="com.dlab.sinsungo.RecipeToDietDialog" />
+            type="com.dlab.sinsungo.ui.dialogs.RecipeToDietDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             android:text="@string/reci_dialog_new_diet"
             android:textAppearance="@style/Text.Bold_14_Black"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/btn_old_diet"
+            app:layout_constraintBottom_toTopOf="@id/btn_old_diet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_new_diet" />
+            app:layout_constraintTop_toBottomOf="@id/btn_new_diet" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

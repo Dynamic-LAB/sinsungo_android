@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/all_img_description"
                 android:foregroundGravity="center"
-                android:src="@drawable/image_empty_shopping"
+                android:src="@drawable/img_empty_shopping"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_empty" />
+                app:layout_constraintTop_toBottomOf="@id/iv_empty" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

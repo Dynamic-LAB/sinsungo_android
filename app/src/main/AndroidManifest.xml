@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dlab.sinsungo">
+
     <!-- 인터넷 사용 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 -->
+    <!-- 카메라 권한 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -22,7 +25,7 @@
         <activity android:name=".ui.HelpActivity" />
         <activity android:name=".ui.NoticeActivity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,9 +37,9 @@
         <activity android:name=".ui.RecipeDetailActivity" />
         <activity android:name=".ui.MyPageActivity" />
         <activity android:name=".MainActivity"/>
-        <activity android:name=".CameraXOCRActivity" />
-        <activity android:name=".ReceiptOCRActivity" />
-        <activity android:name=".TutorialActivity" />
+        <activity android:name=".ui.CameraXOCRActivity" />
+        <activity android:name=".ui.ReceiptOCRActivity" />
+        <activity android:name=".ui.TutorialActivity" />
 
         <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
@@ -66,7 +69,7 @@
 
         <!-- FCM -->
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

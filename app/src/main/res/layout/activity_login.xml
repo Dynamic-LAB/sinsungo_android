@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-            app:layout_constraintStart_toStartOf="@+id/guideline_start">
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start">
 
             <ImageView
                 android:id="@+id/btn_login_kakao"
@@ -48,7 +48,7 @@
                 android:contentDescription="@string/description_kakao_login_btn"
                 android:onClick="@{()->viewModel.onClickLogin(@string/login_type_kakao)}"
                 android:src="@drawable/btn_login_kakao"
-                app:layout_constraintBottom_toTopOf="@+id/btn_login_naver"
+                app:layout_constraintBottom_toTopOf="@id/btn_login_naver"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +63,7 @@
                 app:layout_constraintBottom_toTopOf="@id/btn_login_google"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_login_kakao" />
+                app:layout_constraintTop_toBottomOf="@id/btn_login_kakao" />
 
             <ImageView
                 android:id="@+id/btn_login_google"

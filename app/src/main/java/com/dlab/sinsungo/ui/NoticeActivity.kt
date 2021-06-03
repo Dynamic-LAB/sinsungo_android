@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dlab.sinsungo.NoticeAdapter
+import com.dlab.sinsungo.adapters.NoticeAdapter
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.data.model.Notice
 import com.dlab.sinsungo.databinding.ActivityNoticeBinding

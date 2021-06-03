@@ -10,7 +10,6 @@
     <string name="all_shopping_basket">장바구니</string>
     <string name="all_mypage">마이페이지</string>
     <string name="all_material">재료</string>
-    <string name="all_expiration_date">유통기한</string>
     <string name="all_store_date">보관기한</string>
     <string name="all_gram">g</string>
     <string name="all_ml">ml</string>
@@ -19,7 +18,6 @@
     <string name="all_save">저장</string>
 
     <!-- 버튼 -->
-    <string name="btn_add">추가하기</string>
     <string name="btn_cancel">취소</string>
     <string name="btn_accept">확인</string>
 
@@ -38,32 +36,12 @@
     <string name="dial_hint_memo">내용을 작성해주세요.</string>
     <string name="dial_hint_diet_memo">간단한 메모를 작성해주세요. (예. 아침, 점심, 저녁)</string>
     <string name="dial_normal_essential">* 필수 입력사항</string>
-    <string name="dial_exdate_mismatch_regex">* 형식에 맞게 입력하세요 (yyyy.MM.dd)</string>
-    <string name="dial_notice_essential">필수로 입력하셔야 합니다.</string>
     <string name="dial_date">날짜</string>
-    <string-array name="dial_day_types">
-        <item>아침</item>
-        <item>점심</item>
-        <item>저녁</item>
-    </string-array>
-    <string name="dial_morning">아침</string>
-    <string name="dial_lunch">점심</string>
-    <string name="dial_dinner">저녁</string>
     <string name="dial_menu">메뉴</string>
     <string name="dial_exdate">유통기한</string>
     <string name="dial_make_date">제조일자</string>
     <string name="dial_storage_date">보관일자</string>
     <string name="dial_hint_edit_menu">#메뉴 이름</string>
-    <string-array name="dial_count_types">
-        <item>g</item>
-        <item>ml</item>
-        <item>개</item>
-    </string-array>
-    <string-array name="dial_exdate_types">
-        <item>유통기한</item>
-        <item>제조일자</item>
-        <item>보관일자</item>
-    </string-array>
 
     <!-- 냉장고 -->
     <string-array name="ref_categories">
@@ -83,17 +61,13 @@
     <string name="ref_category_seasoning">조미료/양념</string>
     <string name="ref_custom_edit">직접 입력</string>
     <string name="ref_scan_receipt">영수증 촬영</string>
-    <string name="ref_picture_ingredient">재료 촬영</string>
     <string name="ref_empty_message">냉장고에 재료를 먼저 넣어주세요!</string>
     <string name="ref_format_count_unit">%d %s</string>
-    <string name="ref_format_until_exdate">%s까지 %d일 남았어요!</string>
-    <string name="ref_format_over_exdate">%s에서 %d일 지났어요!</string>
 
     <!-- 식단 -->
     <string name="diet_no_ingredient">사용하는 재료가 없습니다.</string>
     <string name="diet_main_ingredient">주재료: </string>
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
-    <string name="diet_use_ingredient">사용재료</string>
     <string name="diet_custom_edit">직접 입력</string>
     <string name="diet_add_edit">레시피에서 추가하기</string>
 
@@ -110,11 +84,6 @@
     <string name="reci_dialog_old_diet">기존 식단에 추가</string>
 
     <!-- 장바구니 -->
-    <string name="shop_morning">아침 식단의 재료</string>
-    <string name="shop_lunch">점심 식단의 재료</string>
-    <string name="shop_dinner">저녁 식단의 재료</string>
-    <string name="shop_often_ingredient">자주 사용하는 재료</string>
-    <string name="shop_list_title">장 볼 목록</string>
     <string name="shop_empty_message">장보기 목록이 비어있어요!</string>
     <string name="shop_share">공유하기</string>
     <string name="shop_add">장바구니 목록 추가하기</string>

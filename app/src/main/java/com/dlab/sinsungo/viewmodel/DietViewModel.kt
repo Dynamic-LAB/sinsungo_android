@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dlab.sinsungo.GlobalApplication
-import com.dlab.sinsungo.IngredientModel
-import com.dlab.sinsungo.IngredientRepository
+import com.dlab.sinsungo.data.model.IngredientModel
+import com.dlab.sinsungo.data.repository.IngredientRepository
 import com.dlab.sinsungo.data.model.Diet
 import com.dlab.sinsungo.data.repository.DietRepository
 import kotlinx.coroutines.Dispatchers

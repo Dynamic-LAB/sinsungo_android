@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.dlab.sinsungo.IngredientModel" />
+            type="com.dlab.sinsungo.data.model.IngredientModel" />
 
         <variable
             name="remain"
@@ -69,7 +69,7 @@
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain"
+                app:layout_constraintTop_toBottomOf="@id/pb_ingredient_exdate_remain"
                 app:tvExdateType="@{data.exDateType}"
                 app:tvRemain="@{remain}" />
 
@@ -91,7 +91,7 @@
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/Text.Regular_10_Black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pb_ingredient_exdate_remain"
+                app:layout_constraintTop_toBottomOf="@id/pb_ingredient_exdate_remain"
                 app:text="@{data.exdate}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

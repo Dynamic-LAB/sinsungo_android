@@ -122,7 +122,7 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_open_category"
+                    app:layout_constraintEnd_toStartOf="@id/btn_open_category"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -321,7 +321,7 @@
                     android:textAppearance="@style/Text.Bold_14_Black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_exdate_calendar"
+                    app:layout_constraintStart_toEndOf="@id/iv_exdate_calendar"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -342,7 +342,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_exdate">
+                app:layout_constraintTop_toBottomOf="@id/tv_exdate">
 
                 <TextView
                     android:id="@+id/tv_exdate_type"

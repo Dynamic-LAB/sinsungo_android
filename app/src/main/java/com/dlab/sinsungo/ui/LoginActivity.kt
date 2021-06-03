@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.MainActivity
 import com.dlab.sinsungo.R
-import com.dlab.sinsungo.TutorialActivity
 import com.dlab.sinsungo.databinding.ActivityLoginBinding
 import com.dlab.sinsungo.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
