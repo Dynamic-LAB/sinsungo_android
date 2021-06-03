@@ -588,6 +588,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun getScreenshotFromRecyclerView(view: RecyclerView): Bitmap? {
         val adapter = view.adapter
         var bigBitmap: Bitmap? = null
