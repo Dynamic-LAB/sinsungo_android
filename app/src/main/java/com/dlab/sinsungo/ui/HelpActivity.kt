@@ -1,7 +1,7 @@
 package com.dlab.sinsungo.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.databinding.ActivityHelpBinding

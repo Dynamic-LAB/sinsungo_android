@@ -1,9 +1,9 @@
 package com.dlab.sinsungo.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dlab.sinsungo.CustomConfirmDialog
 import com.dlab.sinsungo.GlobalApplication
@@ -11,7 +11,9 @@ import com.dlab.sinsungo.MemberAdapter
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.databinding.ActivityMyPageBinding
 import com.dlab.sinsungo.viewmodel.MyPageViewModel
-import com.google.android.flexbox.*
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 
 class MyPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyPageBinding

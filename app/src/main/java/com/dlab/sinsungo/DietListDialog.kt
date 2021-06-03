@@ -32,12 +32,18 @@ class DietListDialog(private val name: String, private val dismiss: () -> Unit) 
             .setView(binding.root)
             .create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
 
         return dialog
     }
 
     private fun editDietItem(diet: Diet) {
-        CustomBottomSheetDiet(diet, name, dismiss).show(childFragmentManager, "Custom_bottom_sheet_diet")
+        CustomBottomSheetDiet(diet, name, dismiss).show(
+            childFragmentManager,
+            "Custom_bottom_sheet_diet"
+        )
     }
 }

@@ -5,6 +5,7 @@
     tools:context=".ui.NoticeDetailActivity">
 
     <data>
+
         <variable
             name="view"
             type="com.dlab.sinsungo.ui.NoticeDetailActivity" />
@@ -22,8 +23,8 @@
         <include
             android:id="@+id/layout_title"
             layout="@layout/layout_title_with_back_btn"
-            app:title="@{@string/my_notify}"
-            app:activity="@{view}"/>
+            app:activity="@{view}"
+            app:title="@{@string/my_notify}" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
@@ -71,10 +72,10 @@
                     android:layout_marginTop="18dp"
                     android:text="@{notice.content}"
                     android:textAppearance="@style/Text.Bold_16_Black"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_date"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_date" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

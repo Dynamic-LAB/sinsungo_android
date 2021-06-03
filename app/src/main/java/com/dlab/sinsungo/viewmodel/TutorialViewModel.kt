@@ -1,18 +1,14 @@
 package com.dlab.sinsungo.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.data.model.Refrigerator
-import com.dlab.sinsungo.data.model.User
 import com.dlab.sinsungo.data.repository.RefrigeratorRepository
 import com.dlab.sinsungo.data.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class TutorialViewModel : ViewModel() {

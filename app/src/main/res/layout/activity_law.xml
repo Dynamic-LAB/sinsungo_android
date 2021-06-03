@@ -5,6 +5,7 @@
     tools:context=".ui.LawActivity">
 
     <data>
+
         <variable
             name="view"
             type="com.dlab.sinsungo.ui.LawActivity" />
@@ -18,8 +19,8 @@
         <include
             android:id="@+id/layout_title"
             layout="@layout/layout_title_with_back_btn"
-            app:title="@{@string/my_law}"
-            app:activity="@{view}"/>
+            app:activity="@{view}"
+            app:title="@{@string/my_law}" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"

@@ -5,6 +5,7 @@
     tools:context=".ui.NoticeActivity">
 
     <data>
+
         <variable
             name="view"
             type="com.dlab.sinsungo.ui.NoticeActivity" />
@@ -22,19 +23,19 @@
         <include
             android:id="@+id/layout_title"
             layout="@layout/layout_title_with_back_btn"
-            app:title="@{@string/my_notify}"
-            app:activity="@{view}"/>
+            app:activity="@{view}"
+            app:title="@{@string/my_notify}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_notice"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="18dp"
-            app:notices="@{viewModel.notice}"
-            app:layout_constraintStart_toStartOf="@+id/gl_start"
-            app:layout_constraintEnd_toEndOf="@+id/gl_end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_title"/>
+            app:layout_constraintEnd_toEndOf="@+id/gl_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_start"
+            app:layout_constraintTop_toBottomOf="@+id/layout_title"
+            app:notices="@{viewModel.notice}" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"

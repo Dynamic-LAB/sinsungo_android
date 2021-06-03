@@ -14,7 +14,6 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.dlab.sinsungo.data.model.User
 import com.dlab.sinsungo.databinding.DialogConfirmBinding
 import com.dlab.sinsungo.ui.LoginActivity
 import com.dlab.sinsungo.viewmodel.MyPageViewModel

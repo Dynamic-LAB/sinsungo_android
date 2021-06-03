@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dlab.sinsungo.data.model.Notice
-import com.dlab.sinsungo.data.model.Recipe
 import com.dlab.sinsungo.databinding.ItemRcviewNoticeBinding
 
 class NoticeAdapter(val todoItemClick: (Notice) -> Unit) :

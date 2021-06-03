@@ -1,7 +1,6 @@
 package com.dlab.sinsungo.data.repository
 
 import com.dlab.sinsungo.data.RemoteDataSource
-import com.dlab.sinsungo.data.model.Refrigerator
 
 object RefrigeratorRepository {
     /**

@@ -44,9 +44,9 @@
             android:id="@+id/tl_btns"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:stretchColumns="0"
-            android:showDividers="middle"
             android:divider="@color/light_grey"
+            android:showDividers="middle"
+            android:stretchColumns="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -76,14 +76,14 @@
                     android:id="@+id/btn_set_noti"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:switchMinWidth="60dp"
                     android:background="@android:color/transparent"
                     android:gravity="start|center_vertical"
                     android:paddingStart="10dp"
                     android:paddingEnd="0dp"
                     android:text="@string/my_setting_notice"
                     android:textAppearance="@style/Text.Bold_16_Black"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    app:switchMinWidth="60dp" />
 
             </TableRow>
 
