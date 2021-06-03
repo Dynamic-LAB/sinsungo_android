@@ -54,7 +54,7 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private val viewModel: ShoppingViewModel by viewModels()
     private val ingredientViewModel: IngredientViewModel by activityViewModels()
-    private val refId = 61
+    private var refId = GlobalApplication.prefs.getInt("refId")
 
     private val mCalendar = Calendar.getInstance()
 

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.data.model.Shopping
 import com.dlab.sinsungo.data.repository.ShoppingRepository
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,10 @@ class ShoppingViewModel : ViewModel() {
     private val _shoppingList = mutableListOf<Shopping>()
     private var _shoppings = MutableLiveData<List<Shopping>>()
     val shoppings: MutableLiveData<List<Shopping>> = _shoppings
+    private var refId = GlobalApplication.prefs.getInt("refId")
 
     init {
-        getShopping(61)
+        getShopping(refId)
     }
 
     fun setShopping(newShopping: Shopping?) {
