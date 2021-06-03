@@ -42,6 +42,7 @@
     <string name="dial_make_date">제조일자</string>
     <string name="dial_storage_date">보관일자</string>
     <string name="dial_hint_edit_menu">#메뉴 이름</string>
+    <string name="dial_empty_share_data">공유할 목록이 존재하지 않습니다!</string>
 
     <!-- 냉장고 -->
     <string-array name="ref_categories">

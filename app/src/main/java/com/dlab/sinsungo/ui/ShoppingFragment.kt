@@ -39,6 +39,7 @@ import com.dlab.sinsungo.utils.ItemDecoration
 import com.dlab.sinsungo.utils.SwipeHelperCallback
 import com.dlab.sinsungo.viewmodel.IngredientViewModel
 import com.dlab.sinsungo.viewmodel.ShoppingViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
@@ -127,7 +128,11 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.fab_share_shopping -> {
-                shareScreenshot()
+                if (mShoppingListAdapter.currentList.size == 0) {
+                    setAlertDialog(resources.getString(R.string.dial_empty_share_data))
+                } else {
+                    shareScreenshot()
+                }
                 binding.sdvShopping.close()
             }
             R.id.fab_add_shopping -> {
@@ -558,6 +563,17 @@ class ShoppingFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         val mDateString = mSimpleDateFormat.format(mCalendar.time)
 
         checkDialogView.tvExdateInput.text = mDateString
+    }
+
+    private fun setAlertDialog(resource: String) {
+        this.context?.let {
+            MaterialAlertDialogBuilder(it)
+                .setMessage(resource)
+                .setPositiveButton(resources.getString(R.string.btn_accept)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     private fun shareScreenshot() {
