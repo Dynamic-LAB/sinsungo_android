@@ -147,7 +147,7 @@ object CustomBindingAdapter {
     @BindingAdapter("tvDietIngredient")
     @JvmStatic
     fun setDietIngredient(view: TextView, value: List<IngredientModel>?) {
-        if (value == null || value[0].id == null) {
+        if (value == null || value.isEmpty() || value[0].id == null) {
             view.text = view.resources.getString(R.string.diet_no_ingredient)
             view.setTextColor(
                 ResourcesCompat.getColor(
@@ -165,7 +165,7 @@ object CustomBindingAdapter {
     @BindingAdapter("tvDietName")
     @JvmStatic
     fun setDietIngredientGone(view: TextView, value: List<IngredientModel>?) {
-        if (value == null || value[0].id == null) {
+        if (value == null || value.isEmpty() || value[0].id == null) {
             view.visibility = View.GONE
         }
     }
