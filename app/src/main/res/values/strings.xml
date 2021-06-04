@@ -12,6 +12,7 @@
     <string name="all_material">재료</string>
     <string name="all_store_date">보관기한</string>
     <string name="all_gram">g</string>
+    <string name="all_kilo_gram">kg</string>
     <string name="all_ml">ml</string>
     <string name="all_unit">개</string>
     <string name="all_img_description">이미지가 로딩되지 않았습니다. </string>
