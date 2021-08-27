@@ -24,7 +24,7 @@ class DietListDialog(private val name: String, private val dismiss: () -> Unit) 
         binding.viewModel = viewModel
 
         binding.rvDietList.apply {
-            adapter = DietListAdapter(itemClick = { diet -> editDietItem(diet) })
+            adapter = DietListAdapter(editClick = { diet -> editDietItem(diet) })
             layoutManager = LinearLayoutManager(this.context)
             setHasFixedSize(true)
         }

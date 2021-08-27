@@ -7,5 +7,8 @@ data class DietRating(
     val id: Int,
 
     @SerializedName("ratings")
-    val dietMemo: Map<String, Float>
+    val ratings: Map<String, Float>,
+
+    @SerializedName("diet_id")
+    val diet_id: Int
 )

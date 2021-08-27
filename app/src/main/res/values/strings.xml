@@ -72,6 +72,7 @@
     <string name="diet_empty_message">식단을 먼저 짜주세요!</string>
     <string name="diet_custom_edit">직접 입력</string>
     <string name="diet_add_edit">레시피에서 추가하기</string>
+    <string name="diet_test">평가</string>
 
     <!-- 레시피 -->
     <string name="reci_hint_search">검색어를 입력해주세요.</string>

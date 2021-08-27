@@ -23,15 +23,18 @@ class DietViewModel : ViewModel() {
     private val _allIngredientList = mutableListOf<IngredientModel>()
     private val _useIngredientList = mutableListOf<IngredientModel>()
     private val _unUseIngredientList = mutableListOf<IngredientModel>()
+    private val _menuList = mutableListOf<String?>()
 
     private var _allIngredients = MutableLiveData<List<IngredientModel>>()
     private var _useIngredients = MutableLiveData<List<IngredientModel>>()
     private var _unUseIngredients = MutableLiveData<List<IngredientModel>>()
+    private var _menus = MutableLiveData<List<String?>>()
 
     val diets: MutableLiveData<List<Diet>> = _diets
     val allIngredients: MutableLiveData<List<IngredientModel>> = _allIngredients
     val useIngredients: MutableLiveData<List<IngredientModel>> = _useIngredients
     val unUseIngredients: MutableLiveData<List<IngredientModel>> = _unUseIngredients
+    val menuList: MutableLiveData<List<String?>> = _menus
 
     private var refId = GlobalApplication.prefs.getInt("refId")
 
@@ -53,6 +56,7 @@ class DietViewModel : ViewModel() {
     }
 
     fun setDietRating(diet: Diet, dietRating: DietRating) {
+        Log.d("setDietRating", dietRating.toString())
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 DietRatingRepository.setDietRating(dietRating).let { response ->
@@ -60,6 +64,7 @@ class DietViewModel : ViewModel() {
                         withContext(Dispatchers.Main) {
                             _dietList.remove(diet)
                             _diets.postValue(_dietList)
+                            Log.d("setDietRating", response.toString())
                         }
                     } else {
                         Log.e("diet_rating_error", response.message())
@@ -235,5 +240,12 @@ class DietViewModel : ViewModel() {
         _unUseIngredientList.add(ingredient)
         _useIngredients.value = _useIngredientList
         _unUseIngredients.value = _unUseIngredientList
+    }
+
+    fun setMenuList(menuList: List<String?>){
+        _menuList.clear()
+        _menuList.addAll(menuList)
+        _menus.value = _menuList
+        Log.d("setMenuList", menuList.toString())
     }
 }
