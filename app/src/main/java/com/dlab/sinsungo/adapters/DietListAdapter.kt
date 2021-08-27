@@ -12,8 +12,8 @@ import com.dlab.sinsungo.databinding.ItemRcviewDietBinding
 
 class DietListAdapter(
     val deleteClick: ((Diet) -> Unit)? = null,
-    val editClick: ((Diet) -> Unit)? = null,
-    val itemClick: ((Diet) -> Unit)? = null
+    val checkClick: ((Diet) -> Unit)? = null,
+    val editClick: ((Diet) -> Unit)? = null
 ) :
     ListAdapter<Diet, DietListAdapter.ViewHolder>(DietDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,11 +40,11 @@ class DietListAdapter(
             binding.btnDeleteDiet.setOnClickListener {
                 deleteClick?.invoke(getItem(adapterPosition))
             }
-            binding.btnEditDiet.setOnClickListener {
-                editClick?.invoke(getItem(adapterPosition))
+            binding.btnCheckDiet.setOnClickListener {
+                checkClick?.invoke(getItem(adapterPosition))
             }
             binding.cvDietItem.setOnClickListener {
-                itemClick?.invoke(getItem(adapterPosition))
+                editClick?.invoke(getItem(adapterPosition))
             }
         }
 

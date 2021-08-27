@@ -98,7 +98,8 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         itemTouchHelper.attachToRecyclerView(binding.rcviewDiet)
 
         binding.rcviewDiet.apply {
-            mDietListAdapter = DietListAdapter({ diet -> deleteDietItem(diet) }, { diet -> editDietItem(diet) })
+            mDietListAdapter = DietListAdapter({ diet -> deleteDietItem(diet) }, { diet -> checkDietItem(diet) },
+                { diet -> editDietItem(diet) })
             layoutManager = LinearLayoutManager(this.context)
             addItemDecoration(ItemDecoration())
             adapter = mDietListAdapter
@@ -118,6 +119,10 @@ class DietFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         dialog = CustomBottomSheetDiet(diet)
         dialog.show(childFragmentManager, null)
         swipeHelperCallback.resetSwipe(binding.rcviewDiet)
+    }
+
+    private fun checkDietItem(diet: Diet) {
+
     }
 
 }
