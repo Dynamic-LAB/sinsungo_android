@@ -8,6 +8,8 @@ import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.data.model.IngredientModel
 import com.dlab.sinsungo.data.repository.IngredientRepository
 import com.dlab.sinsungo.data.model.Diet
+import com.dlab.sinsungo.data.model.DietRating
+import com.dlab.sinsungo.data.repository.DietRatingRepository
 import com.dlab.sinsungo.data.repository.DietRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,6 +49,26 @@ class DietViewModel : ViewModel() {
             val unUseSearchResult = _unUseIngredientList.filter { it.name.contains(keyWord) }
             _useIngredients.value = useSearchResult
             _unUseIngredients.value = unUseSearchResult
+        }
+    }
+
+    fun setDietRating(diet: Diet, dietRating: DietRating) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                DietRatingRepository.setDietRating(dietRating).let { response ->
+                    if (response.isSuccessful) {
+                        withContext(Dispatchers.Main) {
+                            _dietList.remove(diet)
+                            _diets.postValue(_dietList)
+                        }
+                    } else {
+                        Log.e("diet_rating_error", response.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("get ing ioexception", e.message.toString())
+                e.printStackTrace()
+            }
         }
     }
 

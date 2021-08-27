@@ -112,6 +112,12 @@ interface RetrofitService {
         @Path("id") dietId: Int
     ): Response<JsonObject>
 
+    // Rating Diet (식단 별점)
+    @POST("/recipe/rating")
+    suspend fun setDietRating(
+        @Body dietRating: DietRating
+    ): Response<JsonObject>
+
     // Notice
     @GET("/notice")
     suspend fun getNotice(): Response<List<Notice>>
