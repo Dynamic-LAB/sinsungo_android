@@ -34,7 +34,7 @@
                     android:contentDescription="@string/all_img_description"
                     android:elevation="16dp"
                     android:padding="16dp"
-                    android:src="@drawable/btn_fork_knife" />
+                    android:src="@drawable/btn_fork_knife"
                     app:tint="@color/royal_blue" />
 
                 <View
