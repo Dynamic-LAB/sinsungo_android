@@ -38,7 +38,7 @@
             android:elevation="2dp"
             android:padding="16dp"
             android:text="@string/tutorial_skip"
-            android:textAppearance="@style/Text.Bold_20_Blue"
+            android:textAppearance="@style/Text.Bold_16_Blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
