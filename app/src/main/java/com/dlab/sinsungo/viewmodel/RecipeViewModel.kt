@@ -14,13 +14,16 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class RecipeViewModel : ViewModel() {
-    private val _recipes = MutableLiveData<ArrayList<Recipe>>()
+    private val _normal = MutableLiveData<ArrayList<Recipe>>()
+    private val _recommend = MutableLiveData<ArrayList<Recipe>>()
     private val _scrollTop = MutableLiveData<Boolean>()
     private var _trigger = false
-    private var _search = false
+    private var _search = MutableLiveData<Boolean>(false)
 
-    val recipes: LiveData<ArrayList<Recipe>> = _recipes
+    val normal: LiveData<ArrayList<Recipe>> = _normal
+    val recommend: LiveData<ArrayList<Recipe>> = _recommend
     val scrollTop: LiveData<Boolean> = _scrollTop
+    val search: LiveData<Boolean> = _search
     val trigger = _trigger
 
     init {
@@ -32,7 +35,7 @@ class RecipeViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                if (_search) {
+                if (_search.value!!) {
                     RecipeRepository.searchRecipe(id, start, end, query).let { it ->
                         if (it.isSuccessful) {
                             it.body()?.let { res ->
@@ -49,7 +52,7 @@ class RecipeViewModel : ViewModel() {
                         if (it.isSuccessful) {
                             it.body()?.let { res ->
                                 withContext(Dispatchers.Main) {
-                                    dataProcessing(res)
+                                    dataProcessing(res.normal, res.recommend)
                                 }
                             }
                         } else {
@@ -64,10 +67,10 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
-    private fun dataProcessing(res: ArrayList<Recipe>) {
-        var data = res
+    private fun dataProcessing(normal: ArrayList<Recipe>, recommend: ArrayList<Recipe>? = null) {
+        var data = normal
 
-        _recipes.value?.run {
+        _normal.value?.run {
             val oldData = this.toMutableList()
             oldData.removeLast()
 
@@ -90,12 +93,13 @@ class RecipeViewModel : ViewModel() {
             )
         }
 
-        _recipes.postValue(data)
+        _normal.postValue(data)
+        recommend?.let { _recommend.postValue(it) }
     }
 
     fun enableSearch(id: Int, start: Int, end: Int, query: String = "") {
         _trigger = false
-        _search = true
+        _search.value = query.isNotBlank()
         _scrollTop.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -113,7 +117,7 @@ class RecipeViewModel : ViewModel() {
                                     )
                                 }
 
-                                _recipes.postValue(res)
+                                _normal.postValue(res)
                             }
                         }
                     } else {

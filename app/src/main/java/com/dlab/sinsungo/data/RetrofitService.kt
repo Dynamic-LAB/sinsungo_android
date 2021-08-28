@@ -48,7 +48,7 @@ interface RetrofitService {
         @Path("id") id: Int,
         @Query("start") start: Int,
         @Query("end") end: Int
-    ): Response<ArrayList<Recipe>>
+    ): Response<RecipeData>
 
     @GET("search/recipe/{id}")
     suspend fun searchRecipe(

@@ -40,8 +40,12 @@ class RecipeFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
+        binding.vpRecommend.apply {
+            adapter = RecipeAdapter("recommend") { recipe -> moveToDetail(recipe) }
+        }
+
         binding.rvRecipe.apply {
-            recipeAdapter = RecipeAdapter({ recipe -> moveToDetail(recipe) })
+            recipeAdapter = RecipeAdapter("normal") { recipe -> moveToDetail(recipe) }
             layoutManager = LinearLayoutManager(this.context)
             setHasFixedSize(true)
             adapter = recipeAdapter
