@@ -21,6 +21,7 @@ import com.dlab.sinsungo.R
 import com.dlab.sinsungo.adapters.*
 import com.dlab.sinsungo.data.model.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 
 object CustomBindingAdapter {
@@ -186,6 +187,22 @@ object CustomBindingAdapter {
     fun bindDiet(recyclerView: RecyclerView, diet: List<Diet>?) {
         val adapter = recyclerView.adapter as DietListAdapter
         adapter.submitList(diet?.toMutableList())
+    }
+
+    @BindingAdapter("dietRatingData")
+    @JvmStatic
+    fun bindRatingDiet(recyclerView: RecyclerView, recipes: List<String?>?) {
+        val adapter = recyclerView.adapter as DietRatingListAdapter
+        val ratings = ArrayList<Rating>()
+        Log.d("customBinding", recipes.toString())
+        if (recipes != null) {
+            for (recipe in recipes) {
+                if (recipe != "null") {
+                    recipe?.let { Rating(it, 0.0f) }?.let { ratings.add(it) }
+                }
+            }
+        }
+        adapter.submitList(ratings.toMutableList())
     }
 
     @BindingAdapter("unUseIngredients", "useIngredients")

@@ -1,6 +1,7 @@
 package com.dlab.sinsungo.data
 
 import com.dlab.sinsungo.data.model.*
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import org.json.JSONObject
 import retrofit2.Response
@@ -110,6 +111,12 @@ interface RetrofitService {
     @DELETE("/diet/{id}")
     suspend fun delDiet(
         @Path("id") dietId: Int
+    ): Response<JsonObject>
+
+    // Rating Diet (식단 별점)
+    @POST("/recipe/rating")
+    suspend fun setDietRating(
+        @Body dietRating: DietRating
     ): Response<JsonObject>
 
     // Notice

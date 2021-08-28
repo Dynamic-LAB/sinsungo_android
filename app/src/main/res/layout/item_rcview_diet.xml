@@ -26,7 +26,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/btn_edit_diet"
+                    android:id="@+id/btn_check_diet"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_weight="1"
@@ -34,7 +34,7 @@
                     android:contentDescription="@string/all_img_description"
                     android:elevation="16dp"
                     android:padding="16dp"
-                    android:src="@drawable/btn_edit"
+                    android:src="@drawable/btn_fork_knife" />
                     app:tint="@color/royal_blue" />
 
                 <View

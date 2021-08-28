@@ -8,6 +8,8 @@ import com.dlab.sinsungo.GlobalApplication
 import com.dlab.sinsungo.data.model.IngredientModel
 import com.dlab.sinsungo.data.repository.IngredientRepository
 import com.dlab.sinsungo.data.model.Diet
+import com.dlab.sinsungo.data.model.DietRating
+import com.dlab.sinsungo.data.repository.DietRatingRepository
 import com.dlab.sinsungo.data.repository.DietRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,15 +23,18 @@ class DietViewModel : ViewModel() {
     private val _allIngredientList = mutableListOf<IngredientModel>()
     private val _useIngredientList = mutableListOf<IngredientModel>()
     private val _unUseIngredientList = mutableListOf<IngredientModel>()
+    private val _menuList = mutableListOf<String?>()
 
     private var _allIngredients = MutableLiveData<List<IngredientModel>>()
     private var _useIngredients = MutableLiveData<List<IngredientModel>>()
     private var _unUseIngredients = MutableLiveData<List<IngredientModel>>()
+    private var _menus = MutableLiveData<List<String?>>()
 
     val diets: MutableLiveData<List<Diet>> = _diets
     val allIngredients: MutableLiveData<List<IngredientModel>> = _allIngredients
     val useIngredients: MutableLiveData<List<IngredientModel>> = _useIngredients
     val unUseIngredients: MutableLiveData<List<IngredientModel>> = _unUseIngredients
+    val menuList: MutableLiveData<List<String?>> = _menus
 
     private var refId = GlobalApplication.prefs.getInt("refId")
 
@@ -47,6 +52,28 @@ class DietViewModel : ViewModel() {
             val unUseSearchResult = _unUseIngredientList.filter { it.name.contains(keyWord) }
             _useIngredients.value = useSearchResult
             _unUseIngredients.value = unUseSearchResult
+        }
+    }
+
+    fun setDietRating(diet: Diet, dietRating: DietRating) {
+        Log.d("setDietRating", dietRating.toString())
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                DietRatingRepository.setDietRating(dietRating).let { response ->
+                    if (response.isSuccessful) {
+                        withContext(Dispatchers.Main) {
+                            _dietList.remove(diet)
+                            _diets.postValue(_dietList)
+                            Log.d("setDietRating", response.toString())
+                        }
+                    } else {
+                        Log.e("diet_rating_error", response.message())
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("get ing ioexception", e.message.toString())
+                e.printStackTrace()
+            }
         }
     }
 
@@ -213,5 +240,12 @@ class DietViewModel : ViewModel() {
         _unUseIngredientList.add(ingredient)
         _useIngredients.value = _useIngredientList
         _unUseIngredients.value = _unUseIngredientList
+    }
+
+    fun setMenuList(menuList: List<String?>){
+        _menuList.clear()
+        _menuList.addAll(menuList)
+        _menus.value = _menuList
+        Log.d("setMenuList", menuList.toString())
     }
 }
