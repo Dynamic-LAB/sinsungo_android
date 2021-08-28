@@ -29,14 +29,19 @@
                     android:id="@+id/btn_edit_diet"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_dialog"
-                    android:backgroundTint="@color/lavender_blue"
                     android:contentDescription="@string/all_img_description"
                     android:elevation="16dp"
                     android:padding="16dp"
-                    android:src="@drawable/btn_edit" />
+                    android:src="@drawable/btn_edit"
+                    app:tint="@color/royal_blue" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@color/dim_grey" />
 
                 <ImageView
                     android:id="@+id/btn_delete_diet"
@@ -44,11 +49,11 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_dialog"
-                    android:backgroundTint="@color/free_speech_red"
                     android:contentDescription="@string/all_img_description"
                     android:elevation="16dp"
                     android:padding="16dp"
-                    android:src="@drawable/btn_trash" />
+                    android:src="@drawable/btn_trash"
+                    app:tint="@color/free_speech_red" />
             </LinearLayout>
         </FrameLayout>
 

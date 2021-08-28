@@ -12,11 +12,12 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginTop
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dlab.sinsungo.*
+import com.dlab.sinsungo.R
 import com.dlab.sinsungo.adapters.*
 import com.dlab.sinsungo.data.model.*
 import java.util.*
@@ -102,6 +103,14 @@ object CustomBindingAdapter {
     fun bindShopping(recyclerView: RecyclerView, shopping: List<Shopping>?) {
         val adapter = recyclerView.adapter as ShoppingListAdapter
         adapter.submitList(shopping?.toMutableList())
+    }
+
+    @BindingAdapter("shoppingItem")
+    @JvmStatic
+    fun bindShoppingItem(textView: TextView, value: String?) {
+        if (value == null || value == "") {
+            textView.visibility = View.GONE
+        }
     }
 
     @BindingAdapter("span_text", "span_color")
