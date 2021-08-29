@@ -46,40 +46,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_ocr" />
 
-        <Button
-            android:id="@+id/btn_create_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="계정생성"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/underline_title" />
-
-        <Button
-            android:id="@+id/btn_signIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그인"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_create_account" />
-
-        <Button
-            android:id="@+id/btn_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="계정 리로드"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_signIn" />
-
         <ImageView
             android:id="@+id/iv_ocr_picture"
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/img_empty_receipt"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cl_ocr_buttons"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/underline_title" />
 
@@ -87,10 +61,10 @@
             android:id="@+id/cl_ocr_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ocr_picture"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_ocr_picture">
+            app:layout_constraintStart_toEndOf="@+id/iv_ocr_picture"
+            app:layout_constraintTop_toTopOf="@+id/iv_ocr_picture">
 
             <Button
                 android:id="@+id/btn_open_camera"
@@ -99,22 +73,34 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ocr_receipt_picture"
                 app:icon="@drawable/btn_camera"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_open_gallery"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Dialog"
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/ocr_gallery"
+                app:icon="@drawable/btn_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_open_camera" />
 
             <Button
                 android:id="@+id/btn_ocr"
                 style="@style/Widget.MaterialComponents.Button.Dialog"
                 android:layout_width="144dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/ocr_do"
                 app:icon="@drawable/btn_scan"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_open_camera"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_open_gallery" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -127,7 +113,7 @@
             app:layout_constraintBottom_toTopOf="@id/cl_save_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_ocr_buttons"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ocr_picture"
             app:receiptData="@{viewmodel.resultIngredients}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

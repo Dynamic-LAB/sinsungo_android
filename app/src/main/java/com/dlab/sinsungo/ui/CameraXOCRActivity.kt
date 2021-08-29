@@ -133,6 +133,11 @@ class CameraXOCRActivity : AppCompatActivity() {
         )
     }
 
+    override fun onDestroy() {
+        cameraExecutor.shutdown()
+        super.onDestroy()
+    }
+
     companion object {
         private const val TAG = "Receipt OCR CameraX"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
