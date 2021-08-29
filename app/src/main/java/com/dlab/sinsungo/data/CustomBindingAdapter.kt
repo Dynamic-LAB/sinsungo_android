@@ -12,16 +12,14 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.marginTop
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.adapters.*
 import com.dlab.sinsungo.data.model.*
-import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 
 object CustomBindingAdapter {
@@ -97,6 +95,14 @@ object CustomBindingAdapter {
                 recyclerView.scrollToPosition(0)
             }
         }
+    }
+
+    @BindingAdapter("recommendData")
+    @JvmStatic
+    fun bindRecommend(viewPager2: ViewPager2, recipes: ArrayList<Recipe>?) {
+        val adapter = viewPager2.adapter as RecipeAdapter
+
+        adapter.submitList(recipes)
     }
 
     @BindingAdapter("shoppingData")
