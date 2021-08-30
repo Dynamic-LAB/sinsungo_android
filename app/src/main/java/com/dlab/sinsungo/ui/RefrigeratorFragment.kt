@@ -7,17 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.dlab.sinsungo.data.model.IngredientModel
-import com.dlab.sinsungo.ui.dialogs.IngredientSelfInputDialog
-import com.dlab.sinsungo.viewmodel.IngredientViewModel
 import com.dlab.sinsungo.R
 import com.dlab.sinsungo.adapters.IngredientFragmentStateAdapter
+import com.dlab.sinsungo.data.model.IngredientModel
 import com.dlab.sinsungo.databinding.FragmentRefrigeratorBinding
+import com.dlab.sinsungo.ui.dialogs.IngredientSelfInputDialog
+import com.dlab.sinsungo.viewmodel.IngredientViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -27,21 +26,19 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
     private lateinit var binding: FragmentRefrigeratorBinding
     private val viewModel: IngredientViewModel by activityViewModels()
 
-    private lateinit var getActivityResult: ActivityResultLauncher<Intent>
+    private val getActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val ocrResult = result.data?.getParcelableArrayListExtra<IngredientModel>("ocrPostResult")!!
+            Log.d("ocr post result", ocrResult.toString())
+            viewModel.addOcrResult(ocrResult)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRefrigeratorBinding.inflate(inflater, container, false)
         initTabLayout()
         initSpeedDialItem()
         binding.sdvRefrigerator.setOnActionSelectedListener(this)
-
-        getActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val ocrResult = result.data?.getParcelableArrayListExtra<IngredientModel>("ocrPostResult")!!
-                Log.d("ocr post result", ocrResult.toString())
-                viewModel.addOcrResult(ocrResult)
-            }
-        }
 
         return binding.root
     }
@@ -71,7 +68,7 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
         )
 
         binding.sdvRefrigerator.addActionItem(
-            SpeedDialActionItem.Builder(R.id.fab_scan_receipt, R.drawable.btn_scan)
+            SpeedDialActionItem.Builder(R.id.fab_scan_receipt, R.drawable.btn_receipt)
                 .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
                 .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .setFabSize(FloatingActionButton.SIZE_MINI)
@@ -80,6 +77,18 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
                 .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
                 .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
                 .create(), 1
+        )
+
+        binding.sdvRefrigerator.addActionItem(
+            SpeedDialActionItem.Builder(R.id.fab_scan_barcode, R.drawable.btn_scan)
+                .setFabImageTintColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setFabBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
+                .setFabSize(FloatingActionButton.SIZE_MINI)
+                .setLabel(R.string.ref_scan_barcode)
+                .setLabelClickable(false)
+                .setLabelColor(ResourcesCompat.getColor(resources, R.color.royal_blue, context?.theme))
+                .setLabelBackgroundColor(ResourcesCompat.getColor(resources, R.color.white, context?.theme))
+                .create(), 2
         )
     }
 
@@ -93,6 +102,11 @@ class RefrigeratorFragment : Fragment(), SpeedDialView.OnActionSelectedListener 
             }
             R.id.fab_scan_receipt -> {
                 val intent = Intent(requireActivity(), ReceiptOCRActivity::class.java)
+                getActivityResult.launch(intent)
+                binding.sdvRefrigerator.close()
+            }
+            R.id.fab_scan_barcode -> {
+                val intent = Intent(requireActivity(), BarcodeResultActivity::class.java)
                 getActivityResult.launch(intent)
                 binding.sdvRefrigerator.close()
             }

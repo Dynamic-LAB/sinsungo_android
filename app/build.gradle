@@ -98,6 +98,10 @@ dependencies {
 
     // viewpager indicator
     implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    // mlkit
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta1'
+    implementation 'com.google.mlkit:barcode-scanning:17.0.0'
 }
 
 ktlint {
