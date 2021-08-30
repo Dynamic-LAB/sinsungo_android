@@ -40,6 +40,8 @@
         <activity android:name=".ui.CameraXOCRActivity" />
         <activity android:name=".ui.ReceiptOCRActivity" />
         <activity android:name=".ui.TutorialActivity" />
+        <activity android:name=".ui.BarcodeScanActivity" />
+        <activity android:name=".ui.BarcodeResultActivity" />
 
         <!-- 카카오 인증 Redirect URI 설정 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
