@@ -3,49 +3,61 @@ package com.dlab.sinsungo.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dlab.sinsungo.data.model.IngredientModel
-import com.dlab.sinsungo.R
+import com.bumptech.glide.Glide
 import com.dlab.sinsungo.adapters.ReceiptListAdapter
-import com.dlab.sinsungo.viewmodel.ReceiptOCRViewModel
+import com.dlab.sinsungo.data.model.IngredientModel
 import com.dlab.sinsungo.databinding.ActivityReceiptOcrBinding
 import com.dlab.sinsungo.databinding.DialogReceiptAddIngredientBinding
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.FirebaseFunctionsException
-import com.google.firebase.ktx.Firebase
-import com.google.gson.*
-import java.io.ByteArrayOutputStream
+import com.dlab.sinsungo.viewmodel.ReceiptOCRViewModel
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 
 class ReceiptOCRActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReceiptOcrBinding
     private val viewModel: ReceiptOCRViewModel by viewModels()
 
-    private lateinit var getActivityResult: ActivityResultLauncher<Intent>
+    private val takePictureActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                ocrUri = result.data?.getParcelableExtra("ocr uri")
+                if (ocrUri == null) {
+                    Toast.makeText(this, "영수증을 먼저 촬영해주세요.", Toast.LENGTH_SHORT).show()
+                } else {
+                    binding.ivOcrPicture.setImageURI(ocrUri)
+                }
+            } else {
+                Toast.makeText(this, "취소하셨습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
+    private val getPictureFromGalleryActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                ocrUri = result.data?.data
+                if (ocrUri == null) {
+                    Toast.makeText(this, "영수증 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Glide.with(this).load(ocrUri).into(binding.ivOcrPicture)
+                }
+            } else {
+                Toast.makeText(this, "취소하셨습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private val recognizer = TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build())
     private var ocrUri: Uri? = null
-    private lateinit var bitmap: Bitmap
-
-    private lateinit var functions: FirebaseFunctions
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var mReceiptListAdapter: ReceiptListAdapter
 
@@ -57,45 +69,44 @@ class ReceiptOCRActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         setContentView(binding.root)
-
-        val EMAIL = getString(R.string.firebase_cf_auth_email)
-        val PASS_WORD = getString(R.string.firebase_cf_auth_password)
-
-        functions = FirebaseFunctions.getInstance()
-        auth = Firebase.auth
-
-        getActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                ocrUri = result.data?.getParcelableExtra<Uri>("ocr uri")
-                Log.d("Picture Result", "$ocrUri")
-                if (ocrUri == null) {
-                    Toast.makeText(this, "영수증을 먼저 촬영해주세요.", Toast.LENGTH_SHORT).show()
-                } else {
-                    bitmap = getBitmap(ocrUri!!)
-                    bitmap = scaleBitmapDown(bitmap, 640)
-                    binding.ivOcrPicture.setImageBitmap(bitmap)
-                }
-            }
-        }
+        initRcView()
 
         shortAnimationDuration = resources.getInteger(android.R.integer.config_longAnimTime)
 
-        initRcView()
-
         binding.btnBack.setOnClickListener { finish() }
 
-        binding.btnSignIn.setOnClickListener { signIn(EMAIL, PASS_WORD) }
-        binding.btnCreateAccount.setOnClickListener { createAccount(EMAIL, PASS_WORD) }
-        binding.btnReload.setOnClickListener { reload() }
-
         binding.btnOpenCamera.setOnClickListener {
-            val getOCRPhoto = Intent(this, CameraXOCRActivity::class.java)
-            getActivityResult.launch(getOCRPhoto)
+            val takePhoto = Intent(this, CameraXOCRActivity::class.java)
+            takePictureActivityResult.launch(takePhoto)
+        }
+
+        binding.btnOpenGallery.setOnClickListener {
+            val getPhoto = Intent(Intent.ACTION_GET_CONTENT)
+            getPhoto.type = MediaStore.Images.Media.CONTENT_TYPE
+            getPhoto.type = "image/*"
+            getPictureFromGalleryActivityResult.launch(getPhoto)
         }
 
         binding.btnOcr.setOnClickListener {
-            fadeIn()
-            requestOCR()
+            if (ocrUri == null) {
+                Toast.makeText(this, "영수증 사진이 존재하지 않습니다!", Toast.LENGTH_SHORT).show()
+            } else {
+                fadeIn()
+                val image = InputImage.fromFilePath(this, ocrUri)
+                recognizer.process(image)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            Log.d("MLKIT", "성공")
+                            val visionText = it.result.text
+                            Log.d("MLKIT RESULT", visionText)
+                            viewModel.extractIngredientInOCR(visionText)
+                        } else {
+                            Log.d("MLKIT", "실패")
+                            Log.e("MLKIT", it.exception.message.toString())
+                        }
+                        fadeOut()
+                    }
+            }
         }
 
         binding.btnSave.setOnClickListener {
@@ -132,14 +143,6 @@ class ReceiptOCRActivity : AppCompatActivity() {
                 viewModel.setPostResult(false)
                 if (!isFinishing) finish()
             }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            reload()
         }
     }
 
@@ -183,142 +186,5 @@ class ReceiptOCRActivity : AppCompatActivity() {
 
     private fun setDataIngredient(key: String, value: String, item: IngredientModel) {
         viewModel.setDataIngredient(key, value, item)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun getBitmap(uri: Uri): Bitmap {
-        return if (Build.VERSION.SDK_INT < 28) {
-            MediaStore.Images.Media.getBitmap(contentResolver, uri)
-        } else {
-            val decode = ImageDecoder.createSource(contentResolver, uri)
-            ImageDecoder.decodeBitmap(decode)
-        }
-    }
-
-    private fun scaleBitmapDown(bitmap: Bitmap, maxDimension: Int): Bitmap {
-        val originalWidth = bitmap.width
-        val originalHeight = bitmap.height
-        var resizedWidth = maxDimension
-        var resizedHeight = maxDimension
-        when {
-            originalHeight > originalWidth -> {
-                resizedHeight = maxDimension
-                resizedWidth =
-                    (resizedHeight * originalWidth.toFloat() / originalHeight.toFloat()).toInt()
-            }
-            originalWidth > originalHeight -> {
-                resizedWidth = maxDimension
-                resizedHeight =
-                    (resizedWidth * originalHeight.toFloat() / originalWidth.toFloat()).toInt()
-            }
-            originalHeight == originalWidth -> {
-                resizedHeight = maxDimension
-                resizedWidth = maxDimension
-            }
-        }
-        return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false)
-    }
-
-    private fun requestOCR() {
-        // Convert bitmap to base64 encoded string
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
-        val base64encoded = Base64.encodeToString(imageBytes, Base64.NO_WRAP)
-
-        // Create json request to cloud vision
-        val request = JsonObject()
-        // Add image to request
-        val image = JsonObject()
-        image.add("content", JsonPrimitive(base64encoded))
-        request.add("image", image)
-
-        //Add features to the request
-        val feature = JsonObject()
-        feature.add("type", JsonPrimitive("TEXT_DETECTION"))
-        // feature.add("type", JsonPrimitive("DOCUMENT_TEXT_DETECTION"))
-
-        val features = JsonArray()
-        features.add(feature)
-        request.add("features", features)
-
-        Log.d("ocr request", request.toString())
-
-        annotateImage(request.toString())
-            .addOnCompleteListener { task ->
-                Log.d("task", task.result.toString())
-                if (task.isSuccessful) {
-                    Log.d("ocr", "성공")
-                    val annotation = task.result!!.asJsonArray[0].asJsonObject["fullTextAnnotation"].asJsonObject
-                    val ocrResult: String = annotation["text"].asString
-                    Log.d("ocr result", ocrResult)
-                    viewModel.extractIngredientInOCR(ocrResult)
-                } else {
-                    Log.d("ocr", "실패")
-                    val e = task.exception
-                    if (e is FirebaseFunctionsException) {
-                        Log.d("error", e.code.toString())
-                    }
-                }
-                fadeOut()
-            }
-    }
-
-    private fun annotateImage(requestJson: String): Task<JsonElement> {
-        return functions
-            .getHttpsCallable("annotateImage")
-            .call(requestJson)
-            .continueWith { task ->
-                val result = task.result?.data
-                JsonParser.parseString(Gson().toJson(result))
-            }
-    }
-
-    private fun createAccount(email: String, password: String) {
-        Log.d("firebase auth", "createAccount:$email")
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d("firebase auth", "createAccount success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    Log.d("firebase auth", "createAccount fail")
-                }
-            }
-    }
-
-    private fun signIn(email: String, password: String) {
-        Log.d("firebase auth", "signIn:$email")
-
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d("firebase auth", "signIn success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    Log.d("firebase auth", "signIn fail")
-                }
-            }
-    }
-
-    private fun reload() {
-        auth.currentUser!!.reload().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                updateUI(auth.currentUser)
-            } else {
-                Log.d("firebase auth", "reload fail")
-            }
-        }
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-        if (user != null) {
-            Log.d("user", user.toString())
-        } else {
-            Log.d("user", "is null")
-        }
     }
 }
