@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fab_custom_edit" type="id" />
+    <item name="fab_scan_receipt" type="id" />
+    <item name="fab_add_diet" type="id" />
+    <item name="fab_custom_diet" type="id" />
+    <item name="fab_share_shopping" type="id" />
+    <item name="fab_add_shopping" type="id" />
+    <item name="fab_scan_barcode" type="id" />
+</resources>

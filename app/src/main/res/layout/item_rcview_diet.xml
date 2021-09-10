@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="dataModel"
+            type="com.dlab.sinsungo.data.model.Diet" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_check_diet"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_dialog"
+                    android:contentDescription="@string/all_img_description"
+                    android:elevation="16dp"
+                    android:padding="16dp"
+                    android:src="@drawable/btn_fork_knife"
+                    app:tint="@color/royal_blue" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@color/dim_grey" />
+
+                <ImageView
+                    android:id="@+id/btn_delete_diet"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_dialog"
+                    android:contentDescription="@string/all_img_description"
+                    android:elevation="16dp"
+                    android:padding="16dp"
+                    android:src="@drawable/btn_trash"
+                    app:tint="@color/free_speech_red" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_diet_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tv_diet_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Text.Bold_14_Black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tvDietDate="@{dataModel.dietDate}" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="2dp"
+                    android:layout_height="10dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/royal_blue"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_diet_date"
+                    app:layout_constraintStart_toEndOf="@id/tv_diet_date"
+                    app:layout_constraintTop_toTopOf="@id/tv_diet_date" />
+
+                <TextView
+                    android:id="@+id/tv_diet_memo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{dataModel.dietMemo}"
+                    android:textAppearance="@style/Text.Regular_10_Black"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_diet_date"
+                    app:layout_constraintStart_toEndOf="@id/view"
+                    app:layout_constraintTop_toTopOf="@id/tv_diet_date" />
+
+                <TextView
+                    android:id="@+id/tv_diet_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/Text.Bold_20_Black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diet_date"
+                    app:tvDietMenus="@{dataModel.dietMenus}" />
+
+                <TextView
+                    android:id="@+id/tv_main_diet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/diet_main_ingredient"
+                    android:textAppearance="@style/Text.Regular_10_Green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diet_menu"
+                    app:tvDietName="@{dataModel.dietIngredients}" />
+
+                <TextView
+                    android:id="@+id/tv_diet_ingredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/Text.Regular_10_Black"
+                    app:layout_constraintStart_toEndOf="@id/tv_main_diet"
+                    app:layout_constraintTop_toBottomOf="@id/tv_diet_menu"
+                    app:tvDietIngredient="@{dataModel.dietIngredients}" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+
+
+</layout>

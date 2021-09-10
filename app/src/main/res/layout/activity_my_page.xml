@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.MyPageActivity">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.dlab.sinsungo.ui.MyPageActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.dlab.sinsungo.viewmodel.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="21dp">
+
+        <include
+            android:id="@+id/layout_title"
+            layout="@layout/layout_title_with_back_btn"
+            app:activity="@{view}"
+            app:title="@{@string/all_mypage}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_member"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_bottom"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/tl_btns"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/layout_title"
+            app:layout_constraintVertical_weight="0.22"
+            app:master="@{viewModel.refrigerator.master}"
+            app:members="@{viewModel.refrigerator.members}" />
+
+        <TableLayout
+            android:id="@+id/tl_btns"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:divider="@color/light_grey"
+            android:showDividers="middle"
+            android:stretchColumns="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/rv_member"
+            app:layout_constraintVertical_weight="0.78">
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_add_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->view.showDialog(@string/my_add_member)}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_add_member"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/btn_set_noti"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_setting_notice"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black"
+                    app:switchMinWidth="60dp" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{() -> view.startNoticeActivity()}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_notify"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{() -> view.startHelpActivity()}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_help"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{() -> view.startContactActivity()}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_contact"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_law"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{() -> view.startLawActivity()}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_law"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->view.showDialog(@string/my_logout)}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_logout"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+
+            </TableRow>
+
+            <TableRow android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_withdraw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:onClick="@{()->view.showDialog(@string/my_withdraw)}"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/my_withdraw"
+                    android:textAppearance="@style/Text.Bold_16_Black"
+                    android:textColor="@color/black" />
+            </TableRow>
+
+        </TableLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="26dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="26dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

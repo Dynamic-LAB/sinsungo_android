@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_nav_menu_refrigerator"
+        android:icon="@drawable/ic_bottom_nav_refrigerator"
+        android:title="@string/all_refrigerator" />
+
+    <item
+        android:id="@+id/bottom_nav_menu_diet"
+        android:icon="@drawable/ic_bottom_nav_diet"
+        android:title="@string/all_diet" />
+
+    <item
+        android:id="@+id/bottom_nav_menu_recipe"
+        android:icon="@drawable/ic_bottom_nav_recipe"
+        android:title="@string/all_recipe" />
+
+    <item
+        android:id="@+id/bottom_nav_menu_notification"
+        android:icon="@drawable/ic_bottom_nav_notification"
+        android:title="@string/all_notification" />
+
+    <item
+        android:id="@+id/bottom_nav_menu_shopping_basket"
+        android:icon="@drawable/ic_bottom_nav_basket"
+        android:title="@string/all_shopping_basket" />
+</menu>
